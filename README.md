@@ -12,4 +12,4 @@ The idea is you have `Peeple` and you can make them work, making them work produ
 # Extra Remarks
 - Feel free to contribute
 - Make sure to mention what your PR does and try to follow a similar coding standard!
-- If you are looking for things to do, look at issues on github. Or write ideas of what we should work on next in the Ideas.md!
+- If you are looking for things to do, look at issues on github. Or look at the discussions page!
