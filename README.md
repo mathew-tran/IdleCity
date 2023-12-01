@@ -10,6 +10,6 @@ This game is an idle city builder game. I plan it to be a mix between sim city a
 The idea is you have `Peeple` and you can make them work, making them work produces resources, resources can be towards upgrades and new buildings. So on and so forth.
 
 # Extra Remarks
-Feel free to contribute
-Make sure to mention what your PR does and try to follow a similar coding standard!
-If you are looking for things to do, look at issues on github. Or write ideas of what we should work on next in the Ideas.md!
+- Feel free to contribute
+- Make sure to mention what your PR does and try to follow a similar coding standard!
+- If you are looking for things to do, look at issues on github. Or write ideas of what we should work on next in the Ideas.md!
