@@ -1,0 +1,111 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Scripts/Unlocks/UnlockCategory.gd" type="Script" id=1]
+[ext_resource path="res://Font/PressStart2P-Regular.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.372549, 0.372549, 0.372549, 1 )
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color( 0.0745098, 0.0745098, 0.0745098, 1 )
+
+[sub_resource type="Theme" id=2]
+Panel/styles/panel = SubResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 28
+font_data = ExtResource( 2 )
+
+[sub_resource type="Theme" id=4]
+default_font = SubResource( 3 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 14
+font_data = ExtResource( 2 )
+
+[sub_resource type="Theme" id=6]
+default_font = SubResource( 5 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 12
+extra_spacing_bottom = 5
+font_data = ExtResource( 2 )
+
+[sub_resource type="Theme" id=8]
+default_font = SubResource( 7 )
+
+[node name="UnlockBotany" type="Button"]
+margin_top = 204.0
+margin_right = 600.0
+margin_bottom = 404.0
+rect_min_size = Vector2( 600, 200 )
+script = ExtResource( 1 )
+RequirementType = [ 0 ]
+RequirementAmount = [ 15 ]
+DescriptionTitle = "Research Botany"
+DescriptionText = "Make your city more green!"
+CategoryToUnlock = 1
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 800.0
+margin_bottom = 110.0
+rect_min_size = Vector2( 770, 200 )
+theme = SubResource( 2 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+margin_left = 14.0
+margin_top = 14.0
+margin_right = 584.0
+margin_bottom = 194.0
+rect_min_size = Vector2( 0, 180 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer"]
+margin_right = 500.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 500, 160 )
+
+[node name="Title" type="Label" parent="Panel/HBoxContainer/VBoxContainer"]
+margin_right = 500.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 400, 40 )
+theme = SubResource( 4 )
+text = "Title"
+
+[node name="Description" type="Label" parent="Panel/HBoxContainer/VBoxContainer"]
+margin_top = 44.0
+margin_right = 500.0
+margin_bottom = 84.0
+rect_min_size = Vector2( 400, 40 )
+theme = SubResource( 6 )
+text = "This is a lengthy description about the thing. It does things you know."
+autowrap = true
+
+[node name="Requirements" type="Label" parent="Panel/HBoxContainer/VBoxContainer"]
+margin_top = 88.0
+margin_right = 500.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 400, 40 )
+theme = SubResource( 8 )
+text = "Requirements:
+200 / 200 WOOD | 500/600 STONE"
+
+[node name="TimePurchased" type="Label" parent="Panel/HBoxContainer/VBoxContainer"]
+margin_top = 132.0
+margin_right = 500.0
+margin_bottom = 172.0
+rect_min_size = Vector2( 400, 40 )
+theme = SubResource( 8 )
+text = "PURCHASED: 202020"
+
+[node name="Button" type="Button" parent="Panel/HBoxContainer"]
+margin_left = 504.0
+margin_right = 704.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 200, 80 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "UNLOCK"
+
+[connection signal="button_down" from="Panel/HBoxContainer/Button" to="." method="_on_Button_button_down"]

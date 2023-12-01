@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Prefab/Buildings/Factories/Factory.tscn" type="PackedScene" id=1]
+
+[node name="Factory" instance=ExtResource( 1 )]
+BuildingName = "Stone Factory"
+RequirementType = [ 0 ]
+RequirementAmount = [ 10 ]
+Description = "Generates Stone"
+HappinessAmount = -3
+ResourceType = 1

@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Art/Buildings/Botany/Bush.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Building/Building.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 16, 17 )
+
+[node name="Bush" type="Sprite" groups=["Factory"]]
+texture = ExtResource( 1 )
+centered = false
+script = ExtResource( 2 )
+BuildingLimit = 0
+bIsBlockingNavigation = true
+BuildingName = "Bush"
+RequirementType = [ 0 ]
+RequirementAmount = [ 5 ]
+Description = "Good for the environment!"
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 3 )
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

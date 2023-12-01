@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Prefab/Buildings/Housing/House.tscn" type="PackedScene" id=1]
+
+[node name="Housing" instance=ExtResource( 1 )]
+BuildingLimit = 8
+BuildingName = "Duplex"
+RequirementAmount = [ 100 ]
+Description = "Houses 8 Tenants"
+HappinessAmount = 6

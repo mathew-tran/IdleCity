@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Art/Buildings/Housing/Home.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Building/Housing.gd" type="Script" id=2]
+[ext_resource path="res://Prefab/Particles/ActiveHouseParticle.tscn" type="PackedScene" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+[node name="Housing" type="Sprite" groups=["House"]]
+position = Vector2( 448, 87 )
+texture = ExtResource( 1 )
+centered = false
+script = ExtResource( 2 )
+BuildingLimit = 4
+BuildingName = "Town House"
+BuildingType = 0
+RequirementType = [ 0 ]
+RequirementAmount = [ 10 ]
+Description = "Houses 4 Tenants"
+HappinessAmount = 8
+
+[node name="ActiveParticle" parent="." instance=ExtResource( 3 )]
+position = Vector2( 18, 0 )
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2( -1, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 1 )
