@@ -2,8 +2,8 @@ extends Sprite2D
 
 var MorningColor = "0ac8bc00"
 var DayColor = "28c8bc00"
-var NightColor = "280037c8"
-var MidnightColor = "47002eff"
+var NightColor = "28003782"
+var MidnightColor = "47002eb9"
 
 func _ready():
 	var _OnMorningTime = GameClock.connect("OnMorningTime", Callable(self, "OnMorningTime"))

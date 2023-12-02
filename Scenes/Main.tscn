@@ -176,10 +176,13 @@ layout_mode = 3
 anchors_preset = 0
 
 [node name="Lighting" type="Sprite2D" parent="CanvasLayer/CanvasLayer"]
-modulate = Color(0.784314, 0.737255, 0, 0.0392157)
+modulate = Color(0.278431, 0, 0.180392, 0.72549)
+show_behind_parent = true
 scale = Vector2(32.0938, 18.75)
 texture = ExtResource("11")
 centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 1152, 648)
 script = ExtResource("12")
 
 [node name="Clock" parent="CanvasLayer/CanvasLayer" instance=ExtResource("10")]
