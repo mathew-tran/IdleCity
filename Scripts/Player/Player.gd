@@ -46,12 +46,12 @@ func _process(delta):
 		ProcessMenuMode(delta)
 		
 	if Input.is_action_just_released("ScrollForward"):
-		zoom -= Vector2(delta * ZoomSpeed, delta * ZoomSpeed)
+		zoom += Vector2(delta * ZoomSpeed, delta * ZoomSpeed)
 		if zoom.x < MinZoom:
 			zoom = Vector2(MinZoom, MinZoom)
 
 	if Input.is_action_just_released("ScrollBackward"):
-		zoom += Vector2(delta * ZoomSpeed, delta * ZoomSpeed)
+		zoom -= Vector2(delta * ZoomSpeed, delta * ZoomSpeed)
 		if zoom.x > MaxZoom:
 			zoom = Vector2(MaxZoom, MaxZoom)
 	if FollowTarget:

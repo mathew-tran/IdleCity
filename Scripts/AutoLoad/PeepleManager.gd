@@ -39,8 +39,10 @@ func CheckMinPeepleSize():
 		AddPeeple(instance)
 		
 func OnReload():
-	for peeple in Finder.GetPeepleGroup().get_children():
-		peeple.queue_free()
+	var peepleGroup = Finder.GetPeepleGroup()
+	if peepleGroup:
+		for peeple in peepleGroup.get_children():
+			peeple.queue_free()
 		
 	AllPeeple.clear()
 	UnHousedPeeple.clear()
