@@ -25,7 +25,7 @@ func GetPeepleGroup():
 	return get_tree().get_nodes_in_group("PeepleGroup")[0]
 	
 func GetCamera():
-	return get_tree().get_nodes_in_group("Camera")[0]
+	return get_tree().get_nodes_in_group("Camera3D")[0]
 	
 func GetSound():
 	return get_tree().get_nodes_in_group("SoundManager")[0]

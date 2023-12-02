@@ -25,15 +25,15 @@ func GetFormattedAmount(amount):
 	
 func GenerateNavigationPath(currentPoint, targetPoint):
 	var navigation = get_tree().get_nodes_in_group("Navigation")[0]
-	return Navigation2DServer.map_get_path(navigation, currentPoint, targetPoint, false, 1)
+	return NavigationServer2D.map_get_path(navigation, currentPoint, targetPoint, false, 1)
 
 func AddPopup(contentTitle, contentDescription, newContent):
 	Finder.GetContentPopup().ShowPopup(contentTitle, contentDescription, newContent)
 
 func AddPopupText(position, textContent):
-	var instance = PopupTextClass.instance()
+	var instance = PopupTextClass.instantiate()
 	instance.SetText(textContent)
-	instance.rect_global_position = position
+	instance.global_position = position
 	get_tree().root.add_child(instance)
 	
 func IsPopupVisible():
@@ -67,7 +67,7 @@ func GetBuildingOnTile(tileLocation):
 	return null
 
 func SendLogMessageToPlayer(message):
-	var instance = load("res://Prefab/UI/MessageLog.tscn").instance()
+	var instance = load("res://Prefab/UI/MessageLog.tscn").instantiate()
 	
 	var MessageContainer = get_tree().get_nodes_in_group("MessageContainer")[0]
 	MessageContainer.add_child(instance)

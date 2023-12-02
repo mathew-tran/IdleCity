@@ -1,8 +1,8 @@
 extends Panel
 
-onready var Housing = $SubBuildMenu/Housing
-onready var Factories = $SubBuildMenu/Factories
-onready var Special = $SubBuildMenu/Special
+@onready var Housing = $SubBuildMenu/Housing
+@onready var Factories = $SubBuildMenu/Factories
+@onready var Special = $SubBuildMenu/Special
 
 var BuildingClass = preload("res://Prefab/Buttons/BuildingButton.tscn")
 	
@@ -21,7 +21,7 @@ func _ready():
 	AddButton(preload("res://Prefab/Buildings/SpecialBuildings/ResearchLab.tscn"))
 
 func AddButton(buildingClass):
-	var instance = buildingClass.instance()
+	var instance = buildingClass.instantiate()
 	var buildingType = instance.BuildingType
 	instance.queue_free()
 	if buildingType == GameResources.BUILDING_TYPE.HOUSE:
@@ -41,9 +41,9 @@ func AddButtonToCategory(housingClass, category):
 	if bShouldCreate == false:
 		return
 		
-	var housingClassInstance = housingClass.instance()
+	var housingClassInstance = housingClass.instantiate()
 	
-	var instance = BuildingClass.instance()
+	var instance = BuildingClass.instantiate()
 	instance.DescriptionText = housingClassInstance.Description
 	instance.BuildingClass = housingClass
 	instance.RequirementType = housingClassInstance.RequirementType

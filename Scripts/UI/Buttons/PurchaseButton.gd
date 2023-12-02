@@ -1,10 +1,10 @@
 extends Button
 
-export(Array, GameResources.RESOURCE_TYPE) var RequirementType
-export(Array, int) var RequirementAmount
+@export var RequirementType # (Array, GameResources.RESOURCE_TYPE)
+@export var RequirementAmount # (Array, int)
 
-export(String) var DescriptionTitle = "Title"
-export(String) var DescriptionText = "No description"
+@export var DescriptionTitle: String = "Title"
+@export var DescriptionText: String = "No description"
 
 var Description = null
 var Price = null
@@ -18,7 +18,7 @@ func _ready():
 	Description.text = DescriptionText
 	
 	UpdateUI()
-	var _OnInventoryUpdate = InventoryManager.connect("OnInventoryUpdate", self, "UpdateUI")
+	var _OnInventoryUpdate = InventoryManager.connect("OnInventoryUpdate", Callable(self, "UpdateUI"))
 	
 
 func UpdateUI():

@@ -27,7 +27,7 @@ func _ready():
 	MinuteTimer.wait_time = MinuteDelayTime
 	MinuteTimer.one_shot = false
 	add_child(MinuteTimer)
-	MinuteTimer.connect("timeout", self, "OnTimerUpdate")
+	MinuteTimer.connect("timeout", Callable(self, "OnTimerUpdate"))
 	StartTime()
 	
 func OnLoadComplete():
@@ -51,7 +51,7 @@ func Save():
 	return dict
 	
 func Load(data):
-	if data.empty() == false:
+	if data.is_empty() == false:
 		TimeInMinutes = data["minutes"]
 		TimeInHours = data["hours"]
 		DayAmount = data["day"]

@@ -1,4 +1,4 @@
-extends Sprite
+extends Sprite2D
 
 var TargetPosition = Vector2()
 var bHasNewTarget = false
@@ -8,7 +8,7 @@ var House = null
 var Paths = []
 var PathIndex = 0
 var Progress = 0
-export var Speed = 125
+@export var Speed = 125
 
 var Happiness = 50
 
@@ -52,31 +52,31 @@ func GetHappiness():
 	return Happiness
 
 func GetTexture():
-	return $Sprite.texture
+	return $Sprite2D.texture
 
 func GetModulation():
-	return $Sprite.modulate
+	return $Sprite2D.modulate
 	
 func _exit_tree():
 	HappinessUpdate()
 	
 func _ready():
 	SaveManager.AddToPersistGroup(self)
-	var _OnLoadComplete = SaveManager.connect("OnLoadComplete", self, "OnLoadComplete")	
-	var _OnDayTime = GameClock.connect("OnDayTime", self, "OnDayTimeExecute")
-	var _OnNightTime = GameClock.connect("OnNightTime", self, "OnNightTimeExecute")
-	var _OnHourUpdate = GameClock.connect("OnHourUpdate", self, "OnHourUpdate")
+	var _OnLoadComplete = SaveManager.connect("OnLoadComplete", Callable(self, "OnLoadComplete"))	
+	var _OnDayTime = GameClock.connect("OnDayTime", Callable(self, "OnDayTimeExecute"))
+	var _OnNightTime = GameClock.connect("OnNightTime", Callable(self, "OnNightTimeExecute"))
+	var _OnHourUpdate = GameClock.connect("OnHourUpdate", Callable(self, "OnHourUpdate"))
 	randomize()
 		
 	if bHasBeenSet == false:
 		savedColorIndex = randi() % colors.size()
-		$Sprite.modulate = colors[savedColorIndex]
+		$Sprite2D.modulate = colors[savedColorIndex]
 		PeepleManager.AssignRandomName(self)
-		Speed = Speed + rand_range(-50, 75)
+		Speed = Speed + randf_range(-50, 75)
 	# TODO: Issue reshuffling parents... so that's why I have this timeout.
-	yield(get_tree().create_timer(0.2), "timeout")
+	await get_tree().create_timer(0.2).timeout
 	PeepleManager.AddPeeple(self)
-	var _OnHappinessUpdate = connect("OnHappinessUpdate", self, "HappinessUpdate")
+	var _OnHappinessUpdate = connect("OnHappinessUpdate", Callable(self, "HappinessUpdate"))
 	emit_signal("OnHappinessUpdate")
 
 func AddHappiness(amount):
@@ -91,12 +91,12 @@ func HappinessUpdate():
 	pass
 	
 func OnLoadComplete():
-	$Sprite.modulate = colors[savedColorIndex]
+	$Sprite2D.modulate = colors[savedColorIndex]
 	
 func Save():
 	var dictionary = {
 	"type" : "object",
-	"filename" : get_filename(),
+	"filename" : get_scene_file_path(),
 	"pos_x" : position.x,
 	"pos_y" : position.y,
 	"happiness" : Happiness,
@@ -113,7 +113,7 @@ func Load(dictData):
 	Happiness = dictData["happiness"]
 	Speed = dictData["speed"]
 	savedColorIndex = dictData["color"]
-	$Sprite.modulate = colors[savedColorIndex]
+	$Sprite2D.modulate = colors[savedColorIndex]
 	SetPeepleName(dictData["name"])
 	
 	Finder.GetPeepleGroup().add_child(self)
@@ -217,7 +217,7 @@ func GetRandomPosition():
 func FindJob():
 	WorkPlace = JobManager.FindJob(self)
 	if WorkPlace:
-		WorkPlace.connect("OnDestroyed", self, "OnFactoryDeath")
+		WorkPlace.connect("OnDestroyed", Callable(self, "OnFactoryDeath"))
 		WorkPlace.Subscribe(self)
 		PeepleManager.DeclareEmployed(self)
 	else:
@@ -226,14 +226,14 @@ func FindJob():
 func ProcessBuildingDeath():
 	if is_instance_valid(get_tree()):
 		# TODO: Can I get rid of this??
-		yield(get_tree().create_timer(0.2), "timeout")
+		await get_tree().create_timer(0.2).timeout
 		ChangeAIState(AI_STATES.WANDER, true)
 		bProcessLostSubscription = true
 	
 func FindHouse():
 	House = HousingManager.FindHouse(self)
 	if House:
-		House.connect("OnDestroyed", self, "OnHouseDeath")
+		House.connect("OnDestroyed", Callable(self, "OnHouseDeath"))
 		House.Subscribe(self)
 		PeepleManager.DeclareHoused(self)
 	else:
@@ -241,7 +241,7 @@ func FindHouse():
 
 	
 func OnFactoryDeath():
-	WorkPlace.disconnect("OnDestroyed", self, "OnFactoryDeath")
+	WorkPlace.disconnect("OnDestroyed", Callable(self, "OnFactoryDeath"))
 	WorkPlace = null
 	PeepleManager.DeclaredUnEmployed(self)
 	ProcessBuildingDeath()
@@ -250,7 +250,7 @@ func OnFactoryDeath():
 	
 	
 func OnHouseDeath():
-	House.disconnect("OnDestroyed", self, "OnHouseDeath")
+	House.disconnect("OnDestroyed", Callable(self, "OnHouseDeath"))
 	House = null
 	PeepleManager.DeclareUnhoused(self)
 	ProcessBuildingDeath()
@@ -298,7 +298,7 @@ func MoveToTargetPosition(distance):
 	#Progress += delta * (Speed + PeepleManager.SpeedBuff)
 		var distanceToNext = startPosition.distance_to(Paths[0])
 		if distance <= distanceToNext and distance >= 0.0:
-			global_position = startPosition.linear_interpolate(Paths[0], distance / distanceToNext)
+			global_position = startPosition.lerp(Paths[0], distance / distanceToNext)
 			break
 		elif distance < 0.0:
 			global_position = Paths[PathIndex]	

@@ -6,7 +6,7 @@ extends Panel
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for child in get_child(0).get_children():
-		child.connect("OnInfoUpdate", self, "UpdateUI")
+		child.connect("OnInfoUpdate", Callable(self, "UpdateUI"))
 
 func UpdateUI():
 	var bHasProblems = false

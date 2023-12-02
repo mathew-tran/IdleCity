@@ -16,8 +16,8 @@ func AddToPersistGroup(node):
 	
 func _ready():
 	
-	var _OnDayUpdate = GameClock.connect("OnDayUpdate", self, "Save")
-	yield(get_tree().create_timer(0.2), "timeout")
+	var _OnDayUpdate = GameClock.connect("OnDayUpdate", Callable(self, "Save"))
+	await get_tree().create_timer(0.2).timeout
 	Load()
 
 func _process(_delta):
@@ -30,7 +30,7 @@ func Save():
 	var saveNodes = get_tree().get_nodes_in_group(PersistTag)
 	for savedNode in saveNodes:
 		var nodeData = savedNode.call("Save")
-		saveGame.store_line(to_json(nodeData))
+		saveGame.store_line(JSON.new().stringify(nodeData))
 	saveGame.close()
 	emit_signal("OnSave")
 	Helper.SendLogMessageToPlayer("Game Saved.")
@@ -42,12 +42,14 @@ func Load():
 		saveGame.open(SaveFilePath, File.READ)
 		while not saveGame.eof_reached():
 			var lineData = saveGame.get_line()
-			if lineData.empty():
+			if lineData.is_empty():
 				continue
-			var currentLine = parse_json(lineData)
+			var test_json_conv = JSON.new()
+			test_json_conv.parse(lineData)
+			var currentLine = test_json_conv.get_data()
 			if currentLine:
 				if currentLine["type"] == "object":
-					var newObject = load(currentLine["filename"]).instance()
+					var newObject = load(currentLine["filename"]).instantiate()
 					newObject.Load(currentLine)
 				elif currentLine["type"] == "auto":
 					# Use expressions: https://docs.godotengine.org/en/stable/tutorials/scripting/evaluating_expressions.html
@@ -58,7 +60,7 @@ func Load():
 	
 func Reset():
 	set_process(false)
-	var dir = Directory.new()
+	var dir = DirAccess.new()
 	if dir.open(SaveFilePath) == OK:
 		dir.remove(SaveFilePath)
 	emit_signal("OnDelete")

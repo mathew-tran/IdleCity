@@ -1,7 +1,7 @@
 extends "res://Scripts/AutoLoad/DataHolder/PersistentData.gd"
 
-export(Array, GameResources.RESOURCE_TYPE) var RequirementType
-export(Array, int) var RequirementAmount
+@export var RequirementType # (Array, GameResources.RESOURCE_TYPE)
+@export var RequirementAmount # (Array, int)
 var MaxAmount = 10
 var CurrentAmount = 1
 var bHasPurchased = true
@@ -12,7 +12,7 @@ signal OnTavernUnavailable
 func _ready():
 	RequirementType.append(0)
 	RequirementAmount.append(1)
-	var _OnDayUpdate = GameClock.connect("OnDayUpdate", self, "OnDayUpdate")
+	var _OnDayUpdate = GameClock.connect("OnDayUpdate", Callable(self, "OnDayUpdate"))
 	bHasPurchased = false
 
 func OnDelete():

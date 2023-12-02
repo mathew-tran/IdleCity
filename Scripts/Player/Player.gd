@@ -5,7 +5,7 @@ var ZoomSpeed = 10
 var MaxZoom = 1.6
 var MinZoom = .5
 
-onready var Highlight = $Sprite
+@onready var Highlight = $Sprite2D
 
 var BuildingClass = preload("res://Prefab/Buildings/Factories/Factory.tscn")
 var ClassInstance = null
@@ -26,7 +26,7 @@ signal OnPlayerModeChange(bIsBuildMode)
 func _ready():
 	SetBuildingClass(BuildingClass, null)
 	Helper.ShowBuildTileOutline(true)
-	Finder.GetMenuUI().connect("tab_changed", self, "_on_TabContainer_tab_changed")
+	Finder.GetMenuUI().connect("tab_changed", Callable(self, "_on_TabContainer_tab_changed"))
 
 func SetBuildingClass(newclass, purchaseButton):
 	BuildingClass = newclass
@@ -34,8 +34,8 @@ func SetBuildingClass(newclass, purchaseButton):
 	PurchaseButton = purchaseButton
 	if ClassInstance:
 		ClassInstance.queue_free()
-	ClassInstance = BuildingClass.instance()	
-	$Sprite/GhostImage.texture = ClassInstance.texture
+	ClassInstance = BuildingClass.instantiate()	
+	$Sprite2D/GhostImage.texture = ClassInstance.texture
 	ClassInstance.Setup()
 	
 func _process(delta):
@@ -92,17 +92,17 @@ func ProcessBuildMode(delta):
 	GameClock.Pause()
 	Helper.ShowBuildTileOutline(true)
 	MoveGhost(delta)
-	$Sprite.visible = true
+	$Sprite2D.visible = true
 	var Tilemap = Finder.GetBuildTiles()
 	var TargetPosition = get_global_mouse_position() - offset
 			
-	var tile = Tilemap.world_to_map(TargetPosition)
+	var tile = Tilemap.local_to_map(TargetPosition)
 	
 	if Input.is_action_just_pressed("left_click"):	
 		if CanPurchase() and CanPlace():
 			if Tilemap.get_cell(tile.x, tile.y) != Tilemap.INVALID_CELL:
 				if Helper.IsValidSpawnLocation(ClassInstance.GetCachedSpawnArea(), tile):
-					var newInstance = BuildingClass.instance()
+					var newInstance = BuildingClass.instantiate()
 					newInstance.Setup()
 					Finder.GetBuildings().add_child(newInstance)				
 					newInstance.position = Finder.GetBuildTiles().map_to_world(tile, true)
@@ -117,9 +117,9 @@ func ProcessBuildMode(delta):
 			
 
 	if bOnTile and null == Helper.GetBuildingOnTile(tile) and Helper.IsValidSpawnLocation(ClassInstance.GetCachedSpawnArea(), tile) and CanPurchase():
-		$Sprite/GhostImage.modulate = "5500ffc9"
+		$Sprite2D/GhostImage.modulate = "5500ffc9"
 	else:
-		$Sprite/GhostImage.modulate = "55f70074"
+		$Sprite2D/GhostImage.modulate = "55f70074"
 
 func CanPlace():
 	return get_local_mouse_position().x > -200
@@ -128,20 +128,20 @@ func ProcessMenuMode(_delta):
 	if Helper.IsPopupVisible() == false:		
 		GameClock.Resume()
 	
-	$Sprite.visible = false
+	$Sprite2D.visible = false
 	Helper.ShowBuildTileOutline(false)
 	
 	var Tilemap = Finder.GetBuildTiles()
 	var TargetPosition = get_global_mouse_position() - offset
-	var tile = Tilemap.world_to_map(TargetPosition)
+	var tile = Tilemap.local_to_map(TargetPosition)
 	var building = Helper.GetBuildingOnTile(tile)
 	
 	InputManager.Hovered(building)
 
 func MoveGhost(_delta):	
 	var TargetPosition = get_global_mouse_position() - offset
-	var tile = Finder.GetBuildTiles().world_to_map(TargetPosition)
-	$Sprite.global_position = Finder.GetBuildTiles().map_to_world(tile, true)
+	var tile = Finder.GetBuildTiles().local_to_map(TargetPosition)
+	$Sprite2D.global_position = Finder.GetBuildTiles().map_to_world(tile, true)
 	var Tilemap = Finder.GetBuildTiles()
 	if Tilemap.get_cell(tile.x, tile.y) == Tilemap.INVALID_CELL:
 		bOnTile = false

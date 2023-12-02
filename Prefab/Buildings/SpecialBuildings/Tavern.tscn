@@ -1,12 +1,12 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Art/Buildings/SpecialBuildings/Tavern.png" type="Texture" id=1]
+[ext_resource path="res://Art/Buildings/SpecialBuildings/Tavern.png" type="Texture2D" id=1]
 [ext_resource path="res://Scripts/Building/Special/Tavern.gd" type="Script" id=2]
 [ext_resource path="res://Prefab/Particles/ActiveHouseParticle.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 
-[node name="Tavern" type="Sprite" groups=["House"]]
+[node name="Tavern" type="Sprite2D" groups=["House"]]
 position = Vector2( 448, 87 )
 texture = ExtResource( 1 )
 centered = false
@@ -30,7 +30,7 @@ shape = SubResource( 1 )
 
 [node name="Button" type="Button" parent="."]
 modulate = Color( 1, 1, 1, 0 )
-margin_right = 62.0
-margin_bottom = 64.0
+offset_right = 62.0
+offset_bottom = 64.0
 
 [connection signal="button_down" from="Button" to="." method="_on_Button_button_down"]

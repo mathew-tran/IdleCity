@@ -1,13 +1,13 @@
 extends "res://Scripts/UI/Buttons/PurchaseButton.gd"
 
 
-export var BuildingClass = preload("res://Prefab/Buildings/Factories/Factory.tscn")
+@export var BuildingClass = preload("res://Prefab/Buildings/Factories/Factory.tscn")
 	
 func _ready():
 	Setup()
 	
 func Setup():
-	var instance = BuildingClass.instance()
+	var instance = BuildingClass.instantiate()
 	$Name.text = instance.BuildingName
 	instance.queue_free()
 	

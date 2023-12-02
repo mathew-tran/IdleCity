@@ -1,19 +1,19 @@
 extends Control
 
 func _ready():
-	var _OnResearchGained = ResearchManager.connect("OnResearchGained", self, "OnResearchGained")
+	var _OnResearchGained = ResearchManager.connect("OnResearchGained", Callable(self, "OnResearchGained"))
 	UpdateUI()
 				
 func OnResearchGained():
 	var popup = Finder.GetContentPopup()
-	yield(get_tree().create_timer(.2), "timeout")
+	await get_tree().create_timer(.2).timeout
 	Finder.GetPlayer().PopMode()
 	Helper.AddPopup(popup.GetTitle(), popup.GetDescription(), popup.GetContentClass())
 	
 	
 func UpdateUI():
 	if ResearchManager.IsCategoryUnlocked(GameResources.CATEGORY_TYPE.BOTANY):
-		var instance = load(ResearchManager.ResearchMenus["BOTANY"]).instance()
+		var instance = load(ResearchManager.ResearchMenus["BOTANY"]).instantiate()
 		var bCanSpawn = true
 		for child in $TabContainer.get_children():
 			if child.name == instance.name:
@@ -22,7 +22,7 @@ func UpdateUI():
 		if bCanSpawn:
 			$TabContainer.add_child(instance)
 	visible = false
-	yield(get_tree().create_timer(.1), "timeout")
+	await get_tree().create_timer(.1).timeout
 	$TabContainer.current_tab = ResearchManager.GetLastTab()
 	visible = true
 	for tab in $TabContainer.get_children():

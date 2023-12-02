@@ -17,7 +17,7 @@ func _ready():
 func OnLoadComplete():
 	emit_signal("OnResearchGained")
 	for button in UnlockedButtons:
-		var unlocked = load(UnlockedButtons[button]["filename"]).instance()
+		var unlocked = load(UnlockedButtons[button]["filename"]).instantiate()
 		unlocked.Load((UnlockedButtons[button]["data"]))
 		unlocked.RunUnlockFunction()
 	
@@ -54,12 +54,12 @@ func CacheUnlockedButton(button):
 	if UnlockedButtons.has(button.name):
 		return
 		
-	var time = OS.get_datetime()
+	var time = Time.get_datetime_dict_from_system()
 	var display_string : String = "%02d/%02d/%02d %02d:%02d:%02d" % [time.year, time.month, time.day, time.hour, time.minute, time.second];
 	UnlockedButtons[button.name] = {
 		"type" : "upgrade",
 		"time" : display_string,
-		"filename" : button.get_filename(),
+		"filename" : button.get_scene_file_path(),
 		"data" : button.Save()
 		}
 

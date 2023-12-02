@@ -1,6 +1,6 @@
 extends "res://Scripts/UI/Buttons/UnlockableButton.gd"
 
-export (GameResources.CATEGORY_TYPE) var CategoryToUnlock
+@export (GameResources.CATEGORY_TYPE) var CategoryToUnlock
 
 func RunUnlockFunction():
 	ResearchManager.IncrementUnlockLevel(CategoryToUnlock)
