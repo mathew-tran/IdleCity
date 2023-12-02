@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/Buttons/ResetButton.gd" id="5"]
 [ext_resource type="Script" path="res://Scripts/Environment/LevelNavigator.gd" id="6"]
 [ext_resource type="Texture2D" uid="uid://muf4k5ch7p4v" path="res://Art/Tiles/Water.png" id="7"]
-[ext_resource type="PackedScene" path="res://Prefab/UI/MenuUI.tscn" id="8"]
+[ext_resource type="PackedScene" uid="uid://our2ymq12s7u" path="res://Prefab/UI/MenuUI.tscn" id="8"]
 [ext_resource type="PackedScene" path="res://Prefab/UI/ContentPopup.tscn" id="9"]
 [ext_resource type="PackedScene" path="res://Prefab/UI/ClockUI.tscn" id="10"]
 [ext_resource type="Texture2D" uid="uid://dnpgwmt22ocj3" path="res://Art/WhitePixel.png" id="11"]
@@ -188,13 +188,17 @@ script = ExtResource("12")
 [node name="Clock" parent="CanvasLayer/CanvasLayer" instance=ExtResource("10")]
 light_mask = 0
 layout_mode = 0
-offset_left = 858.0
-offset_top = 8.0
-offset_right = 1024.0
-offset_bottom = 56.0
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = 977.0
+offset_top = 9.0
+offset_right = 1143.0
+offset_bottom = 57.0
 
 [node name="MenuUI" parent="CanvasLayer/CanvasLayer" groups=["MenuUI"] instance=ExtResource("8")]
 layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
 offset_left = 0.0
 offset_top = 0.0
 offset_right = 294.0
@@ -221,11 +225,18 @@ offset_right = 1024.0
 offset_bottom = 600.0
 
 [node name="Button" type="Button" parent="CanvasLayer/CanvasLayer"]
-layout_mode = 0
-offset_left = 886.0
-offset_top = 557.0
-offset_right = 1029.0
-offset_bottom = 600.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1099.0
+offset_top = 613.0
+offset_right = 1150.0
+offset_bottom = 644.0
+grow_horizontal = 0
+grow_vertical = 0
 text = "Reset"
 script = ExtResource("5")
 
