@@ -14,8 +14,7 @@ var PeepleClass = preload("res://Prefab/Peeple/Peeple.tscn")
 var PeepleNames = []
 
 func PopulateNames():
-	var file = File.new()
-	file.open("res://Content/names.txt", File.READ)
+	var file = FileAccess.open("res://Content/names.txt", FileAccess.READ)
 	var test_json_conv = JSON.new()
 	test_json_conv.parse(file.get_as_text())
 	var data = test_json_conv.get_data()

@@ -59,6 +59,7 @@ func IsValidSpawnLocation(spawnArea, location):
 	return true
 	
 func GetBuildingOnTile(tileLocation):
+	tileLocation = Vector2i(tileLocation)
 	var tiles = Finder.GetBuildings()
 	for tile in tiles.get_children():
 		for area in tile.CachedSpawnArea:

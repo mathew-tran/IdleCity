@@ -100,7 +100,7 @@ func ProcessBuildMode(delta):
 	
 	if Input.is_action_just_pressed("left_click"):	
 		if CanPurchase() and CanPlace():
-			if Tilemap.get_cell(tile.x, tile.y) != Tilemap.INVALID_CELL:
+			if Tilemap.get_cell_tile_data(0, tile) == null:
 				if Helper.IsValidSpawnLocation(ClassInstance.GetCachedSpawnArea(), tile):
 					var newInstance = BuildingClass.instantiate()
 					newInstance.Setup()
@@ -141,9 +141,9 @@ func ProcessMenuMode(_delta):
 func MoveGhost(_delta):	
 	var TargetPosition = get_global_mouse_position() - offset
 	var tile = Finder.GetBuildTiles().local_to_map(TargetPosition)
-	$Sprite2D.global_position = Finder.GetBuildTiles().map_to_world(tile, true)
+	$Sprite2D.global_position = Finder.GetBuildTiles().map_to_local(tile)
 	var Tilemap = Finder.GetBuildTiles()
-	if Tilemap.get_cell(tile.x, tile.y) == Tilemap.INVALID_CELL:
+	if Tilemap.get_cell_tile_data(0, tile) == null:
 		bOnTile = false
 	else:
 		bOnTile = true

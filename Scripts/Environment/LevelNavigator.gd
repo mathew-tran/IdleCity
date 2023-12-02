@@ -1,4 +1,4 @@
-extends Navigation2D
+extends Node2D
 
 
 signal OnNavigationLoaded

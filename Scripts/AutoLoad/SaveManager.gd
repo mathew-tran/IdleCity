@@ -25,8 +25,8 @@ func _process(_delta):
 
 		
 func Save():
-	var saveGame = File.new()
-	saveGame.open(SaveFilePath, File.WRITE)
+	
+	var saveGame = FileAccess.open(SaveFilePath, FileAccess.WRITE)
 	var saveNodes = get_tree().get_nodes_in_group(PersistTag)
 	for savedNode in saveNodes:
 		var nodeData = savedNode.call("Save")
@@ -37,9 +37,8 @@ func Save():
 	
 func Load():
 	emit_signal("OnLoad")
-	var saveGame = File.new()
-	if saveGame.file_exists(SaveFilePath):	
-		saveGame.open(SaveFilePath, File.READ)
+	if FileAccess.file_exists(SaveFilePath):	
+		var saveGame = FileAccess.open(SaveFilePath, FileAccess.READ)
 		while not saveGame.eof_reached():
 			var lineData = saveGame.get_line()
 			if lineData.is_empty():
@@ -60,8 +59,8 @@ func Load():
 	
 func Reset():
 	set_process(false)
-	var dir = DirAccess.new()
-	if dir.open(SaveFilePath) == OK:
+	var dir = DirAccess.open(SaveFilePath)
+	if  dir:
 		dir.remove(SaveFilePath)
 	emit_signal("OnDelete")
 	var _sceneReload = get_tree().reload_current_scene()

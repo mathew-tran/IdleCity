@@ -1,7 +1,7 @@
 extends Button
 
-@export var RequirementType # (Array, GameResources.RESOURCE_TYPE)
-@export var RequirementAmount # (Array, int)
+@export var RequirementType : Array[GameResources.RESOURCE_TYPE]
+@export var RequirementAmount : Array[int]
 
 @export var DescriptionTitle: String = "Title"
 @export var DescriptionText: String = "No description"

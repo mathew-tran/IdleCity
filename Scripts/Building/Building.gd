@@ -43,7 +43,7 @@ func GetSpawnArea():
 	var spawnHeight = int(texture.get_height() / 32.0)
 	for x in range(0, spawnWidth):
 		for y in range(0, spawnHeight):
-			area.append(Vector2(x,y))	
+			area.append(Vector2i(x,y))	
 	return area
 	
 func GetCachedSpawnArea():
@@ -71,7 +71,7 @@ func OnExit():
 func UpdateLevelNavigation():
 	if bIsBlockingNavigation:
 		for area in CachedSpawnArea:
-			Finder.GetBuildTiles().set_cell(area.x, area.y, 1)
+			Finder.GetBuildTiles().set_cell(0, area, 1)
 		
 	
 func Save():
@@ -105,7 +105,7 @@ func Enter(peeple):
 func Exit(peeple):
 	if PeepleInBuilding.has(peeple):
 		var index = PeepleInBuilding.find(peeple)
-		PeepleInBuilding.remove(index)
+		PeepleInBuilding.remove_at(index)
 	if PeepleInBuilding.size() == 0:
 		OnDeactivated()
 
@@ -135,4 +135,4 @@ func _exit_tree():
 	emit_signal("OnDestroyed")
 	if bIsBlockingNavigation:
 		for area in CachedSpawnArea:
-			Finder.GetBuildTiles().set_cell(area.x, area.y, 0)
+			Finder.GetBuildTiles().set_cell(0, area, 0)

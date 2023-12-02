@@ -3,7 +3,7 @@ extends "res://Scripts/UI/Buttons/PurchaseButton.gd"
 var bHasBeenPurchased = false
 
 @export var RequiredLevel = 0
-@export (GameResources.CATEGORY_TYPE) var Category = GameResources.CATEGORY_TYPE.GENERAL
+@export var Category = GameResources.CATEGORY_TYPE.GENERAL
 
 func PreSetup():
 	Description = $Panel/HBoxContainer/VBoxContainer/Description

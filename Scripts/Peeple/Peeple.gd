@@ -145,7 +145,7 @@ func AIWANDER():
 	var bIsPositive = randi() % 2
 	var newPosition = global_position
 	if bIsPositive:
-		 newPosition += GetRandomPosition()
+		newPosition += GetRandomPosition()
 	else:
 		newPosition -= GetRandomPosition()
 	SetTargetPosition(newPosition)

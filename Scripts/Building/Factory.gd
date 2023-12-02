@@ -1,6 +1,6 @@
 extends "res://Scripts/Building/Building.gd"
 
-@export var ResourceType  # (GameResources.RESOURCE_TYPE)
+@export var ResourceType  : GameResources.RESOURCE_TYPE
 
 func _ready():
 	$ActiveParticle.emitting = false
