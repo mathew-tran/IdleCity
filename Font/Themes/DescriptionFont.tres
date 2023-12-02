@@ -307,4 +307,4 @@ cache/0/14/0/kerning_overrides/14/0 = Vector2(0, 0)
 
 [resource]
 default_font = SubResource("1")
-default_font_size = 13
+default_font_size = 6

@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" path="res://Prefab/UI/ClockUI.tscn" id="10"]
 [ext_resource type="Texture2D" uid="uid://dnpgwmt22ocj3" path="res://Art/WhitePixel.png" id="11"]
 [ext_resource type="Script" path="res://Scripts/Environment/Lighting.gd" id="12"]
-[ext_resource type="PackedScene" path="res://Prefab/UI/PeepleUI.tscn" id="13"]
+[ext_resource type="PackedScene" uid="uid://c4a8wugy53o8b" path="res://Prefab/UI/PeepleUI.tscn" id="13"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_4huhu"]
 vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
