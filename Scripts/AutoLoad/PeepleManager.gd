@@ -67,7 +67,7 @@ func DeclareUnhoused(newPeeple):
 func DeclareHoused(currentPeeple):
 	if UnHousedPeeple.has(currentPeeple):
 		var index = UnHousedPeeple.find(currentPeeple)
-		UnHousedPeeple.remove(index)
+		UnHousedPeeple.remove_at(index)
 		emit_signal("OnPeepleHouseUpdate")
 
 func GetUnHousedPeepleAmount():
@@ -81,7 +81,7 @@ func DeclaredUnEmployed(newPeeple):
 func DeclareEmployed(currentPeeple):
 	if UnemployedPeeple.has(currentPeeple):
 		var index = UnemployedPeeple.find(currentPeeple)
-		UnemployedPeeple.remove(index)
+		UnemployedPeeple.remove_at(index)
 		emit_signal("OnPeepleEmploymentUpdate")
 
 func GetUnEmployedPeepleAmount():

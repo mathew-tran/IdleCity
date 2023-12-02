@@ -307,7 +307,7 @@ func MoveToTargetPosition(distance):
 			break
 		distance -= distanceToNext
 		startPosition = Paths[0]
-		Paths.remove(0)
+		Paths.remove_at(0)
 	
 	
 	if Paths.size() == 0:

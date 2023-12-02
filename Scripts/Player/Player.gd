@@ -100,12 +100,12 @@ func ProcessBuildMode(delta):
 	
 	if Input.is_action_just_pressed("left_click"):	
 		if CanPurchase() and CanPlace():
-			if Tilemap.get_cell_tile_data(0, tile) == null:
+			if Tilemap.get_cell_tile_data(0, tile) != null:
 				if Helper.IsValidSpawnLocation(ClassInstance.GetCachedSpawnArea(), tile):
 					var newInstance = BuildingClass.instantiate()
 					newInstance.Setup()
 					Finder.GetBuildings().add_child(newInstance)				
-					newInstance.position = Finder.GetBuildTiles().map_to_world(tile, true)
+					newInstance.position = Finder.GetBuildTiles().map_to_local(tile)
 					newInstance.AdjustSpawnArea(tile)
 					newInstance.UpdateLevelNavigation()				
 					PurchaseButton.Purchase()
