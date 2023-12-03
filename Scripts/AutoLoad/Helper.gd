@@ -22,10 +22,6 @@ func GetFormattedAmount(amount):
 		score = score.insert(i, ",")
 		i = i - 3
 	return score
-	
-func GenerateNavigationPath(currentPoint, targetPoint):
-	var navigation = get_tree().get_nodes_in_group("Navigation")[0]
-	return NavigationServer2D.map_get_path(navigation, currentPoint, targetPoint, false, 1)
 
 func AddPopup(contentTitle, contentDescription, newContent):
 	Finder.GetContentPopup().ShowPopup(contentTitle, contentDescription, newContent)

@@ -5,9 +5,6 @@ var bHasNewTarget = false
 var WorkPlace = null
 var House = null
 
-var Paths = []
-var PathIndex = 0
-var Progress = 0
 @export var Speed = 125
 
 var Happiness = 50
@@ -25,6 +22,7 @@ var colors = [Color(1.0, 1.0, 1.0, 1.0),
 var bProcessLostSubscription = false
 var PeepleName = ""
 var bHasBeenSet = false
+var SpeedDelta : float
 
 enum AI_STATES {
 	WANDER,
@@ -287,45 +285,31 @@ func SetTargetPosition(newTargetPosition):
 			
 	bHasNewTarget = true
 	TargetPosition = newTargetPosition
-	Paths = Helper.GenerateNavigationPath(position, newTargetPosition)
-	PathIndex = 0
-	if Paths.size() == 0:
-		bHasNewTarget = false
+	$NavigationAgent2D.target_position = newTargetPosition
 	
-func MoveToTargetPosition(distance):
-	var startPosition = global_position
-	for _i in range(Paths.size()):
-	#Progress += delta * (Speed + PeepleManager.SpeedBuff)
-		var distanceToNext = startPosition.distance_to(Paths[0])
-		if distance <= distanceToNext and distance >= 0.0:
-			global_position = startPosition.lerp(Paths[0], distance / distanceToNext)
-			break
-		elif distance < 0.0:
-			global_position = Paths[PathIndex]	
-			PathIndex += 1
-			set_process(false)
-			break
-		distance -= distanceToNext
-		startPosition = Paths[0]
-		Paths.remove_at(0)
+func MoveToTargetPosition():
+	if CheckWorkPlace() and GameClock.IsWorkTime():
+		if IsAtPosition(GetWorkPlacePosition()):
+			RunAI()
+			return
+	elif CheckHouse() and false == GameClock.IsWorkTime():
+		if IsAtPosition(GetHousePosition()):
+			RunAI()
+			return
 	
 	
-	if Paths.size() == 0:
-		bHasNewTarget = false
+func _physics_process(delta):
+	if $NavigationAgent2D.is_navigation_finished():
 		global_position = TargetPosition
-		if CheckWorkPlace() and GameClock.IsWorkTime():
-			if IsAtPosition(GetWorkPlacePosition()):
-				RunAI()
-				return
-		elif CheckHouse() and false == GameClock.IsWorkTime():
-			if IsAtPosition(GetHousePosition()):
-				RunAI()
-				return
-	
-	
+		return
+
+	SpeedDelta = Speed * delta
+	var nextPathPosition : Vector2 = $NavigationAgent2D.get_next_path_position()
+	var new_velocity: Vector2 = global_position.direction_to(nextPathPosition) * SpeedDelta
+	_on_navigation_agent_2d_velocity_computed(new_velocity)
+		
 func _process(delta):
-	if bHasNewTarget:
-		MoveToTargetPosition(delta * (Speed + PeepleManager.SpeedBuff))	
+	MoveToTargetPosition()	
 	
 func OnDayTimeExecute():
 	if CheckHouse():
@@ -351,3 +335,7 @@ func _on_Button_button_down():
 	print(GetPeepleName() + " get info!")
 	Helper.FocusCamera(self)
 	Helper.AddDescriptionPopup(self)
+
+
+func _on_navigation_agent_2d_velocity_computed(safe_velocity):
+	global_position = global_position.move_toward(global_position + safe_velocity, SpeedDelta)

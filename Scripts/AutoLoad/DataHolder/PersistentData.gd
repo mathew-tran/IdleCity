@@ -12,7 +12,7 @@ func OnLoadAuto(scriptName, data):
 	if Helper.GetScriptName(self) == scriptName:
 		Load(data)
 
-func Load(data):
+func Load(_data):
 	pass
 	
 func OnLoadComplete():

@@ -30,7 +30,7 @@ func Save():
 	var saveNodes = get_tree().get_nodes_in_group(PersistTag)
 	for savedNode in saveNodes:
 		var nodeData = savedNode.call("Save")
-		saveGame.store_line(JSON.new().stringify(nodeData))
+		saveGame.store_line(JSON.stringify(nodeData))
 	saveGame.close()
 	emit_signal("OnSave")
 	Helper.SendLogMessageToPlayer("Game Saved.")
