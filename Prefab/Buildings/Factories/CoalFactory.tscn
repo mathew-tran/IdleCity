@@ -14,5 +14,5 @@ RequirementAmount = Array[int]([20])
 Description = "Generates Coal"
 HappinessAmount = -2
 
-[node name="ActiveParticle" parent="." index="1"]
+[node name="ActiveParticle" parent="." index="0"]
 position = Vector2(30, 0)

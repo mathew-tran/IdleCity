@@ -1,8 +1,17 @@
 extends Panel
 
 var trackedPeeple = null
-var bIsFollowing = false
-var bIsActive = false
+var bIsFollowing : bool = false
+var bIsActive : bool = false
+
+@onready var HappinessBar : ProgressBar = $RightSide/ProgressBar
+@onready var PeepleNameLabel : Label = $LeftSide/PeepleName
+@onready var PeepleTexture : Sprite2D = $LeftSide/PeepleFace
+
+@onready var FollowButton : Button = $LeftSide/FollowButton
+
+@onready var WorkControl = $RightSide/WorkControl
+@onready var HouseControl = $RightSide/HouseControl
 
 func _ready():
 	Finder.GetPlayer().connect("OnPlayerModeChange", Callable(self, "PlayerModeChange"))
@@ -28,9 +37,11 @@ func Show(peeple):
 	trackedPeeple.connect("OnJobUpdate", Callable(self, "JobUpdate"))
 	trackedPeeple.connect("OnHouseUpdate", Callable(self, "HouseUpdate"))
 	
-	$LeftSide/PeepleName.text = peeple.GetPeepleName()		
-	$LeftSide/PeepleFace.texture = peeple.GetTexture()
-	$LeftSide/PeepleFace.modulate = peeple.GetModulation()
+	HouseControl.connect("HouseFollowClicked", Callable(self, "HouseFollowClicked"))
+	WorkControl.connect("JobFollowClicked", Callable(self, "JobFollowClicked"))
+	PeepleNameLabel.text = peeple.GetPeepleName()		
+	PeepleTexture.texture = peeple.GetTexture()
+	PeepleTexture.modulate = peeple.GetModulation()
 	
 	UpdateUI()
 	JobUpdate()
@@ -38,37 +49,29 @@ func Show(peeple):
 	visible = true
 
 func UpdateUI():
-	$RightSide/ProgressBar.value = trackedPeeple.GetHappiness()
+	HappinessBar.value = trackedPeeple.GetHappiness()
 	var gradeValue = GameResources.GetHappinessGrading(trackedPeeple.GetHappiness())
 	if GameResources.GRADE.A == gradeValue:
-		$RightSide/ProgressBar.modulate = Color.GREEN
+		HappinessBar.modulate = Color.GREEN
 	if GameResources.GRADE.B == gradeValue:
-		$RightSide/ProgressBar.modulate = Color.GREEN_YELLOW
+		HappinessBar.modulate = Color.GREEN_YELLOW
 	if GameResources.GRADE.C == gradeValue:
-		$RightSide/ProgressBar.modulate = Color.YELLOW
+		HappinessBar.modulate = Color.YELLOW
 	if GameResources.GRADE.D == gradeValue:
-		$RightSide/ProgressBar.modulate = Color.RED
+		HappinessBar.modulate = Color.RED
 		
 	if bIsFollowing:
-		$LeftSide/Button.text = "Unfollow"
+		FollowButton.text = "Unfollow"
 	else:
-		$LeftSide/Button.text = "Follow"
+		FollowButton.text = "Follow"
 
 func JobUpdate():
 	if trackedPeeple:
-		$RightSide/WorkControl/Button.visible = trackedPeeple.GetWork() != null
-		if trackedPeeple.GetWork():
-			$RightSide/WorkControl/WorkName.text = trackedPeeple.GetWork().name
-		else:
-			$RightSide/WorkControl/WorkName.text = "Unemployed"
-
+		WorkControl.Update(trackedPeeple)
+#
 func HouseUpdate():
 	if trackedPeeple:
-		$RightSide/HouseControl/Button.visible = trackedPeeple.GetHouse() != null
-		if trackedPeeple.GetHouse():
-			$RightSide/HouseControl/HouseName.text = trackedPeeple.GetHouse().name
-		else:
-			$RightSide/HouseControl/HouseName.text = "Homeless"
+		HouseControl.Update(trackedPeeple)
 	
 func StopFollowing():
 	if bIsFollowing:
@@ -91,14 +94,14 @@ func _on_Button_button_up():
 			
 	UpdateUI()
 
-func _on_WorkButton_button_up():
+func JobFollowClicked():
 	if trackedPeeple:
 		if trackedPeeple.GetWork():
 			Helper.FocusCamera(trackedPeeple.GetWork())
 			StopFollowing()
 
 
-func _on_HouseButton_button_up():
+func HouseFollowClicked():
 		if trackedPeeple:
 			if trackedPeeple.GetHouse():
 				Helper.FocusCamera(trackedPeeple.GetHouse())

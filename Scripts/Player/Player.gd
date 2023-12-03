@@ -47,13 +47,13 @@ func _process(delta):
 		
 	if Input.is_action_just_released("ScrollForward"):
 		zoom += Vector2(delta * ZoomSpeed, delta * ZoomSpeed)
-		if zoom.x < MinZoom:
-			zoom = Vector2(MinZoom, MinZoom)
+		if zoom.x > MaxZoom:
+			zoom = Vector2(MaxZoom, MaxZoom)
 
 	if Input.is_action_just_released("ScrollBackward"):
 		zoom -= Vector2(delta * ZoomSpeed, delta * ZoomSpeed)
-		if zoom.x > MaxZoom:
-			zoom = Vector2(MaxZoom, MaxZoom)
+		if zoom.x < MinZoom:
+			zoom = Vector2(MinZoom, MinZoom)
 	if FollowTarget:
 		global_position = FollowTarget.position
 		return

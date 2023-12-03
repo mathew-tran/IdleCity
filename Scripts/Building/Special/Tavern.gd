@@ -2,7 +2,6 @@ extends "res://Scripts/Building/Building.gd"
 
 var Content = preload("res://Prefab/UI/TavernUI.tscn")
 
-
 func _ready():
 	super()
 	var _OnAvailable = TavernManager.connect("OnTavernAvailable", Callable(self, "Show"))

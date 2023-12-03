@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpsyblv43xw8q"]
+
+[ext_resource type="Script" path="res://Scripts/UI/Menus/BuildMenuUI.gd" id="1_gqby8"]
+
+[node name="Build" type="Panel" groups=["BuildMenuUI"]]
+light_mask = 0
+script = ExtResource("1_gqby8")
+
+[node name="SubBuildMenu" type="TabContainer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_right = 2.0
+tab_focus_mode = 0
+
+[node name="Housing" type="Panel" parent="SubBuildMenu"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubBuildMenu/Housing"]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 210.0
+offset_bottom = 538.0
+
+[node name="Factories" type="Panel" parent="SubBuildMenu"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubBuildMenu/Factories"]
+light_mask = 0
+layout_mode = 0
+offset_left = 5.0
+offset_right = 217.0
+offset_bottom = 563.0
+
+[node name="Special" type="Panel" parent="SubBuildMenu"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubBuildMenu/Special"]
+light_mask = 0
+layout_mode = 0
+offset_left = 5.0
+offset_right = 217.0
+offset_bottom = 563.0
