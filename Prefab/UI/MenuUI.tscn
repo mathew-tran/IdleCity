@@ -16,6 +16,7 @@ offset_left = -515.0
 offset_top = -299.0
 offset_right = -221.0
 offset_bottom = 301.0
+tab_focus_mode = 0
 script = ExtResource("6")
 
 [node name="Info" type="Panel" parent="."]
