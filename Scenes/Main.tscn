@@ -1,17 +1,11 @@
-[gd_scene load_steps=26 format=3 uid="uid://bbfud0yccmq8m"]
+[gd_scene load_steps=20 format=3 uid="uid://bbfud0yccmq8m"]
 
 [ext_resource type="Texture2D" uid="uid://clblx6k8l11ea" path="res://Art/UI/GridOutline.png" id="1"]
+[ext_resource type="PackedScene" uid="uid://h7k00cd651nj" path="res://Prefab/UI/UIMaster.tscn" id="1_qg2o7"]
 [ext_resource type="Texture2D" uid="uid://5rs5ukgt8oss" path="res://Art/Tiles/Grass.png" id="2"]
 [ext_resource type="PackedScene" uid="uid://foxlaxf1cs8k" path="res://Prefab/Player.tscn" id="3"]
 [ext_resource type="Script" path="res://Scripts/UI/BuildTileOutline.gd" id="4"]
-[ext_resource type="Script" path="res://Scripts/UI/Buttons/ResetButton.gd" id="5"]
 [ext_resource type="Texture2D" uid="uid://muf4k5ch7p4v" path="res://Art/Tiles/Water.png" id="7"]
-[ext_resource type="PackedScene" uid="uid://our2ymq12s7u" path="res://Prefab/UI/MenuUI.tscn" id="8"]
-[ext_resource type="PackedScene" uid="uid://bjtgjvs7p60mj" path="res://Prefab/UI/ContentPopup.tscn" id="9"]
-[ext_resource type="PackedScene" path="res://Prefab/UI/ClockUI.tscn" id="10"]
-[ext_resource type="Texture2D" uid="uid://dnpgwmt22ocj3" path="res://Art/WhitePixel.png" id="11"]
-[ext_resource type="Script" path="res://Scripts/Environment/Lighting.gd" id="12"]
-[ext_resource type="PackedScene" uid="uid://c4a8wugy53o8b" path="res://Prefab/UI/PeepleUI.tscn" id="13"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_4huhu"]
 vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
@@ -166,88 +160,7 @@ sources/0 = SubResource("TileSetAtlasSource_7uw13")
 
 [node name="Node2D" type="Node2D"]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-process_mode = 3
-
-[node name="Lighting" type="Sprite2D" parent="CanvasLayer"]
-modulate = Color(0.278431, 0, 0.180392, 0.72549)
-show_behind_parent = true
-scale = Vector2(32.0938, 18.75)
-texture = ExtResource("11")
-centered = false
-region_enabled = true
-region_rect = Rect2(0, 0, 1152, 648)
-script = ExtResource("12")
-
-[node name="Clock" parent="CanvasLayer" instance=ExtResource("10")]
-light_mask = 0
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 977.0
-offset_top = 9.0
-offset_right = 1143.0
-offset_bottom = 57.0
-
-[node name="MenuUI" parent="CanvasLayer" groups=["MenuUI"] instance=ExtResource("8")]
-anchors_preset = 0
-anchor_right = 0.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 294.0
-offset_bottom = 600.0
-
-[node name="PeepleUI" parent="CanvasLayer" groups=["DescriptionUI"] instance=ExtResource("13")]
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -814.0
-offset_top = 108.0
-offset_right = -610.0
-offset_bottom = 193.0
-scale = Vector2(2, 2)
-
-[node name="MessageContainer" type="VBoxContainer" parent="CanvasLayer" groups=["MessageContainer"]]
-process_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -212.0
-offset_top = -94.0
-offset_right = 212.0
-offset_bottom = 94.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="ContentPopup" parent="CanvasLayer" instance=ExtResource("9")]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Button" type="Button" parent="CanvasLayer"]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -53.0
-offset_top = -35.0
-offset_right = -2.0
-offset_bottom = -4.0
-grow_horizontal = 0
-grow_vertical = 0
-text = "Reset"
-script = ExtResource("5")
+[node name="CanvasLayer" parent="." instance=ExtResource("1_qg2o7")]
 
 [node name="BuildTiles" type="TileMap" parent="." groups=["BuildTiles", "Navigation"]]
 tile_set = SubResource("5")
@@ -266,5 +179,3 @@ script = ExtResource("4")
 z_as_relative = false
 
 [node name="Player" parent="." instance=ExtResource("3")]
-
-[connection signal="button_down" from="CanvasLayer/Button" to="CanvasLayer/Button" method="_on_Button_button_down"]
