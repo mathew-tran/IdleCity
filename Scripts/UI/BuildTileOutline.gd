@@ -15,5 +15,5 @@ func Hide():
 func _ready():
 	Hide()
 	var tiles = Finder.GetBuildTiles()
-	for tile in tiles.get_used_cells():
-		set_cell(tile.x, tile.y, 0)
+	for tile in tiles.get_used_cells(0):
+		set_cell(0, tile, 0)

@@ -5,7 +5,7 @@ var bIsFollowing = false
 var bIsActive = false
 
 func _ready():
-	Finder.GetPlayer().connect("OnPlayerModeChange", self, "PlayerModeChange")
+	Finder.GetPlayer().connect("OnPlayerModeChange", Callable(self, "PlayerModeChange"))
 	visible = false
 	
 func PlayerModeChange(bIsBuildMode):
@@ -20,13 +20,13 @@ func Show(peeple):
 	bIsActive = true
 	StopFollowing()
 	if trackedPeeple:
-		trackedPeeple.disconnect("OnHappinessUpdate", self, "UpdateUI")
-		trackedPeeple.disconnect("OnJobUpdate", self, "JobUpdate")
-		trackedPeeple.disconnect("OnHouseUpdate", self, "HouseUpdate")
+		trackedPeeple.disconnect("OnHappinessUpdate", Callable(self, "UpdateUI"))
+		trackedPeeple.disconnect("OnJobUpdate", Callable(self, "JobUpdate"))
+		trackedPeeple.disconnect("OnHouseUpdate", Callable(self, "HouseUpdate"))
 	trackedPeeple = peeple
-	trackedPeeple.connect("OnHappinessUpdate", self, "UpdateUI")
-	trackedPeeple.connect("OnJobUpdate", self, "JobUpdate")
-	trackedPeeple.connect("OnHouseUpdate", self, "HouseUpdate")
+	trackedPeeple.connect("OnHappinessUpdate", Callable(self, "UpdateUI"))
+	trackedPeeple.connect("OnJobUpdate", Callable(self, "JobUpdate"))
+	trackedPeeple.connect("OnHouseUpdate", Callable(self, "HouseUpdate"))
 	
 	$LeftSide/PeepleName.text = peeple.GetPeepleName()		
 	$LeftSide/PeepleFace.texture = peeple.GetTexture()
@@ -41,13 +41,13 @@ func UpdateUI():
 	$RightSide/ProgressBar.value = trackedPeeple.GetHappiness()
 	var gradeValue = GameResources.GetHappinessGrading(trackedPeeple.GetHappiness())
 	if GameResources.GRADE.A == gradeValue:
-		$RightSide/ProgressBar.modulate = Color.green
+		$RightSide/ProgressBar.modulate = Color.GREEN
 	if GameResources.GRADE.B == gradeValue:
-		$RightSide/ProgressBar.modulate = Color.greenyellow
+		$RightSide/ProgressBar.modulate = Color.GREEN_YELLOW
 	if GameResources.GRADE.C == gradeValue:
-		$RightSide/ProgressBar.modulate = Color.yellow
+		$RightSide/ProgressBar.modulate = Color.YELLOW
 	if GameResources.GRADE.D == gradeValue:
-		$RightSide/ProgressBar.modulate = Color.red
+		$RightSide/ProgressBar.modulate = Color.RED
 		
 	if bIsFollowing:
 		$LeftSide/Button.text = "Unfollow"

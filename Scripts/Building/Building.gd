@@ -1,34 +1,34 @@
-extends Sprite
+extends Sprite2D
 
 
-export var BuildingLimit = 1
-export var bIsBlockingNavigation = false
+@export var BuildingLimit = 1
+@export var bIsBlockingNavigation = false
 var SubscribedPeeple = []
 var SpawnArea = [Vector2.ZERO]
 
 var PeepleInBuilding = []
 
-export var BuildingName = "ThisBuildingName"
+@export var BuildingName = "ThisBuildingName"
 
-export (GameResources.BUILDING_TYPE) var BuildingType = GameResources.BUILDING_TYPE.FACTORY
+@export var BuildingType : GameResources.BUILDING_TYPE
 
-export(Array, GameResources.RESOURCE_TYPE) var RequirementType
-export(Array, int) var RequirementAmount
-export(String) var Description = "No description"
+@export var RequirementType : Array[GameResources.RESOURCE_TYPE]
+@export var RequirementAmount : Array[int]
+@export var Description: String = "No description"
 
-export(int) var HappinessAmount = 3
+@export var HappinessAmount: int = 3
 
-export var bShowClickable = false
+@export var bShowClickable = false
 
 var CachedSpawnArea = []
 signal OnDestroyed
 
 func _ready():
 	SaveManager.AddToPersistGroup(self)
-	var _OnHalfHourUpdate = GameClock.connect("OnHalfHourUpdate", self, "HalfHourUpdate")
+	var _OnHalfHourUpdate = GameClock.connect("OnHalfHourUpdate", Callable(self, "HalfHourUpdate"))
 
 func Setup():
-	if CachedSpawnArea.empty():
+	if CachedSpawnArea.is_empty():
 		CachedSpawnArea = GetSpawnArea()
 
 func AdjustSpawnArea(tileDisplacement):
@@ -43,7 +43,7 @@ func GetSpawnArea():
 	var spawnHeight = int(texture.get_height() / 32.0)
 	for x in range(0, spawnWidth):
 		for y in range(0, spawnHeight):
-			area.append(Vector2(x,y))	
+			area.append(Vector2i(x,y))	
 	return area
 	
 func GetCachedSpawnArea():
@@ -71,14 +71,14 @@ func OnExit():
 func UpdateLevelNavigation():
 	if bIsBlockingNavigation:
 		for area in CachedSpawnArea:
-			Finder.GetBuildTiles().set_cell(area.x, area.y, 1)
+			Finder.GetBuildTiles().set_cell(0, area, 1)
 		
 	
 func Save():
 	var tile = (CachedSpawnArea[0] - GetSpawnArea()[0])
 	var dictionary = {
 		"type" : "object",
-		"filename" : get_filename(),
+		"filename" : get_scene_file_path(),
 		"pos_x" : position.x,
 		"pos_y" : position.y,	
 		"tile_x" : tile.x,
@@ -105,7 +105,7 @@ func Enter(peeple):
 func Exit(peeple):
 	if PeepleInBuilding.has(peeple):
 		var index = PeepleInBuilding.find(peeple)
-		PeepleInBuilding.remove(index)
+		PeepleInBuilding.remove_at(index)
 	if PeepleInBuilding.size() == 0:
 		OnDeactivated()
 
@@ -135,4 +135,4 @@ func _exit_tree():
 	emit_signal("OnDestroyed")
 	if bIsBlockingNavigation:
 		for area in CachedSpawnArea:
-			Finder.GetBuildTiles().set_cell(area.x, area.y, 0)
+			Finder.GetBuildTiles().set_cell(0, area, 0)

@@ -6,5 +6,5 @@ func RunUnlockFunction():
 func Save():
 	return {}
 	
-func Load(data):
+func Load(_data):
 	return {}

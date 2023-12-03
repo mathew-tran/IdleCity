@@ -4,8 +4,9 @@ var Content = preload("res://Prefab/UI/TavernUI.tscn")
 
 
 func _ready():
-	var _OnAvailable = TavernManager.connect("OnTavernAvailable", self, "Show")
-	var _OnUnavailable = TavernManager.connect("OnTavernUnavailable", self, "Hide")
+	super()
+	var _OnAvailable = TavernManager.connect("OnTavernAvailable", Callable(self, "Show"))
+	var _OnUnavailable = TavernManager.connect("OnTavernUnavailable", Callable(self, "Hide"))
 	Hide()
 	
 func Show():

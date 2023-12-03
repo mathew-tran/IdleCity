@@ -16,8 +16,8 @@ func AddToPersistGroup(node):
 	
 func _ready():
 	
-	var _OnDayUpdate = GameClock.connect("OnDayUpdate", self, "Save")
-	yield(get_tree().create_timer(0.2), "timeout")
+	var _OnDayUpdate = GameClock.connect("OnDayUpdate", Callable(self, "Save"))
+	await get_tree().create_timer(0.2).timeout
 	Load()
 
 func _process(_delta):
@@ -25,29 +25,30 @@ func _process(_delta):
 
 		
 func Save():
-	var saveGame = File.new()
-	saveGame.open(SaveFilePath, File.WRITE)
+	
+	var saveGame = FileAccess.open(SaveFilePath, FileAccess.WRITE)
 	var saveNodes = get_tree().get_nodes_in_group(PersistTag)
 	for savedNode in saveNodes:
 		var nodeData = savedNode.call("Save")
-		saveGame.store_line(to_json(nodeData))
+		saveGame.store_line(JSON.stringify(nodeData))
 	saveGame.close()
 	emit_signal("OnSave")
 	Helper.SendLogMessageToPlayer("Game Saved.")
 	
 func Load():
 	emit_signal("OnLoad")
-	var saveGame = File.new()
-	if saveGame.file_exists(SaveFilePath):	
-		saveGame.open(SaveFilePath, File.READ)
+	if FileAccess.file_exists(SaveFilePath):	
+		var saveGame = FileAccess.open(SaveFilePath, FileAccess.READ)
 		while not saveGame.eof_reached():
 			var lineData = saveGame.get_line()
-			if lineData.empty():
+			if lineData.is_empty():
 				continue
-			var currentLine = parse_json(lineData)
+			var test_json_conv = JSON.new()
+			test_json_conv.parse(lineData)
+			var currentLine = test_json_conv.get_data()
 			if currentLine:
 				if currentLine["type"] == "object":
-					var newObject = load(currentLine["filename"]).instance()
+					var newObject = load(currentLine["filename"]).instantiate()
 					newObject.Load(currentLine)
 				elif currentLine["type"] == "auto":
 					# Use expressions: https://docs.godotengine.org/en/stable/tutorials/scripting/evaluating_expressions.html
@@ -58,8 +59,8 @@ func Load():
 	
 func Reset():
 	set_process(false)
-	var dir = Directory.new()
-	if dir.open(SaveFilePath) == OK:
+	var dir = DirAccess.open(SaveFilePath)
+	if  dir:
 		dir.remove(SaveFilePath)
 	emit_signal("OnDelete")
 	var _sceneReload = get_tree().reload_current_scene()

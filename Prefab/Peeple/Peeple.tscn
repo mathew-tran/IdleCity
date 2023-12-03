@@ -1,56 +1,62 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=8 format=3 uid="uid://bxkrj20oxn7l2"]
 
-[ext_resource path="res://Scripts/Peeple/Peeple.gd" type="Script" id=1]
-[ext_resource path="res://Art/Minion/MinionFace.png" type="Texture" id=2]
-[ext_resource path="res://Art/Emotes/Angry.png" type="Texture" id=3]
-[ext_resource path="res://Art/Minion/Torso.png" type="Texture" id=5]
+[ext_resource type="Script" path="res://Scripts/Peeple/Peeple.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://by3oydj7e22tx" path="res://Art/Minion/MinionFace.png" id="2_2oka4"]
+[ext_resource type="Texture2D" uid="uid://dlbymvfmevv3n" path="res://Art/Minion/Torso.png" id="3_wo58c"]
 
-[sub_resource type="Gradient" id=1]
-colors = PoolColorArray( 1, 1, 1, 0.262745, 1, 1, 1, 0 )
+[sub_resource type="Gradient" id="1"]
+colors = PackedColorArray(1, 1, 1, 0.262745, 1, 1, 1, 0)
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id="2"]
 resource_name = "Glowing"
-loop = true
+loop_mode = 1
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id="3"]
 length = 0.001
 
-[node name="Peeple" type="Sprite" groups=["Peeple"]]
-position = Vector2( 52, 66 )
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sptuk"]
+_data = {
+"Glowing": SubResource("2"),
+"RESET": SubResource("3")
+}
+
+[node name="Peeple" type="Sprite2D" groups=["Peeple"]]
 z_index = 1
-script = ExtResource( 1 )
+position = Vector2(52, 66)
+script = ExtResource("1")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 show_behind_parent = true
 z_as_relative = false
 amount = 50
 lifetime = 0.5
-local_coords = false
-gravity = Vector2( 0, 0 )
-scale_amount = 14.0
-color_ramp = SubResource( 1 )
+gravity = Vector2(0, 0)
+color_ramp = SubResource("1")
 
-[node name="Emote Sprite" type="Sprite" parent="."]
-position = Vector2( 0, -23 )
-scale = Vector2( 0.4, 0.4 )
-texture = ExtResource( 3 )
+[node name="Emote Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -23)
+scale = Vector2(0.4, 0.4)
 
 [node name="Button" type="Button" parent="."]
-modulate = Color( 1, 1, 1, 0.0627451 )
-margin_left = -15.0
-margin_top = -15.0
-margin_right = 16.0
-margin_bottom = 15.0
+modulate = Color(1, 1, 1, 0.0627451)
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 16.0
+offset_bottom = 15.0
 button_mask = 2
 
-[node name="Face" type="Sprite" parent="."]
-texture = ExtResource( 2 )
+[node name="Face" type="Sprite2D" parent="."]
+texture = ExtResource("2_2oka4")
 
-[node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 5 )
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_wo58c")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/Glowing = SubResource( 2 )
-anims/RESET = SubResource( 3 )
+libraries = {
+"": SubResource("AnimationLibrary_sptuk")
+}
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 
 [connection signal="button_down" from="Button" to="." method="_on_Button_button_down"]
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]

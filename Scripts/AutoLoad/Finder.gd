@@ -22,10 +22,13 @@ func GetPeeples():
 	return get_tree().get_nodes_in_group("Peeple")
 	
 func GetPeepleGroup():
-	return get_tree().get_nodes_in_group("PeepleGroup")[0]
+	var result = get_tree().get_nodes_in_group("PeepleGroup")
+	if result:
+		return result[0]
+	return null
 	
 func GetCamera():
-	return get_tree().get_nodes_in_group("Camera")[0]
+	return get_tree().get_nodes_in_group("Camera3D")[0]
 	
 func GetSound():
 	return get_tree().get_nodes_in_group("SoundManager")[0]

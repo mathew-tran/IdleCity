@@ -5,10 +5,10 @@ var PeepleClass = preload("res://Prefab/Peeple/Peeple.tscn")
 var RequirementType
 var RequirementAmount
 
-onready var PurchaseButton = $VBoxContainer/Button
-onready var MessageText = $VBoxContainer/MessageText
-onready var RequirementText = $VBoxContainer/Requirements
-onready var RequirementTitle = $VBoxContainer/RequirementTitle
+@onready var PurchaseButton = $VBoxContainer/Button
+@onready var MessageText = $VBoxContainer/MessageText
+@onready var RequirementText = $VBoxContainer/Requirements
+@onready var RequirementTitle = $VBoxContainer/RequirementTitle
 
 func _ready():
 	RequirementType = TavernManager.GetRequirementType()
@@ -20,11 +20,11 @@ func _ready():
 			MessageText.text = TavernManager.GetMaxPeepleReachedMessage()
 		else:			
 			MessageText.text = "You do not meet the requirements!"
-		MessageText.add_color_override("font_color", Color.red)
+		MessageText.add_theme_color_override("font_color", Color.RED)
 	elif TavernManager.GetFlag():
 		PurchaseButton.disabled = true
 		MessageText.text = TavernManager.GetWaitForLaterMessage()
-		MessageText.add_color_override("font_color", Color.red)
+		MessageText.add_theme_color_override("font_color", Color.RED)
 		
 	if  PurchaseButton.disabled == false:
 		MessageText.text = "Recruit a Peeple"
@@ -44,7 +44,7 @@ func _on_Button_button_down():
 	if InventoryManager.CanAfford(RequirementType, RequirementAmount):
 		InventoryManager.Purchase(RequirementType, RequirementAmount)
 		UpdateUI()
-		var instance = PeepleClass.instance()
+		var instance = PeepleClass.instantiate()
 		instance.position = InputManager.GetLastClickedObject().global_position
 		Finder.GetPeepleGroup().add_child(instance)
 		PurchaseButton.disabled = true

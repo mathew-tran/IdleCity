@@ -1,35 +1,36 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=5 format=3 uid="uid://br4drdj12xs1u"]
 
-[ext_resource path="res://Scripts/Building/Special/ResearchLab.gd" type="Script" id=1]
-[ext_resource path="res://Prefab/Particles/ActiveHouseParticle.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Art/Buildings/SpecialBuildings/Know.png" type="Texture" id=3]
+[ext_resource type="Script" path="res://Scripts/Building/Special/ResearchLab.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Prefab/Particles/ActiveHouseParticle.tscn" id="2"]
+[ext_resource type="Texture2D" uid="uid://bk8w0teeuwnmj" path="res://Art/Buildings/SpecialBuildings/Know.png" id="3"]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id="1"]
 
-[node name="ResearchLab" type="Sprite"]
-texture = ExtResource( 3 )
+[node name="ResearchLab" type="Sprite2D"]
+texture = ExtResource("3")
 centered = false
-script = ExtResource( 1 )
+script = ExtResource("1")
 BuildingName = "Research Lab"
 BuildingType = 2
-RequirementType = [ 1 ]
-RequirementAmount = [ 5 ]
+RequirementType = Array[int]([1])
+RequirementAmount = Array[int]([5])
 Description = "Learn things!"
 bShowClickable = true
 
-[node name="ActiveParticle" parent="." instance=ExtResource( 2 )]
-position = Vector2( 18, 0 )
+[node name="ActiveParticle" parent="." instance=ExtResource("2")]
+position = Vector2(18, 0)
+emission_sphere_radius = 1.0
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2( -1, 0 )
+position = Vector2(-1, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 1 )
+shape = SubResource("1")
 
 [node name="Button" type="Button" parent="."]
-modulate = Color( 1, 1, 1, 0 )
-margin_right = 32.0
-margin_bottom = 33.0
-icon = ExtResource( 3 )
+modulate = Color(1, 1, 1, 0)
+offset_right = 32.0
+offset_bottom = 33.0
+icon = ExtResource("3")
 
 [connection signal="button_down" from="Button" to="." method="_on_Button_button_down"]

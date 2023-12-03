@@ -1,27 +1,26 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=5 format=3 uid="uid://foxlaxf1cs8k"]
 
-[ext_resource path="res://Scripts/Player/Player.gd" type="Script" id=2]
-[ext_resource path="res://Art/UI/GridHighlight.png" type="Texture" id=3]
-[ext_resource path="res://Art/Buildings/Factories/Factory_Small.png" type="Texture" id=4]
+[ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://jurfxui50hik" path="res://Art/UI/GridHighlight.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://c3ifyjuii5wx6" path="res://Art/Buildings/Factories/Factory_Small.png" id="4"]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id="2"]
 
-[node name="Player" type="Camera2D" groups=["Camera", "Player"]]
-pause_mode = 2
-current = true
-smoothing_speed = 20.0
-script = ExtResource( 2 )
+[node name="Player" type="Camera2D" groups=["Camera3D", "Player"]]
+process_mode = 3
+position_smoothing_speed = 20.0
+script = ExtResource("2")
 
-[node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 3 )
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3")
 centered = false
 
-[node name="GhostImage" type="Sprite" parent="Sprite"]
-modulate = Color( 0.968627, 0, 0.454902, 0.333333 )
-texture = ExtResource( 4 )
+[node name="GhostImage" type="Sprite2D" parent="Sprite2D"]
+modulate = Color(0.933333, 0.2, 0.152941, 0.678431)
+texture = ExtResource("4")
 centered = false
 
-[node name="Area" type="Area2D" parent="Sprite"]
+[node name="Area3D" type="Area2D" parent="Sprite2D"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/Area"]
-shape = SubResource( 2 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area3D"]
+shape = SubResource("2")

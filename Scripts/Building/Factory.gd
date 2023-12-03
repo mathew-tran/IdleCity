@@ -1,10 +1,11 @@
 extends "res://Scripts/Building/Building.gd"
 
-export(GameResources.RESOURCE_TYPE) var ResourceType 
+@export var ResourceType  : GameResources.RESOURCE_TYPE
 
 func _ready():
+	super()
 	$ActiveParticle.emitting = false
-	var _OnHalfHourUpdate = GameClock.connect("OnHalfHourUpdate", self, "ProduceWork")
+	var _OnHalfHourUpdate = GameClock.connect("OnHalfHourUpdate", Callable(self, "ProduceWork"))
 	
 	
 func OnActivated():
@@ -15,7 +16,7 @@ func OnDeactivated():
 
 func ProduceWork():
 	if IsActive():
-		yield(get_tree().create_timer(rand_range(0.1, 0.5)), "timeout")
+		await get_tree().create_timer(randf_range(0.1, 0.5)).timeout
 		var reward = GameResources.Reward.new()
 		var bonus = 0
 		for peeple in PeepleInBuilding:

@@ -14,9 +14,10 @@ var PeepleClass = preload("res://Prefab/Peeple/Peeple.tscn")
 var PeepleNames = []
 
 func PopulateNames():
-	var file = File.new()
-	file.open("res://Content/names.txt", File.READ)
-	var data = parse_json(file.get_as_text())
+	var file = FileAccess.open("res://Content/names.txt", FileAccess.READ)
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(file.get_as_text())
+	var data = test_json_conv.get_data()
 	PeepleNames = data["Names"]
 	file.close()
 	
@@ -26,20 +27,22 @@ func AssignRandomName(peeple):
 	
 func _ready():
 	
-	var _OnLoadComplete = SaveManager.connect("OnLoadComplete", self, "OnLoadComplete")
-	var _OnReload = SaveManager.connect("OnReload", self, "OnReload")
+	var _OnLoadComplete = SaveManager.connect("OnLoadComplete", Callable(self, "OnLoadComplete"))
+	var _OnReload = SaveManager.connect("OnReload", Callable(self, "OnReload"))
 	PopulateNames()
 	
 func CheckMinPeepleSize():
-	yield(get_tree().create_timer(0.2), "timeout")
+	await get_tree().create_timer(0.2).timeout
 	if AllPeeple.size() == 0:
-		var instance = PeepleClass.instance()
+		var instance = PeepleClass.instantiate()
 		add_child(instance)		
 		AddPeeple(instance)
 		
 func OnReload():
-	for peeple in Finder.GetPeepleGroup().get_children():
-		peeple.queue_free()
+	var peepleGroup = Finder.GetPeepleGroup()
+	if peepleGroup:
+		for peeple in peepleGroup.get_children():
+			peeple.queue_free()
 		
 	AllPeeple.clear()
 	UnHousedPeeple.clear()
@@ -64,7 +67,7 @@ func DeclareUnhoused(newPeeple):
 func DeclareHoused(currentPeeple):
 	if UnHousedPeeple.has(currentPeeple):
 		var index = UnHousedPeeple.find(currentPeeple)
-		UnHousedPeeple.remove(index)
+		UnHousedPeeple.remove_at(index)
 		emit_signal("OnPeepleHouseUpdate")
 
 func GetUnHousedPeepleAmount():
@@ -78,7 +81,7 @@ func DeclaredUnEmployed(newPeeple):
 func DeclareEmployed(currentPeeple):
 	if UnemployedPeeple.has(currentPeeple):
 		var index = UnemployedPeeple.find(currentPeeple)
-		UnemployedPeeple.remove(index)
+		UnemployedPeeple.remove_at(index)
 		emit_signal("OnPeepleEmploymentUpdate")
 
 func GetUnEmployedPeepleAmount():

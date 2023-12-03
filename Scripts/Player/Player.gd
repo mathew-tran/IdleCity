@@ -4,8 +4,8 @@ var MoveSpeed = 200
 var ZoomSpeed = 10
 var MaxZoom = 1.6
 var MinZoom = .5
-
-onready var Highlight = $Sprite
+var Offset = Vector2(16, 16)
+@onready var Highlight = $Sprite2D
 
 var BuildingClass = preload("res://Prefab/Buildings/Factories/Factory.tscn")
 var ClassInstance = null
@@ -26,7 +26,7 @@ signal OnPlayerModeChange(bIsBuildMode)
 func _ready():
 	SetBuildingClass(BuildingClass, null)
 	Helper.ShowBuildTileOutline(true)
-	Finder.GetMenuUI().connect("tab_changed", self, "_on_TabContainer_tab_changed")
+	Finder.GetMenuUI().connect("tab_changed", Callable(self, "_on_TabContainer_tab_changed"))
 
 func SetBuildingClass(newclass, purchaseButton):
 	BuildingClass = newclass
@@ -34,8 +34,8 @@ func SetBuildingClass(newclass, purchaseButton):
 	PurchaseButton = purchaseButton
 	if ClassInstance:
 		ClassInstance.queue_free()
-	ClassInstance = BuildingClass.instance()	
-	$Sprite/GhostImage.texture = ClassInstance.texture
+	ClassInstance = BuildingClass.instantiate()	
+	$Sprite2D/GhostImage.texture = ClassInstance.texture
 	ClassInstance.Setup()
 	
 func _process(delta):
@@ -46,12 +46,12 @@ func _process(delta):
 		ProcessMenuMode(delta)
 		
 	if Input.is_action_just_released("ScrollForward"):
-		zoom -= Vector2(delta * ZoomSpeed, delta * ZoomSpeed)
+		zoom += Vector2(delta * ZoomSpeed, delta * ZoomSpeed)
 		if zoom.x < MinZoom:
 			zoom = Vector2(MinZoom, MinZoom)
 
 	if Input.is_action_just_released("ScrollBackward"):
-		zoom += Vector2(delta * ZoomSpeed, delta * ZoomSpeed)
+		zoom -= Vector2(delta * ZoomSpeed, delta * ZoomSpeed)
 		if zoom.x > MaxZoom:
 			zoom = Vector2(MaxZoom, MaxZoom)
 	if FollowTarget:
@@ -92,20 +92,20 @@ func ProcessBuildMode(delta):
 	GameClock.Pause()
 	Helper.ShowBuildTileOutline(true)
 	MoveGhost(delta)
-	$Sprite.visible = true
+	$Sprite2D.visible = true
 	var Tilemap = Finder.GetBuildTiles()
-	var TargetPosition = get_global_mouse_position() - offset
+	var TargetPosition = get_global_mouse_position() - Offset
 			
-	var tile = Tilemap.world_to_map(TargetPosition)
+	var tile = Tilemap.local_to_map(TargetPosition)
 	
 	if Input.is_action_just_pressed("left_click"):	
 		if CanPurchase() and CanPlace():
-			if Tilemap.get_cell(tile.x, tile.y) != Tilemap.INVALID_CELL:
+			if Tilemap.get_cell_tile_data(0, tile) != null:
 				if Helper.IsValidSpawnLocation(ClassInstance.GetCachedSpawnArea(), tile):
-					var newInstance = BuildingClass.instance()
+					var newInstance = BuildingClass.instantiate()
 					newInstance.Setup()
 					Finder.GetBuildings().add_child(newInstance)				
-					newInstance.position = Finder.GetBuildTiles().map_to_world(tile, true)
+					newInstance.position = Finder.GetBuildTiles().map_to_local(tile)
 					newInstance.AdjustSpawnArea(tile)
 					newInstance.UpdateLevelNavigation()				
 					PurchaseButton.Purchase()
@@ -117,9 +117,9 @@ func ProcessBuildMode(delta):
 			
 
 	if bOnTile and null == Helper.GetBuildingOnTile(tile) and Helper.IsValidSpawnLocation(ClassInstance.GetCachedSpawnArea(), tile) and CanPurchase():
-		$Sprite/GhostImage.modulate = "5500ffc9"
+		$Sprite2D/GhostImage.modulate = "00bc68c9"
 	else:
-		$Sprite/GhostImage.modulate = "55f70074"
+		$Sprite2D/GhostImage.modulate = "ee3327ad"
 
 func CanPlace():
 	return get_local_mouse_position().x > -200
@@ -128,22 +128,22 @@ func ProcessMenuMode(_delta):
 	if Helper.IsPopupVisible() == false:		
 		GameClock.Resume()
 	
-	$Sprite.visible = false
+	$Sprite2D.visible = false
 	Helper.ShowBuildTileOutline(false)
 	
 	var Tilemap = Finder.GetBuildTiles()
-	var TargetPosition = get_global_mouse_position() - offset
-	var tile = Tilemap.world_to_map(TargetPosition)
+	var TargetPosition = get_global_mouse_position() - Offset
+	var tile = Tilemap.local_to_map(TargetPosition)
 	var building = Helper.GetBuildingOnTile(tile)
 	
 	InputManager.Hovered(building)
 
 func MoveGhost(_delta):	
-	var TargetPosition = get_global_mouse_position() - offset
-	var tile = Finder.GetBuildTiles().world_to_map(TargetPosition)
-	$Sprite.global_position = Finder.GetBuildTiles().map_to_world(tile, true)
+	var TargetPosition = get_global_mouse_position() - Offset
+	var tile = Finder.GetBuildTiles().local_to_map(TargetPosition)
+	$Sprite2D.global_position = Finder.GetBuildTiles().map_to_local(tile)
 	var Tilemap = Finder.GetBuildTiles()
-	if Tilemap.get_cell(tile.x, tile.y) == Tilemap.INVALID_CELL:
+	if Tilemap.get_cell_tile_data(0, tile) == null:
 		bOnTile = false
 	else:
 		bOnTile = true

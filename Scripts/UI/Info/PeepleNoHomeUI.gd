@@ -2,7 +2,7 @@ extends "res://Scripts/UI/Info/UIBase.gd"
 
 
 func _ready():
-	var _OnPeepleHouseUpdate = PeepleManager.connect("OnPeepleHouseUpdate", self, "Show")
+	var _OnPeepleHouseUpdate = PeepleManager.connect("OnPeepleHouseUpdate", Callable(self, "Show"))
 	Show()
 	
 func Show():

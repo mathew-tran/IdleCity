@@ -1,17 +1,18 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://c71lhxvxiepls"]
 
-[ext_resource path="res://Prefab/Buildings/Factories/Factory.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Art/Buildings/Factories/Factory_Coal.png" type="Texture" id=2]
+[ext_resource type="PackedScene" uid="uid://uwf4k8cusyjv" path="res://Prefab/Buildings/Factories/Factory.tscn" id="1"]
+[ext_resource type="Texture2D" uid="uid://bngmc82rkvl1i" path="res://Art/Buildings/Factories/Factory_Coal.png" id="2"]
 
-[node name="Factory" instance=ExtResource( 1 )]
-modulate = Color( 0.407843, 0, 0.854902, 1 )
-texture = ExtResource( 2 )
+[node name="Factory" instance=ExtResource("1")]
+modulate = Color(0.407843, 0, 0.854902, 1)
+texture = ExtResource("2")
+ResourceType = 2
 BuildingName = "Coal Factory"
-RequirementType = [ 0 ]
-RequirementAmount = [ 20 ]
+BuildingType = 1
+RequirementType = Array[int]([0])
+RequirementAmount = Array[int]([20])
 Description = "Generates Coal"
 HappinessAmount = -2
-ResourceType = 2
 
 [node name="ActiveParticle" parent="." index="1"]
-position = Vector2( 30, 0 )
+position = Vector2(30, 0)
