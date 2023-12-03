@@ -8,7 +8,6 @@ size = Vector2(32, 34)
 
 [node name="Bush" type="Sprite2D" groups=["Factory"]]
 texture = ExtResource("1")
-centered = false
 script = ExtResource("2")
 BuildingLimit = 0
 bIsBlockingNavigation = true

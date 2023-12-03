@@ -1,14 +1,17 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://fdiatj5sep31"]
 
-[ext_resource path="res://Art/Effects/SmokeCloud.png" type="Texture2D" id=1]
+[ext_resource type="Texture2D" uid="uid://c7xdefdfvdixs" path="res://Art/Effects/SmokeCloud.png" id="1"]
 
 [node name="ActiveParticle" type="CPUParticles2D"]
 rotation = -1.5708
 amount = 10
 lifetime = 0.4
-texture = ExtResource( 1 )
+texture = ExtResource("1")
 emission_shape = 2
-emission_rect_extents = Vector2( 8, 1 )
-gravity = Vector2( 0, 0 )
-initial_velocity = 50.0
-scale_amount = 0.2
+emission_sphere_radius = 0.5
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 194.93
+initial_velocity_max = 194.93
+scale_amount_min = 0.2
+scale_amount_max = 0.2

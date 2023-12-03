@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c71lhxvxiepls"]
 
-[ext_resource type="PackedScene" path="res://Prefab/Buildings/Factories/Factory.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://uwf4k8cusyjv" path="res://Prefab/Buildings/Factories/Factory.tscn" id="1"]
 [ext_resource type="Texture2D" uid="uid://bngmc82rkvl1i" path="res://Art/Buildings/Factories/Factory_Coal.png" id="2"]
 
 [node name="Factory" instance=ExtResource("1")]
@@ -16,4 +16,3 @@ HappinessAmount = -2
 
 [node name="ActiveParticle" parent="." index="1"]
 position = Vector2(30, 0)
-emission_sphere_radius = 1.0

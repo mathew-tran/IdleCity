@@ -52,6 +52,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -8.0
 offset_right = 2.0
+tab_focus_mode = 0
 
 [node name="Housing" type="Panel" parent="Build/SubBuildMenu"]
 layout_mode = 2

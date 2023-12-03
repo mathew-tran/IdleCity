@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://clblx6k8l11ea" path="res://Art/UI/GridOutline.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://5rs5ukgt8oss" path="res://Art/Tiles/Grass.png" id="2"]
-[ext_resource type="PackedScene" path="res://Prefab/Player.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://foxlaxf1cs8k" path="res://Prefab/Player.tscn" id="3"]
 [ext_resource type="Script" path="res://Scripts/UI/BuildTileOutline.gd" id="4"]
 [ext_resource type="Script" path="res://Scripts/UI/Buttons/ResetButton.gd" id="5"]
 [ext_resource type="Script" path="res://Scripts/Environment/LevelNavigator.gd" id="6"]

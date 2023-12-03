@@ -4,7 +4,7 @@ var MoveSpeed = 200
 var ZoomSpeed = 10
 var MaxZoom = 1.6
 var MinZoom = .5
-
+var Offset = Vector2(16, 16)
 @onready var Highlight = $Sprite2D
 
 var BuildingClass = preload("res://Prefab/Buildings/Factories/Factory.tscn")
@@ -94,7 +94,7 @@ func ProcessBuildMode(delta):
 	MoveGhost(delta)
 	$Sprite2D.visible = true
 	var Tilemap = Finder.GetBuildTiles()
-	var TargetPosition = get_global_mouse_position() - offset
+	var TargetPosition = get_global_mouse_position() - Offset
 			
 	var tile = Tilemap.local_to_map(TargetPosition)
 	
@@ -117,9 +117,9 @@ func ProcessBuildMode(delta):
 			
 
 	if bOnTile and null == Helper.GetBuildingOnTile(tile) and Helper.IsValidSpawnLocation(ClassInstance.GetCachedSpawnArea(), tile) and CanPurchase():
-		$Sprite2D/GhostImage.modulate = "5500ffc9"
+		$Sprite2D/GhostImage.modulate = "00bc68c9"
 	else:
-		$Sprite2D/GhostImage.modulate = "55f70074"
+		$Sprite2D/GhostImage.modulate = "ee3327ad"
 
 func CanPlace():
 	return get_local_mouse_position().x > -200
@@ -132,14 +132,14 @@ func ProcessMenuMode(_delta):
 	Helper.ShowBuildTileOutline(false)
 	
 	var Tilemap = Finder.GetBuildTiles()
-	var TargetPosition = get_global_mouse_position() - offset
+	var TargetPosition = get_global_mouse_position() - Offset
 	var tile = Tilemap.local_to_map(TargetPosition)
 	var building = Helper.GetBuildingOnTile(tile)
 	
 	InputManager.Hovered(building)
 
 func MoveGhost(_delta):	
-	var TargetPosition = get_global_mouse_position() - offset
+	var TargetPosition = get_global_mouse_position() - Offset
 	var tile = Finder.GetBuildTiles().local_to_map(TargetPosition)
 	$Sprite2D.global_position = Finder.GetBuildTiles().map_to_local(tile)
 	var Tilemap = Finder.GetBuildTiles()
