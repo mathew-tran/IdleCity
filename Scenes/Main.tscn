@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/Buttons/ResetButton.gd" id="5"]
 [ext_resource type="Texture2D" uid="uid://muf4k5ch7p4v" path="res://Art/Tiles/Water.png" id="7"]
 [ext_resource type="PackedScene" uid="uid://our2ymq12s7u" path="res://Prefab/UI/MenuUI.tscn" id="8"]
-[ext_resource type="PackedScene" path="res://Prefab/UI/ContentPopup.tscn" id="9"]
+[ext_resource type="PackedScene" uid="uid://bjtgjvs7p60mj" path="res://Prefab/UI/ContentPopup.tscn" id="9"]
 [ext_resource type="PackedScene" path="res://Prefab/UI/ClockUI.tscn" id="10"]
 [ext_resource type="Texture2D" uid="uid://dnpgwmt22ocj3" path="res://Art/WhitePixel.png" id="11"]
 [ext_resource type="Script" path="res://Scripts/Environment/Lighting.gd" id="12"]
@@ -169,12 +169,7 @@ sources/0 = SubResource("TileSetAtlasSource_7uw13")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 process_mode = 3
 
-[node name="CanvasLayer" type="Control" parent="CanvasLayer"]
-light_mask = 0
-layout_mode = 3
-anchors_preset = 0
-
-[node name="Lighting" type="Sprite2D" parent="CanvasLayer/CanvasLayer"]
+[node name="Lighting" type="Sprite2D" parent="CanvasLayer"]
 modulate = Color(0.278431, 0, 0.180392, 0.72549)
 show_behind_parent = true
 scale = Vector2(32.0938, 18.75)
@@ -184,9 +179,8 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1152, 648)
 script = ExtResource("12")
 
-[node name="Clock" parent="CanvasLayer/CanvasLayer" instance=ExtResource("10")]
+[node name="Clock" parent="CanvasLayer" instance=ExtResource("10")]
 light_mask = 0
-layout_mode = 0
 anchor_left = 0.0
 anchor_right = 0.0
 offset_left = 977.0
@@ -194,8 +188,7 @@ offset_top = 9.0
 offset_right = 1143.0
 offset_bottom = 57.0
 
-[node name="MenuUI" parent="CanvasLayer/CanvasLayer" groups=["MenuUI"] instance=ExtResource("8")]
-layout_mode = 0
+[node name="MenuUI" parent="CanvasLayer" groups=["MenuUI"] instance=ExtResource("8")]
 anchors_preset = 0
 anchor_right = 0.0
 offset_left = 0.0
@@ -203,54 +196,58 @@ offset_top = 0.0
 offset_right = 294.0
 offset_bottom = 600.0
 
-[node name="PeepleUI" parent="CanvasLayer/CanvasLayer" groups=["DescriptionUI"] instance=ExtResource("13")]
-layout_mode = 0
+[node name="PeepleUI" parent="CanvasLayer" groups=["DescriptionUI"] instance=ExtResource("13")]
+anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 338.0
-offset_top = 432.0
-offset_right = 542.0
-offset_bottom = 517.0
+offset_left = -814.0
+offset_top = 108.0
+offset_right = -610.0
+offset_bottom = 193.0
 scale = Vector2(2, 2)
 
-[node name="ContentPopup" parent="CanvasLayer/CanvasLayer" instance=ExtResource("9")]
-visible = false
-anchors_preset = 0
+[node name="MessageContainer" type="VBoxContainer" parent="CanvasLayer" groups=["MessageContainer"]]
+process_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -212.0
+offset_top = -94.0
+offset_right = 212.0
+offset_bottom = 94.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ContentPopup" parent="CanvasLayer" instance=ExtResource("9")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = 0.0
 offset_top = 0.0
-offset_right = 1024.0
-offset_bottom = 600.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Button" type="Button" parent="CanvasLayer/CanvasLayer"]
-layout_mode = 1
+[node name="Button" type="Button" parent="CanvasLayer"]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 1099.0
-offset_top = 613.0
-offset_right = 1150.0
-offset_bottom = 644.0
+offset_left = -53.0
+offset_top = -35.0
+offset_right = -2.0
+offset_bottom = -4.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "Reset"
 script = ExtResource("5")
-
-[node name="MessageContainer" type="VBoxContainer" parent="CanvasLayer/CanvasLayer" groups=["MessageContainer"]]
-process_mode = 3
-layout_mode = 0
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 320.0
-offset_top = 193.0
-offset_right = 744.0
-offset_bottom = 381.0
-mouse_filter = 2
 
 [node name="BuildTiles" type="TileMap" parent="." groups=["BuildTiles", "Navigation"]]
 tile_set = SubResource("5")
@@ -270,4 +267,4 @@ z_as_relative = false
 
 [node name="Player" parent="." instance=ExtResource("3")]
 
-[connection signal="button_down" from="CanvasLayer/CanvasLayer/Button" to="CanvasLayer/CanvasLayer/Button" method="_on_Button_button_down"]
+[connection signal="button_down" from="CanvasLayer/Button" to="CanvasLayer/Button" method="_on_Button_button_down"]

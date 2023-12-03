@@ -3,6 +3,7 @@ extends "res://Scripts/Building/Building.gd"
 @export var ResourceType  : GameResources.RESOURCE_TYPE
 
 func _ready():
+	super()
 	$ActiveParticle.emitting = false
 	var _OnHalfHourUpdate = GameClock.connect("OnHalfHourUpdate", Callable(self, "ProduceWork"))
 	
