@@ -1,6 +1,11 @@
 # IdleCity
 ![image](image.png)
 
+# How to play
+- Place down a factory for a `Peeple` to work in
+- During `Work hours` Peeple will work, gaining resources
+- As you gain more resources, you will be able to buy things like houses and more factories!
+
 # About
 - This game is an open source idle city builder game. I plan it to be a mix between sim city and an idle game
 - The idea is you have `Peeple` and you can make them work, making them work produces resources, resources can be towards upgrades and new buildings. So on and so forth.
