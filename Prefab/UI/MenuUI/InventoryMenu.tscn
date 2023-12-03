@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://bj3neuhv1bs2d"]
+
+[ext_resource type="Script" path="res://Scripts/UI/UI.gd" id="1_e3ku6"]
+
+[node name="Inventory" type="Panel"]
+visible = false
+script = ExtResource("1_e3ku6")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 45.0
+offset_bottom = 23.0

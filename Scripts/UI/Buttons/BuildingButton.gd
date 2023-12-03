@@ -1,6 +1,5 @@
 extends "res://Scripts/UI/Buttons/PurchaseButton.gd"
 
-
 @export var BuildingClass = preload("res://Prefab/Buildings/Factories/Factory.tscn")
 	
 func _ready():

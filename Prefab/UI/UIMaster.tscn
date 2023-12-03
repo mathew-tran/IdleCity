@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dnpgwmt22ocj3" path="res://Art/WhitePixel.png" id="1_kk1i6"]
 [ext_resource type="Script" path="res://Scripts/Environment/Lighting.gd" id="2_6jn4j"]
-[ext_resource type="PackedScene" path="res://Prefab/UI/ClockUI.tscn" id="3_u8r83"]
+[ext_resource type="PackedScene" uid="uid://bvc5o0awn1heh" path="res://Prefab/UI/ClockUI.tscn" id="3_u8r83"]
 [ext_resource type="PackedScene" uid="uid://our2ymq12s7u" path="res://Prefab/UI/MenuUI.tscn" id="4_fxgjd"]
 [ext_resource type="PackedScene" uid="uid://c4a8wugy53o8b" path="res://Prefab/UI/PeepleUI.tscn" id="5_pb7i5"]
 [ext_resource type="PackedScene" uid="uid://bjtgjvs7p60mj" path="res://Prefab/UI/ContentPopup.tscn" id="6_6rn30"]

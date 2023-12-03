@@ -1,6 +1,5 @@
 extends Sprite2D
 
-
 @export var BuildingLimit = 1
 @export var bIsBlockingNavigation = false
 var SubscribedPeeple = []
