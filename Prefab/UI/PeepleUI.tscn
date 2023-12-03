@@ -408,7 +408,7 @@ offset_right = 83.0
 offset_bottom = 87.0
 
 [node name="PeepleFace" type="Sprite2D" parent="LeftSide"]
-position = Vector2(31, 5)
+position = Vector2(40, 11)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("1")
 centered = false
@@ -416,10 +416,10 @@ centered = false
 [node name="PeepleName" type="Label" parent="LeftSide"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 0
-offset_left = 10.0
-offset_top = 28.0
-offset_right = 115.0
-offset_bottom = 41.0
+offset_left = 19.0
+offset_top = 34.0
+offset_right = 124.0
+offset_bottom = 47.0
 scale = Vector2(0.6, 0.6)
 size_flags_horizontal = 2
 theme = ExtResource("3")
@@ -430,10 +430,11 @@ vertical_alignment = 1
 
 [node name="FollowButton" type="Button" parent="LeftSide"]
 layout_mode = 0
-offset_left = 11.0
+offset_left = 13.0
 offset_top = 46.0
-offset_right = 79.0
+offset_right = 163.0
 offset_bottom = 66.0
+scale = Vector2(0.5, 0.5)
 theme = SubResource("13")
 text = "FOLLOW"
 
@@ -446,9 +447,9 @@ offset_bottom = 46.0
 
 [node name="HappinessLabel" type="Label" parent="RightSide"]
 layout_mode = 0
-offset_left = 107.0
+offset_left = 113.0
 offset_top = -2.0
-offset_right = 206.0
+offset_right = 212.0
 offset_bottom = 9.0
 theme = SubResource("6")
 text = "Happiness"
@@ -456,9 +457,9 @@ text = "Happiness"
 [node name="ProgressBar" type="ProgressBar" parent="RightSide"]
 custom_minimum_size = Vector2(80, 8)
 layout_mode = 0
-offset_left = 108.0
+offset_left = 114.0
 offset_top = 10.0
-offset_right = 208.0
+offset_right = 214.0
 offset_bottom = 37.0
 scale = Vector2(0.5, 0.5)
 theme = SubResource("9")
@@ -476,7 +477,7 @@ offset_top = 47.0
 offset_right = 178.0
 offset_bottom = 65.0
 
-[node name="Button" type="Button" parent="."]
+[node name="ExitButton" type="Button" parent="."]
 layout_mode = 0
 offset_left = 186.0
 offset_right = 230.0
@@ -485,4 +486,4 @@ scale = Vector2(0.4, 0.4)
 icon = ExtResource("5")
 
 [connection signal="button_up" from="LeftSide/FollowButton" to="." method="_on_Button_button_up"]
-[connection signal="button_up" from="Button" to="." method="_on_ToolButton_button_up"]
+[connection signal="button_up" from="ExitButton" to="." method="_on_ToolButton_button_up"]
