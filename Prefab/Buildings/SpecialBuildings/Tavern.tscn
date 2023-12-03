@@ -1,35 +1,36 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=5 format=3 uid="uid://dmhf8m62xrt4w"]
 
-[ext_resource path="res://Art/Buildings/SpecialBuildings/Tavern.png" type="Texture2D" id=1]
-[ext_resource path="res://Scripts/Building/Special/Tavern.gd" type="Script" id=2]
-[ext_resource path="res://Prefab/Particles/ActiveHouseParticle.tscn" type="PackedScene" id=3]
+[ext_resource type="Texture2D" uid="uid://crdrhcy7mbo2r" path="res://Art/Buildings/SpecialBuildings/Tavern.png" id="1"]
+[ext_resource type="Script" path="res://Scripts/Building/Special/Tavern.gd" id="2"]
+[ext_resource type="PackedScene" path="res://Prefab/Particles/ActiveHouseParticle.tscn" id="3"]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id="1"]
 
 [node name="Tavern" type="Sprite2D" groups=["House"]]
-position = Vector2( 448, 87 )
-texture = ExtResource( 1 )
+position = Vector2(448, 87)
+texture = ExtResource("1")
 centered = false
-script = ExtResource( 2 )
+script = ExtResource("2")
 BuildingLimit = 0
 BuildingName = "Tavern"
 BuildingType = 2
-RequirementType = [ 0 ]
-RequirementAmount = [ 1 ]
+RequirementType = Array[int]([0])
+RequirementAmount = Array[int]([1])
 Description = "Recruit a single Peeple daily."
 bShowClickable = true
 
-[node name="ActiveParticle" parent="." instance=ExtResource( 3 )]
-position = Vector2( 18, 0 )
+[node name="ActiveParticle" parent="." instance=ExtResource("3")]
+position = Vector2(18, 0)
+emission_sphere_radius = 1.0
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2( -1, 0 )
+position = Vector2(-1, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 1 )
+shape = SubResource("1")
 
 [node name="Button" type="Button" parent="."]
-modulate = Color( 1, 1, 1, 0 )
+modulate = Color(1, 1, 1, 0)
 offset_right = 62.0
 offset_bottom = 64.0
 

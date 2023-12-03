@@ -8,6 +8,7 @@ modulate = Color(0.407843, 0, 0.854902, 1)
 texture = ExtResource("2")
 ResourceType = 2
 BuildingName = "Coal Factory"
+BuildingType = 1
 RequirementType = Array[int]([0])
 RequirementAmount = Array[int]([20])
 Description = "Generates Coal"

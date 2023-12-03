@@ -1,11 +1,15 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://bhib4ars7emei"]
 
-[ext_resource path="res://Prefab/Buildings/Factories/Factory.tscn" type="PackedScene" id=1]
+[ext_resource type="PackedScene" path="res://Prefab/Buildings/Factories/Factory.tscn" id="1"]
 
-[node name="Factory" instance=ExtResource( 1 )]
+[node name="Factory" instance=ExtResource("1")]
+ResourceType = 1
 BuildingName = "Stone Factory"
-RequirementType = [ 0 ]
-RequirementAmount = [ 10 ]
+BuildingType = 1
+RequirementType = Array[int]([0])
+RequirementAmount = Array[int]([10])
 Description = "Generates Stone"
 HappinessAmount = -3
-ResourceType = 1
+
+[node name="ActiveParticle" parent="." index="1"]
+emission_sphere_radius = 1.0
