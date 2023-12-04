@@ -23,6 +23,7 @@ script = ExtResource("2_6jn4j")
 
 [node name="Clock" parent="." instance=ExtResource("3_u8r83")]
 light_mask = 0
+anchors_preset = 0
 anchor_left = 0.0
 anchor_right = 0.0
 offset_left = 977.0

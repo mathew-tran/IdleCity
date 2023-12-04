@@ -7,10 +7,10 @@ func _ready():
 	var _OnAvailable = TavernManager.connect("OnTavernAvailable", Callable(self, "Show"))
 	var _OnUnavailable = TavernManager.connect("OnTavernUnavailable", Callable(self, "Hide"))
 	Hide()
-	
+
 func Show():
 	$ActiveParticle.emitting = true
-	
+
 func Hide():
 	$ActiveParticle.emitting = false
 

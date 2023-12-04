@@ -16,15 +16,15 @@ var bIsActive : bool = false
 func _ready():
 	Finder.GetPlayer().connect("OnPlayerModeChange", Callable(self, "PlayerModeChange"))
 	visible = false
-	
+
 func PlayerModeChange(bIsBuildMode):
 	if bIsBuildMode:
 		visible = false
 	else:
 		if bIsActive:
 			visible = true
-			
-			
+
+
 func Show(peeple):
 	bIsActive = true
 	StopFollowing()
@@ -36,13 +36,13 @@ func Show(peeple):
 	trackedPeeple.connect("OnHappinessUpdate", Callable(self, "UpdateUI"))
 	trackedPeeple.connect("OnJobUpdate", Callable(self, "JobUpdate"))
 	trackedPeeple.connect("OnHouseUpdate", Callable(self, "HouseUpdate"))
-	
+
 	HouseControl.connect("HouseFollowClicked", Callable(self, "HouseFollowClicked"))
 	WorkControl.connect("JobFollowClicked", Callable(self, "JobFollowClicked"))
-	PeepleNameLabel.text = peeple.GetPeepleName()		
+	PeepleNameLabel.text = peeple.GetPeepleName()
 	PeepleTexture.texture = peeple.GetTexture()
 	PeepleTexture.modulate = peeple.GetModulation()
-	
+
 	UpdateUI()
 	JobUpdate()
 	HouseUpdate()
@@ -59,7 +59,7 @@ func UpdateUI():
 		HappinessBar.modulate = Color.YELLOW
 	if GameResources.GRADE.D == gradeValue:
 		HappinessBar.modulate = Color.RED
-		
+
 	if bIsFollowing:
 		FollowButton.text = "Unfollow"
 	else:
@@ -72,7 +72,7 @@ func JobUpdate():
 func HouseUpdate():
 	if trackedPeeple:
 		HouseControl.Update(trackedPeeple)
-	
+
 func StopFollowing():
 	if bIsFollowing:
 		Helper.FollowCamera(null)
@@ -91,7 +91,7 @@ func _on_Button_button_up():
 			Helper.FollowCamera(trackedPeeple)
 		else:
 			Helper.FollowCamera(null)
-			
+
 	UpdateUI()
 
 func JobFollowClicked():

@@ -7,10 +7,10 @@ extends TileMap
 
 func Show():
 	visible = true
-	
+
 func Hide():
 	visible = false
-	
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Hide()

@@ -5,17 +5,17 @@ extends Panel
 @onready var Special = $SubBuildMenu/Special
 
 var BuildingClass = preload("res://Prefab/Buttons/BuildingButton.tscn")
-	
+
 func _ready():
-	
+
 	# Add housing
 	AddButton(preload("res://Prefab/Buildings/Housing/House.tscn"))
 	AddButton(preload("res://Prefab/Buildings/Housing/BigHouse.tscn"))
-	
+
 	# Add factories
 	AddButton(preload("res://Prefab/Buildings/Factories/StoneFactory.tscn"))
 	AddButton(preload("res://Prefab/Buildings/Factories/WoodFactory.tscn"))
-	
+
 	# Add special
 	AddButton(preload("res://Prefab/Buildings/SpecialBuildings/Tavern.tscn"))
 	AddButton(preload("res://Prefab/Buildings/SpecialBuildings/ResearchLab.tscn"))
@@ -37,12 +37,12 @@ func AddButtonToCategory(housingClass, category):
 		if housingClass == child.BuildingClass:
 			bShouldCreate = true
 			break
-	
+
 	if bShouldCreate == false:
 		return
-		
+
 	var housingClassInstance = housingClass.instantiate()
-	
+
 	var instance = BuildingClass.instantiate()
 	instance.DescriptionText = housingClassInstance.Description
 	instance.BuildingClass = housingClass

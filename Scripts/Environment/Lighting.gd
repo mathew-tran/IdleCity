@@ -14,13 +14,13 @@ func _ready():
 		OnDayTime()
 	else:
 		OnNightTime()
-		
+
 func OnMorningTime():
 	modulate = MorningColor
-	
+
 func OnDayTime():
 	modulate = DayColor
-	
+
 func OnNightTime():
 	modulate = NightColor
 

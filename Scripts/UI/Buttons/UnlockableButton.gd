@@ -13,7 +13,7 @@ func PreSetup():
 	bHasBeenPurchased = ResearchManager.IsButtonUnlocked(self)
 	visible = false
 func UpdateUI():
-		
+
 	super.UpdateUI()
 	if bHasBeenPurchased:
 		$Panel/HBoxContainer/Button.disabled = true
@@ -33,6 +33,6 @@ func _on_Button_button_down():
 		ResearchManager.IncrementUnlockLevel(Category)
 		ResearchManager.CacheUnlockedButton(self)
 		RunUnlockFunction()
-	
+
 func RunUnlockFunction():
 	pass

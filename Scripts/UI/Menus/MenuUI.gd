@@ -8,4 +8,4 @@ func _input(event):
 		current_tab = 1
 	if event.is_action_pressed("F3"):
 		current_tab = 2
-		
+

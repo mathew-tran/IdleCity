@@ -13,9 +13,9 @@ signal OnLoadComplete
 
 func AddToPersistGroup(node):
 	node.add_to_group(PersistTag)
-	
+
 func _ready():
-	
+
 	var _OnDayUpdate = GameClock.connect("OnDayUpdate", Callable(self, "Save"))
 	await get_tree().create_timer(0.2).timeout
 	Load()
@@ -23,9 +23,9 @@ func _ready():
 func _process(_delta):
 	pass
 
-		
+
 func Save():
-	
+
 	var saveGame = FileAccess.open(SaveFilePath, FileAccess.WRITE)
 	var saveNodes = get_tree().get_nodes_in_group(PersistTag)
 	for savedNode in saveNodes:
@@ -34,10 +34,10 @@ func Save():
 	saveGame.close()
 	emit_signal("OnSave")
 	Helper.SendLogMessageToPlayer("Game Saved.")
-	
+
 func Load():
 	emit_signal("OnLoad")
-	if FileAccess.file_exists(SaveFilePath):	
+	if FileAccess.file_exists(SaveFilePath):
 		var saveGame = FileAccess.open(SaveFilePath, FileAccess.READ)
 		while not saveGame.eof_reached():
 			var lineData = saveGame.get_line()
@@ -54,9 +54,9 @@ func Load():
 					# Use expressions: https://docs.godotengine.org/en/stable/tutorials/scripting/evaluating_expressions.html
 					emit_signal("OnLoadAuto", currentLine["script"], currentLine)
 		saveGame.close()
-		
+
 	emit_signal("OnLoadComplete")
-	
+
 func Reset():
 	set_process(false)
 	var dir = DirAccess.open(SaveFilePath)
@@ -66,4 +66,4 @@ func Reset():
 	var _sceneReload = get_tree().reload_current_scene()
 	emit_signal("OnReload")
 	set_process(true)
-	
+

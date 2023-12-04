@@ -9,8 +9,8 @@ func UpdateUI():
 	for child in get_child(0).get_children():
 		if child.bHasProblem:
 			bHasProblems = true
-	
+
 	if bHasProblems:
 		name = "Info (!)"
-	else: 
+	else:
 		name = "Info"

@@ -31,19 +31,19 @@ func GetHappinessGrading(amount):
 	if amount >= 35:
 		return GRADE.C
 	return GRADE.D
-	
+
 enum UI_MODE {BUILD, MENU}
 
 func GetResName(resourceInt):
 	return str(GameResources.RESOURCE_TYPE.keys()[resourceInt])
-	
+
 
 class Reward extends Resource:
 	var ResourceType
 	var Amount : int
-		
+
 	func GetRewardString() -> String:
 		return str(Amount) + "x " + str(GameResources.RESOURCE_TYPE.keys()[ResourceType])
-	
+
 	func GetAmount() -> int:
 		return Amount

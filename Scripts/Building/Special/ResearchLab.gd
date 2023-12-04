@@ -4,7 +4,7 @@ var Content = preload("res://Prefab/UI/ResearchLabUI.tscn")
 
 func Show():
 	$ActiveParticle.emitting = true
-	
+
 func Hide():
 	$ActiveParticle.emitting = false
 

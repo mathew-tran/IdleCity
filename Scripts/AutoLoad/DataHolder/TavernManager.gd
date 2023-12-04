@@ -18,7 +18,7 @@ func _ready():
 func OnDelete():
 	RequirementAmount[0] = 1
 	CurrentAmount = 1
-		
+
 func Save():
 	var dict = {
 		"type" : "auto",
@@ -34,8 +34,8 @@ func Load(data):
 	RequirementType[0] = data["reqtype"]
 	CurrentAmount = data["currentamount"]
 	bHasPurchased = false
-	
-	
+
+
 func GetRequirementAmount():
 	return RequirementAmount
 
@@ -48,7 +48,7 @@ func OnDayUpdate():
 			Increment()
 			bHasPurchased = false
 			emit_signal("OnTavernAvailable")
-	
+
 func SetFlag():
 	bHasPurchased = true
 	CurrentAmount += 1
@@ -56,9 +56,9 @@ func SetFlag():
 
 func GetFlag():
 	return bHasPurchased
-	
+
 func Increment():
-	RequirementAmount[0] += 10	
+	RequirementAmount[0] += 10
 	Helper.SendLogMessageToPlayer("Tavern is available to take new recruits!")
 
 func CanGetMorePeeple():
@@ -66,6 +66,6 @@ func CanGetMorePeeple():
 
 func GetMaxPeepleReachedMessage():
 	return "You are at the max limit of peeple!"
-	
+
 func GetWaitForLaterMessage():
 	return "Come back tommorow!"

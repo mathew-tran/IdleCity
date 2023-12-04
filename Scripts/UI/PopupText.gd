@@ -2,7 +2,7 @@ extends Label
 
 func SetText(newText):
 	text = newText
-	
+
 func _ready():
 	$AnimationPlayer.play("GhostAnim")
 
