@@ -70,7 +70,7 @@ func OnExit():
 func UpdateLevelNavigation():
 	if bIsBlockingNavigation:
 		for area in CachedSpawnArea:
-			Finder.GetBuildTiles().set_cell(0, area, 1)
+			Helper.SetTile(area, GameResources.Tiles["Water"])
 
 
 func Save():
@@ -134,4 +134,4 @@ func _exit_tree():
 	emit_signal("OnDestroyed")
 	if bIsBlockingNavigation:
 		for area in CachedSpawnArea:
-			Finder.GetBuildTiles().set_cell(0, area, 0)
+			Helper.SetTile(area, GameResources.Tiles["Grass"])

@@ -98,6 +98,8 @@ func ProcessBuildMode(delta):
 
 	var tile = Helper.GetTileInTilemap(TargetPosition)
 
+	print(Helper.GetTileInfo(tile))
+
 	if Input.is_action_just_pressed("left_click"):
 		if IsSpawnable(tile):
 			var newInstance = BuildingClass.instantiate()
@@ -113,7 +115,6 @@ func ProcessBuildMode(delta):
 		if building:
 			building.queue_free()
 
-
 	if IsSpawnable(tile):
 		$Sprite2D/GhostImage.modulate = "00bc68c9"
 	else:
@@ -125,7 +126,7 @@ func IsSpawnable(tile):
 func IsWaterTile(tile):
 	var tileInfo = Helper.GetTileInfo(tile)
 	if tileInfo != null:
-		if tileInfo == 1:
+		if tileInfo == GameResources.Tiles["Water"]:
 			return true
 	return false
 

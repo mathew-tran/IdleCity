@@ -1,5 +1,9 @@
 extends Node
 
+var Tiles = {
+	"Grass" : 0,
+	"Water" : 1
+}
 enum BUILDING_TYPE {
 	HOUSE,
 	FACTORY,
