@@ -98,8 +98,6 @@ func ProcessBuildMode(delta):
 
 	var tile = Helper.GetTileInTilemap(TargetPosition)
 
-	print(Helper.GetTileInfo(tile))
-
 	if Input.is_action_just_pressed("left_click"):
 		if IsSpawnable(tile):
 			var newInstance = BuildingClass.instantiate()

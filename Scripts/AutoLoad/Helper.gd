@@ -73,7 +73,8 @@ func GetTileInfo(tile):
 func SetTile(tile, tileTypeIndex):
 	var Tilemap = Finder.GetBuildTiles()
 	Tilemap.set_cell(0, tile, tileTypeIndex, Vector2i(0,0))
-	Tilemap.update_internals()
+
+
 
 func GetTileInTilemap(globalPosition):
 	var Tilemap = Finder.GetBuildTiles()

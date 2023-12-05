@@ -300,8 +300,10 @@ func MoveToTargetPosition():
 
 func _physics_process(delta):
 	if $NavigationAgent2D.is_navigation_finished():
-		global_position = TargetPosition
-		return
+		if global_position.distance_to(TargetPosition) < 5:
+			global_position = TargetPosition
+			return
+			return
 
 	SpeedDelta = Speed * delta
 	var nextPathPosition : Vector2 = $NavigationAgent2D.get_next_path_position()

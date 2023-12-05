@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://1vegil70q25r"]
+[gd_scene load_steps=4 format=3 uid="uid://1vegil70q25r"]
 
 [ext_resource type="Texture2D" uid="uid://n2rsskh601m3" path="res://Art/Buildings/Botany/Bush.png" id="1"]
 [ext_resource type="Script" path="res://Scripts/Building/Building.gd" id="2"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_to3i0"]
+outlines = Array[PackedVector2Array]([PackedVector2Array(0, 1, 0, 31, 30, 32, 29, 2)])
+source_geometry_group_name = &"navigation_polygon_source_group"
 
 [node name="Bush" type="Sprite2D" groups=["Factory"]]
 texture = ExtResource("1")
@@ -16,5 +20,12 @@ RequirementAmount = Array[int]([5])
 Description = "Good for the environment!"
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_to3i0")
+enabled = false
+use_edge_connections = false
+enter_cost = 500.0
+constrain_avoidance = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
