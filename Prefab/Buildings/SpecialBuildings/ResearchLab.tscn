@@ -16,6 +16,7 @@ RequirementType = Array[int]([1])
 RequirementAmount = Array[int]([5])
 Description = "Learn things!"
 bShowClickable = true
+BuildingPrefix = "ResearchLab"
 
 [node name="ActiveParticle" parent="." instance=ExtResource("2")]
 position = Vector2(18, 0)

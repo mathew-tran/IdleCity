@@ -17,6 +17,7 @@ RequirementType = Array[int]([0])
 RequirementAmount = Array[int]([10])
 Description = "Houses 4 Tenants"
 HappinessAmount = 8
+BuildingPrefix = "TownHouse"
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(-1, 0)
