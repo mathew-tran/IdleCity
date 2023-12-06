@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/UI/UI.gd" id="1_e3ku6"]
 
-[node name="Inventory" type="Panel"]
+[node name="Inventory" type="Panel" groups=["controls"]]
 visible = false
 script = ExtResource("1_e3ku6")
 

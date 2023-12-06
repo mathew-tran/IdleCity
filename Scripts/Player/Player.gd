@@ -26,6 +26,7 @@ func _ready():
 	SetBuildingClass(BuildingClass, null)
 	Helper.ShowBuildTileOutline(true)
 	Finder.GetMenuUI().connect("tab_changed", Callable(self, "_on_TabContainer_tab_changed"))
+
 	$Sprite2D/GhostImage.visible = false
 
 func SetBuildingClass(newclass, purchaseButton):
@@ -40,7 +41,6 @@ func SetBuildingClass(newclass, purchaseButton):
 	ClassInstance.Setup()
 
 func _process(delta):
-
 	if CurrentPlayerMode == GameResources.UI_MODE.BUILD:
 		ProcessBuildMode(delta)
 	else:
@@ -98,6 +98,8 @@ func ProcessBuildMode(delta):
 
 	var tile = Helper.GetTileInTilemap(TargetPosition)
 
+	if Helper.IsMouseOnControl():
+		return
 	if Input.is_action_just_pressed("left_click"):
 		if IsSpawnable(tile):
 			var newInstance = BuildingClass.instantiate()

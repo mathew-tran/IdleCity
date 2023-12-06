@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bj3neuhv1bs2d" path="res://Prefab/UI/MenuUI/InventoryMenu.tscn" id="4_lkesw"]
 [ext_resource type="Script" path="res://Scripts/UI/Menus/MenuUI.gd" id="6"]
 
-[node name="MenuUI" type="TabContainer"]
+[node name="MenuUI" type="TabContainer" groups=["controls"]]
 light_mask = 0
 anchors_preset = -1
 anchor_right = 0.239

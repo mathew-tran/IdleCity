@@ -38,6 +38,15 @@ func IsPopupVisible():
 func AddDescriptionPopup(object):
 	Finder.GetDescriptionUI().Show(object)
 
+func IsMouseOnControl():
+	var mouse_position = get_viewport().get_mouse_position()
+	var controls = get_tree().get_nodes_in_group("controls") # Assuming all controls are in a group named 'controls'
+
+	for control in controls:
+		if control.get_global_rect().has_point(mouse_position):
+			return true
+	return false
+
 func ReparentNode(child: Node, new_parent: Node):
 	var old_parent = child.get_parent()
 	old_parent.remove_child(child)

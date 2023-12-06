@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/UI/Menus/BuildMenuUI.gd" id="1_gqby8"]
 
-[node name="Build" type="Panel" groups=["BuildMenuUI"]]
+[node name="Build" type="Panel" groups=["BuildMenuUI", "controls"]]
 light_mask = 0
 script = ExtResource("1_gqby8")
 

@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/Info/PeepleNoHomeUI.gd" id="3_retpw"]
 [ext_resource type="Script" path="res://Scripts/UI/Info/PeepleMissingJobUI.gd" id="4_of75d"]
 
-[node name="Info" type="Panel"]
+[node name="Info" type="Panel" groups=["controls"]]
 modulate = Color(0.796078, 0.701961, 0.701961, 1)
 script = ExtResource("1_3vjgb")
 
