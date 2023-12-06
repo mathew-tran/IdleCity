@@ -18,6 +18,7 @@ BuildingType = 2
 RequirementType = Array[int]([0])
 RequirementAmount = Array[int]([5])
 Description = "Good for the environment!"
+BuildingPrefix = "Bush"
 
 [node name="Timer" type="Timer" parent="."]
 

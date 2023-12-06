@@ -19,12 +19,15 @@ var PeepleInBuilding = []
 
 @export var bShowClickable = false
 
+@export var BuildingPrefix = ""
 var CachedSpawnArea = []
+
 signal OnDestroyed
 
 func _ready():
 	SaveManager.AddToPersistGroup(self)
 	var _OnHalfHourUpdate = GameClock.connect("OnHalfHourUpdate", Callable(self, "HalfHourUpdate"))
+	name = BuildingPrefix
 
 func Setup():
 	if CachedSpawnArea.is_empty():

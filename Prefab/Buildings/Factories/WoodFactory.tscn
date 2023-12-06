@@ -9,6 +9,7 @@ BuildingName = "Wood Factory"
 BuildingType = 1
 Description = "Generates Wood"
 HappinessAmount = -3
+BuildingPrefix = "WoodFactory"
 
 [node name="ActiveParticle" parent="." index="0"]
 position = Vector2(31, 16)

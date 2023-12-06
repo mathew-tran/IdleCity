@@ -8,3 +8,4 @@ BuildingName = "Duplex"
 RequirementAmount = Array[int]([100])
 Description = "Houses 8 Tenants"
 HappinessAmount = 6
+BuildingPrefix = "TownDuplex"
