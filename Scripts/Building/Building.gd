@@ -17,7 +17,8 @@ var PeepleInBuilding = []
 
 @export var HappinessAmount: int = 3
 
-@export var bShowClickable = false
+var bShowClickable = true
+var bCanBeClicked = false
 
 @export var BuildingPrefix = ""
 var CachedSpawnArea = []
@@ -27,6 +28,8 @@ signal OnDestroyed
 func _ready():
 	SaveManager.AddToPersistGroup(self)
 	var _OnHalfHourUpdate = GameClock.connect("OnHalfHourUpdate", Callable(self, "HalfHourUpdate"))
+	$Area2D.connect("mouse_entered", Callable(self, "OnMouseEntered"))
+	$Area2D.connect("mouse_exited", Callable(self, "OnMouseExited"))
 	name = BuildingPrefix
 
 func Setup():
@@ -55,10 +58,21 @@ func HalfHourUpdate():
 	for peeple in PeepleInBuilding:
 		peeple.AddHappiness(HappinessAmount)
 
+func _input(event):
+	if bCanBeClicked:
+		if event.is_action_pressed("left_click"):
+			print(name)
+
 func OnHover():
 	if bShowClickable:
 		modulate = "dedede"
 		pass
+
+func OnMouseEntered():
+	bCanBeClicked = true
+
+func OnMouseExited():
+	bCanBeClicked = false
 
 func OnClick():
 	if bShowClickable:

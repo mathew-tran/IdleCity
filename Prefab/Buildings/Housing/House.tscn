@@ -4,8 +4,8 @@
 [ext_resource type="Script" path="res://Scripts/Building/Housing.gd" id="2"]
 [ext_resource type="PackedScene" path="res://Prefab/Particles/ActiveHouseParticle.tscn" id="3"]
 
-[sub_resource type="RectangleShape2D" id="1"]
-size = Vector2(27, 29)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ue84j"]
+size = Vector2(32, 32)
 
 [node name="Housing" type="Sprite2D" groups=["House"]]
 texture = ExtResource("1_28bhi")
@@ -24,7 +24,7 @@ position = Vector2(-1, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(16.5, 17.5)
-shape = SubResource("1")
+shape = SubResource("RectangleShape2D_ue84j")
 
 [node name="ActiveParticle" parent="." instance=ExtResource("3")]
 position = Vector2(17, 4)
