@@ -83,7 +83,12 @@ func SetTile(tile, tileTypeIndex):
 	var Tilemap = Finder.GetBuildTiles()
 	Tilemap.set_cell(0, tile, tileTypeIndex, Vector2i(0,0))
 
-
+func IsWaterTile(tile):
+	var tileInfo = Helper.GetTileInfo(tile)
+	if tileInfo != null:
+		if tileInfo == GameResources.Tiles["Water"]:
+			return true
+	return false
 
 func GetTileInTilemap(globalPosition):
 	var Tilemap = Finder.GetBuildTiles()

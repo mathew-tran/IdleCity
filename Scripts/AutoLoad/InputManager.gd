@@ -5,9 +5,11 @@ var LastClickedObject = null
 var LastHoveredObject = null
 
 signal OnContextClicked(obj)
+signal OnClicked(obj)
 
 func Click(object):
 	LastClickedObject = object
+	emit_signal("OnClicked", LastClickedObject)
 
 func GetLastClickedObject():
 	return LastClickedObject

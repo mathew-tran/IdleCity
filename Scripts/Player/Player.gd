@@ -117,14 +117,9 @@ func ProcessBuildMode(delta):
 		$Sprite2D/GhostImage.modulate = "ee3327ad"
 
 func IsSpawnable(tile):
-	return IsWaterTile(tile) == false and null == Helper.GetBuildingOnTile(tile) and Helper.IsValidSpawnLocation(ClassInstance.GetCachedSpawnArea(), tile) and CanPurchase()
+	return Helper.IsWaterTile(tile) == false and null == Helper.GetBuildingOnTile(tile) and Helper.IsValidSpawnLocation(ClassInstance.GetCachedSpawnArea(), tile) and CanPurchase()
 
-func IsWaterTile(tile):
-	var tileInfo = Helper.GetTileInfo(tile)
-	if tileInfo != null:
-		if tileInfo == GameResources.Tiles["Water"]:
-			return true
-	return false
+
 
 func ProcessMenuMode(_delta):
 	if Helper.IsPopupVisible() == false:

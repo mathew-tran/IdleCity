@@ -73,8 +73,11 @@ func _process(delta):
 		var tile = Helper.GetTileInTilemap(TargetPosition)
 		global_position = Finder.GetBuildTiles().map_to_local(tile)
 		if Input.is_action_just_released("left_click"):
-			bIsInMoveMode = false
-			UpdateLevelNavigation()
+			if Helper.IsWaterTile(tile) == false:
+				bIsInMoveMode = false
+				UpdateLevelNavigation()
+			else:
+				Helper.AddPopupText(get_global_mouse_position(), "Cannot\nplace object!")
 		if Input.is_action_just_released("right_click"):
 			bIsInMoveMode = false
 			global_position = LastPosition
