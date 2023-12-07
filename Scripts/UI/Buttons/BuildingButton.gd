@@ -10,6 +10,7 @@ func Setup():
 	var instance = BuildingClass.instantiate()
 	$Name.text = instance.BuildingName
 	$Description.text = DescriptionText
+	$TextureRect.texture = instance.texture
 	instance.queue_free()
 
 func _on_FactoryButton_pressed():
