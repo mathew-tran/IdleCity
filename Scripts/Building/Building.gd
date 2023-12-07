@@ -111,9 +111,17 @@ func OnExit():
 
 func UpdateLevelNavigation():
 	if bIsBlockingNavigation:
-		for area in CachedSpawnArea:
-			Helper.SetTile(area, GameResources.Tiles["Water"])
+		#RemoveNavBlockers()
+		#CachedSpawnArea = GetSpawnArea()
+		AddNavBlockers()
 
+func AddNavBlockers():
+	for area in CachedSpawnArea:
+		Helper.SetTile(area, GameResources.Tiles["Water"])
+
+func RemoveNavBlockers():
+	for area in CachedSpawnArea:
+			Helper.SetTile(area, GameResources.Tiles["Grass"])
 
 func Save():
 	var tile = (CachedSpawnArea[0] - GetSpawnArea()[0])
@@ -175,5 +183,4 @@ func OnDeactivated():
 func _exit_tree():
 	emit_signal("OnDestroyed")
 	if bIsBlockingNavigation:
-		for area in CachedSpawnArea:
-			Helper.SetTile(area, GameResources.Tiles["Grass"])
+		RemoveNavBlockers()
