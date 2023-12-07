@@ -56,7 +56,7 @@ func IsValidSpawnLocation(spawnArea, location):
 	var buildings = Finder.GetBuildings()
 	var takenSpots = []
 	for building in buildings.get_children():
-		for area in building.CachedSpawnArea:
+		for area in building.GetSpawnArea():
 			takenSpots.append(area)
 	for area in spawnArea:
 		if takenSpots.find(area + location) != -1:
@@ -67,7 +67,7 @@ func GetBuildingOnTile(tileLocation):
 	tileLocation = Vector2i(tileLocation)
 	var tiles = Finder.GetBuildings()
 	for tile in tiles.get_children():
-		for area in tile.CachedSpawnArea:
+		for area in tile.GetSpawnArea():
 			if area == tileLocation:
 				return tile
 	return null
@@ -89,6 +89,9 @@ func IsWaterTile(tile):
 		if tileInfo == GameResources.Tiles["Water"]:
 			return true
 	return false
+
+func IsPlaceable(tile, spawnArea):
+	return Helper.IsWaterTile(tile) == false and null == Helper.GetBuildingOnTile(tile) and Helper.IsValidSpawnLocation(spawnArea, tile)
 
 func GetTileInTilemap(globalPosition):
 	var Tilemap = Finder.GetBuildTiles()

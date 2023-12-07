@@ -37,15 +37,6 @@ func _ready():
 	name = BuildingPrefix
 	LastPosition = global_position
 
-func Setup():
-	if CachedSpawnArea.is_empty():
-		CachedSpawnArea = GetSpawnArea()
-
-func AdjustSpawnArea():
-	return
-	#for areaPosition in range(0, len(CachedSpawnArea)):
-		#CachedSpawnArea[areaPosition].x += tileDisplacement.x
-		#CachedSpawnArea[areaPosition].y += tileDisplacement.y
 
 func GetSpawnArea():
 	#This only captures squares.
@@ -54,11 +45,8 @@ func GetSpawnArea():
 	var spawnHeight = int(texture.get_height() / 32.0)
 	for x in range(0, spawnWidth):
 		for y in range(0, spawnHeight):
-			area.append(Vector2i(x,y))
+			area.append(Vector2i(x,y) + Vector2i(global_position))
 	return area
-
-func GetCachedSpawnArea():
-	return CachedSpawnArea
 
 func HalfHourUpdate():
 	for peeple in PeepleInBuilding:
@@ -77,7 +65,7 @@ func _process(delta):
 		var tile = Helper.GetTileInTilemap(TargetPosition)
 		global_position = Finder.GetBuildTiles().map_to_local(tile)
 		if Input.is_action_just_released("left_click"):
-			if Helper.IsWaterTile(tile) == false:
+			if Helper.IsPlaceable(tile, GetSpawnArea()):
 				bIsInMoveMode = false
 				UpdateLevelNavigation()
 			else:
@@ -142,8 +130,6 @@ func Save():
 func Load(dictData):
 	position.x = dictData["pos_x"]
 	position.y = dictData["pos_y"]
-	Setup()
-	AdjustSpawnArea()
 
 	Finder.GetBuildings().add_child(self)
 	UpdateLevelNavigation()

@@ -38,7 +38,6 @@ func SetBuildingClass(newclass, purchaseButton):
 	ClassInstance = BuildingClass.instantiate()
 	$Sprite2D/GhostImage.texture = ClassInstance.texture
 	$Sprite2D/GhostImage.visible = true
-	ClassInstance.Setup()
 
 func _process(delta):
 	if CurrentPlayerMode == GameResources.UI_MODE.BUILD:
@@ -103,10 +102,8 @@ func ProcessBuildMode(delta):
 	if Input.is_action_just_pressed("left_click"):
 		if IsSpawnable(tile):
 			var newInstance = BuildingClass.instantiate()
-			newInstance.Setup()
 			Finder.GetBuildings().add_child(newInstance)
 			newInstance.position = Finder.GetBuildTiles().map_to_local(tile)
-			newInstance.AdjustSpawnArea(tile)
 			newInstance.UpdateLevelNavigation()
 			PurchaseButton.Purchase()
 
@@ -117,7 +114,7 @@ func ProcessBuildMode(delta):
 		$Sprite2D/GhostImage.modulate = "ee3327ad"
 
 func IsSpawnable(tile):
-	return Helper.IsWaterTile(tile) == false and null == Helper.GetBuildingOnTile(tile) and Helper.IsValidSpawnLocation(ClassInstance.GetCachedSpawnArea(), tile) and CanPurchase()
+	return Helper.IsPlaceable(tile, ClassInstance.GetSpawnArea()) and CanPurchase()
 
 
 
