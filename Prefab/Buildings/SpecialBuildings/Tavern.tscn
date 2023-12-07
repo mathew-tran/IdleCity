@@ -28,10 +28,3 @@ position = Vector2(-1, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(33, 32)
 shape = SubResource("RectangleShape2D_btb68")
-
-[node name="Button" type="Button" parent="."]
-modulate = Color(1, 1, 1, 0)
-offset_right = 62.0
-offset_bottom = 64.0
-
-[connection signal="button_down" from="Button" to="." method="_on_Button_button_down"]

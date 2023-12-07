@@ -17,8 +17,10 @@ var PeepleInBuilding = []
 
 @export var HappinessAmount: int = 3
 
-var bShowClickable = true
 var bCanBeClicked = false
+
+var bIsInMoveMode = false
+var LastPosition = Vector2(0,0)
 
 @export var BuildingPrefix = ""
 var CachedSpawnArea = []
@@ -59,14 +61,35 @@ func HalfHourUpdate():
 		peeple.AddHappiness(HappinessAmount)
 
 func _input(event):
-	if bCanBeClicked:
-		if event.is_action_pressed("left_click"):
-			print(name)
+	if bCanBeClicked and !bIsInMoveMode:
+		if event.is_action_released("left_click"):
+			OnLeftClick()
+		if event.is_action_released("right_click"):
+			OnRightClick()
+
+func _process(delta):
+	if bIsInMoveMode:
+		var TargetPosition = get_global_mouse_position() - Vector2(16,16)
+		var tile = Helper.GetTileInTilemap(TargetPosition)
+		global_position = Finder.GetBuildTiles().map_to_local(tile)
+		if Input.is_action_just_released("left_click"):
+			bIsInMoveMode = false
+			UpdateLevelNavigation()
+		if Input.is_action_just_released("right_click"):
+			bIsInMoveMode = false
+			global_position = LastPosition
+
+func SetMoveMode(bIsMoving):
+	await get_tree().create_timer(.1).timeout
+	bIsInMoveMode = bIsMoving
+	if bIsInMoveMode:
+		LastPosition = global_position
+
+func GetMoveMode():
+	return bIsInMoveMode
 
 func OnHover():
-	if bShowClickable:
-		modulate = "dedede"
-		pass
+	modulate = "dedede"
 
 func OnMouseEntered():
 	bCanBeClicked = true
@@ -74,15 +97,14 @@ func OnMouseEntered():
 func OnMouseExited():
 	bCanBeClicked = false
 
-func OnClick():
-	if bShowClickable:
-		modulate = "7d7d7d"
-		pass
+func OnLeftClick():
+	pass
+
+func OnRightClick():
+	InputManager.ContextClick(self)
 
 func OnExit():
-	if bShowClickable:
-		modulate = "ffffff"
-		pass
+	modulate = "ffffff"
 
 func UpdateLevelNavigation():
 	if bIsBlockingNavigation:

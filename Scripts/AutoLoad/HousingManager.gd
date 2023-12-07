@@ -8,8 +8,8 @@ func FindHouse(tenant):
 		var deltaDistance = house.global_position.distance_to(tenant.global_position)
 		if house.CanSubscribe():
 			if deltaDistance < closestPosition:
-				closestHouse = house 
-	
+				closestHouse = house
+
 	if closestHouse == null:
 		#print("Could not find house for: " + tenant.name)
 		pass

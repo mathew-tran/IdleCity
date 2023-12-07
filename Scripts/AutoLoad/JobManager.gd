@@ -9,7 +9,7 @@ func FindJob(employee):
 		if factory.CanSubscribe():
 			if deltaDistance < closestPosition:
 				closestFactory = factory
-	
+
 	if closestFactory == null:
 		#print("Could not find job for: " + employee.name)
 		pass

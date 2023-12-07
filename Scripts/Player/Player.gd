@@ -110,10 +110,6 @@ func ProcessBuildMode(delta):
 			newInstance.UpdateLevelNavigation()
 			PurchaseButton.Purchase()
 
-	if Input.is_action_just_pressed("right_click"):
-		var building = Helper.GetBuildingOnTile(tile)
-		if building:
-			building.queue_free()
 
 	if IsSpawnable(tile):
 		$Sprite2D/GhostImage.modulate = "00bc68c9"
@@ -129,9 +125,6 @@ func IsWaterTile(tile):
 		if tileInfo == GameResources.Tiles["Water"]:
 			return true
 	return false
-
-func CanPlace():
-	return get_local_mouse_position().x > -200
 
 func ProcessMenuMode(_delta):
 	if Helper.IsPopupVisible() == false:
