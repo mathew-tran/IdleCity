@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dreybwy6svxjc"]
 
-[ext_resource type="Texture2D" uid="uid://d0dqsf37fbagw" path="res://Art/Buildings/Housing/SimpleHome.png" id="1_04j7k"]
+[ext_resource type="Texture2D" uid="uid://d0dqsf37fbagw" path="res://Art/Buildings/Housing/House.png" id="1_28bhi"]
 [ext_resource type="Script" path="res://Scripts/Building/Housing.gd" id="2"]
 [ext_resource type="PackedScene" path="res://Prefab/Particles/ActiveHouseParticle.tscn" id="3"]
 
@@ -8,7 +8,7 @@
 size = Vector2(27, 29)
 
 [node name="Housing" type="Sprite2D" groups=["House"]]
-texture = ExtResource("1_04j7k")
+texture = ExtResource("1_28bhi")
 centered = false
 script = ExtResource("2")
 BuildingLimit = 2
