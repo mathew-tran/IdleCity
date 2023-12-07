@@ -22,6 +22,8 @@ var bCanBeClicked = false
 var bIsInMoveMode = false
 var LastPosition = Vector2(0,0)
 
+var BlockedTiles = []
+
 @export var BuildingPrefix = ""
 var CachedSpawnArea = []
 
@@ -33,15 +35,17 @@ func _ready():
 	$Area2D.connect("mouse_entered", Callable(self, "OnMouseEntered"))
 	$Area2D.connect("mouse_exited", Callable(self, "OnMouseExited"))
 	name = BuildingPrefix
+	LastPosition = global_position
 
 func Setup():
 	if CachedSpawnArea.is_empty():
 		CachedSpawnArea = GetSpawnArea()
 
-func AdjustSpawnArea(tileDisplacement):
-	for area in range(0, len(CachedSpawnArea)):
-		CachedSpawnArea[area].x += tileDisplacement.x
-		CachedSpawnArea[area].y += tileDisplacement.y
+func AdjustSpawnArea():
+	return
+	#for areaPosition in range(0, len(CachedSpawnArea)):
+		#CachedSpawnArea[areaPosition].x += tileDisplacement.x
+		#CachedSpawnArea[areaPosition].y += tileDisplacement.y
 
 func GetSpawnArea():
 	#This only captures squares.
@@ -111,27 +115,27 @@ func OnExit():
 
 func UpdateLevelNavigation():
 	if bIsBlockingNavigation:
-		#RemoveNavBlockers()
-		#CachedSpawnArea = GetSpawnArea()
+		RemoveNavBlockers()
+		CachedSpawnArea = GetSpawnArea()
 		AddNavBlockers()
 
 func AddNavBlockers():
 	for area in CachedSpawnArea:
-		Helper.SetTile(area, GameResources.Tiles["Water"])
+		var tile = Helper.GetTileInTilemap(Vector2i(global_position) + area)
+		Helper.SetTile(tile, GameResources.Tiles["Water"])
+		BlockedTiles.append(tile)
 
 func RemoveNavBlockers():
-	for area in CachedSpawnArea:
-			Helper.SetTile(area, GameResources.Tiles["Grass"])
+	for tile in BlockedTiles:
+		Helper.SetTile(tile, GameResources.Tiles["Grass"])
+	BlockedTiles.clear()
 
 func Save():
-	var tile = (CachedSpawnArea[0] - GetSpawnArea()[0])
 	var dictionary = {
 		"type" : "object",
 		"filename" : get_scene_file_path(),
 		"pos_x" : position.x,
 		"pos_y" : position.y,
-		"tile_x" : tile.x,
-		"tile_y" : tile.y
 		}
 	return dictionary
 
@@ -139,7 +143,7 @@ func Load(dictData):
 	position.x = dictData["pos_x"]
 	position.y = dictData["pos_y"]
 	Setup()
-	AdjustSpawnArea(Vector2(dictData["tile_x"], dictData["tile_y"]))
+	AdjustSpawnArea()
 
 	Finder.GetBuildings().add_child(self)
 	UpdateLevelNavigation()
