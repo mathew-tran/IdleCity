@@ -1,11 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://cw2aw54uyor8t"]
+[gd_scene load_steps=3 format=3 uid="uid://cw2aw54uyor8t"]
 
 [ext_resource type="PackedScene" uid="uid://dreybwy6svxjc" path="res://Prefab/Buildings/Housing/House.tscn" id="1"]
+[ext_resource type="Texture2D" uid="uid://dta2wndi0eo6p" path="res://Art/Buildings/Housing/Home.png" id="2_rliq8"]
 
 [node name="Housing" instance=ExtResource("1")]
-BuildingLimit = 8
+texture = ExtResource("2_rliq8")
 BuildingName = "Duplex"
 RequirementAmount = Array[int]([100])
-Description = "Houses 8 Tenants"
 HappinessAmount = 6
 BuildingPrefix = "TownDuplex"
