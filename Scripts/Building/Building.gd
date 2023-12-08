@@ -37,16 +37,21 @@ func _ready():
 	name = BuildingPrefix
 	LastPosition = global_position
 
-
-func GetSpawnArea():
+func GetTileOffsets():
 	#This only captures squares.
 	var area = []
 	var spawnWidth = int(texture.get_width() / 32.0)
 	var spawnHeight = int(texture.get_height() / 32.0)
 	for x in range(0, spawnWidth):
 		for y in range(0, spawnHeight):
-			area.append(Vector2i(x,y) + Vector2i(global_position))
+			area.append(Vector2i(x,y))
 	return area
+
+func GetGlobalSpawnArea():
+	var globalTilePositions = []
+	for tile in GetTileOffsets():
+		globalTilePositions.append(tile + Vector2i(global_position))
+	return globalTilePositions
 
 func HalfHourUpdate():
 	for peeple in PeepleInBuilding:
@@ -59,13 +64,16 @@ func _input(event):
 		if event.is_action_released("right_click"):
 			OnRightClick()
 
+func IsInMoveMode():
+	return bIsInMoveMode
+
 func _process(delta):
 	if bIsInMoveMode:
 		var TargetPosition = get_global_mouse_position() - Vector2(16,16)
 		var tile = Helper.GetTileInTilemap(TargetPosition)
 		global_position = Finder.GetBuildTiles().map_to_local(tile)
 		if Input.is_action_just_released("left_click"):
-			if Helper.IsPlaceable(tile, GetSpawnArea()):
+			if Helper.IsPlaceable(GetTileOffsets(), TargetPosition):
 				bIsInMoveMode = false
 				UpdateLevelNavigation()
 			else:
@@ -104,12 +112,12 @@ func OnExit():
 func UpdateLevelNavigation():
 	if bIsBlockingNavigation:
 		RemoveNavBlockers()
-		CachedSpawnArea = GetSpawnArea()
+		CachedSpawnArea = GetGlobalSpawnArea()
 		AddNavBlockers()
 
 func AddNavBlockers():
 	for area in CachedSpawnArea:
-		var tile = Helper.GetTileInTilemap(Vector2i(global_position) + area)
+		var tile = Helper.GetTileInTilemap(area)
 		Helper.SetTile(tile, GameResources.Tiles["Water"])
 		BlockedTiles.append(tile)
 

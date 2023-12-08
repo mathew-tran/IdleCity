@@ -30,11 +30,12 @@ func _ready():
 	$Sprite2D/GhostImage.visible = false
 
 func SetBuildingClass(newclass, purchaseButton):
+	if ClassInstance:
+		ClassInstance.queue_free()
 	BuildingClass = newclass
 
 	PurchaseButton = purchaseButton
-	if ClassInstance:
-		ClassInstance.queue_free()
+
 	ClassInstance = BuildingClass.instantiate()
 	$Sprite2D/GhostImage.texture = ClassInstance.texture
 	$Sprite2D/GhostImage.visible = true
@@ -100,7 +101,7 @@ func ProcessBuildMode(delta):
 	if Helper.IsMouseOnControl():
 		return
 	if Input.is_action_just_pressed("left_click"):
-		if IsSpawnable(tile):
+		if Helper.IsPlaceable(ClassInstance.GetTileOffsets(), TargetPosition):
 			var newInstance = BuildingClass.instantiate()
 			Finder.GetBuildings().add_child(newInstance)
 			newInstance.position = Finder.GetBuildTiles().map_to_local(tile)
@@ -108,13 +109,13 @@ func ProcessBuildMode(delta):
 			PurchaseButton.Purchase()
 
 
-	if IsSpawnable(tile):
+	if Helper.IsPlaceable(ClassInstance.GetTileOffsets(), TargetPosition):
 		$Sprite2D/GhostImage.modulate = "00bc68c9"
 	else:
 		$Sprite2D/GhostImage.modulate = "ee3327ad"
 
 func IsSpawnable(tile):
-	return Helper.IsPlaceable(tile, ClassInstance.GetSpawnArea()) and CanPurchase()
+	return Helper.IsPlaceable(ClassInstance.GetGlobalSpawnArea()) and CanPurchase()
 
 
 

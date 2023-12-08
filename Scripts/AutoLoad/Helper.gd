@@ -65,11 +65,13 @@ func IsValidSpawnLocation(spawnArea, location):
 
 func GetBuildingOnTile(tileLocation):
 	tileLocation = Vector2i(tileLocation)
-	var tiles = Finder.GetBuildings()
-	for tile in tiles.get_children():
-		for area in tile.GetSpawnArea():
-			if area == tileLocation:
-				return tile
+	var buildings = Finder.GetBuildings()
+	for building in buildings.get_children():
+		if building.IsInMoveMode() == false:
+			for area in building.GetGlobalSpawnArea():
+				var areaTile = Helper.GetTileInTilemap(area)
+				if areaTile == tileLocation:
+					return building
 	return null
 
 func GetTileInfo(tile):
@@ -90,8 +92,17 @@ func IsWaterTile(tile):
 			return true
 	return false
 
-func IsPlaceable(tile, spawnArea):
-	return Helper.IsWaterTile(tile) == false and null == Helper.GetBuildingOnTile(tile) and Helper.IsValidSpawnLocation(spawnArea, tile)
+func IsPlaceable(spawnArea, offset = Vector2i.ZERO):
+	for area in spawnArea:
+		var tile = GetTileInTilemap(Vector2i(offset))
+		tile += area
+		print(tile)
+		if Helper.IsWaterTile(tile):
+			return false
+		if Helper.GetBuildingOnTile(tile):
+			return false
+	return true
+	#return Helper.IsWaterTile(tile) == false and null == Helper.GetBuildingOnTile(tile) and Helper.IsValidSpawnLocation(spawnArea, tile)
 
 func GetTileInTilemap(globalPosition):
 	var Tilemap = Finder.GetBuildTiles()
