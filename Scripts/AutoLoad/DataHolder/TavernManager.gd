@@ -2,7 +2,7 @@ extends "res://Scripts/AutoLoad/DataHolder/PersistentData.gd"
 
 @export var RequirementType : Array[GameResources.RESOURCE_TYPE]
 @export var RequirementAmount : Array[int]
-var MaxAmount = 10
+var MaxAmount = 50
 var CurrentAmount = 1
 var bHasPurchased = true
 

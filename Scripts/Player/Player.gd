@@ -4,10 +4,10 @@ var MoveSpeed = 200
 var ZoomSpeed = 10
 var MaxZoom = 1.6
 var MinZoom = .5
-var Offset = Vector2(16, 16)
 @onready var Highlight = $Sprite2D
 
 var BuildingClass = preload("res://Prefab/Buildings/Factories/Factory.tscn")
+var DefaultBuildingClass = preload("res://Prefab/Buildings/Factories/Factory.tscn")
 var ClassInstance = null
 var PurchaseButton = null
 
@@ -27,21 +27,24 @@ func _ready():
 	Helper.ShowBuildTileOutline(true)
 	Finder.GetMenuUI().connect("tab_changed", Callable(self, "_on_TabContainer_tab_changed"))
 
-	$Sprite2D/GhostImage.visible = false
+
 
 func SetBuildingClass(newclass, purchaseButton):
+	if ClassInstance:
+		ClassInstance.queue_free()
 	BuildingClass = newclass
 
 	PurchaseButton = purchaseButton
-	if ClassInstance:
-		ClassInstance.queue_free()
+
 	ClassInstance = BuildingClass.instantiate()
 	$Sprite2D/GhostImage.texture = ClassInstance.texture
-	$Sprite2D/GhostImage.visible = true
-	ClassInstance.Setup()
+	$Sprite2D/GhostImage.visible = newclass != DefaultBuildingClass
+
+func IsInBuildMode():
+	return CurrentPlayerMode == GameResources.UI_MODE.BUILD
 
 func _process(delta):
-	if CurrentPlayerMode == GameResources.UI_MODE.BUILD:
+	if IsInBuildMode():
 		ProcessBuildMode(delta)
 	else:
 		ProcessMenuMode(delta)
@@ -94,44 +97,34 @@ func ProcessBuildMode(delta):
 	Helper.ShowBuildTileOutline(true)
 	MoveGhost(delta)
 	$Sprite2D.visible = true
-	var TargetPosition = get_global_mouse_position() - Offset
-
+	var TargetPosition =  Helper.GetCustomMousePosition()
 	var tile = Helper.GetTileInTilemap(TargetPosition)
+	var tileOffset = Vector2i(Finder.GetBuildTiles().map_to_local(tile))
+	var potentialSpawnArea = ClassInstance.GetGlobalSpawnArea()
 
+	for i in range(0, len(potentialSpawnArea)):
+		potentialSpawnArea[i] += tileOffset
+
+	#print(potentialSpawnArea)
 	if Helper.IsMouseOnControl():
 		return
-	if Input.is_action_just_pressed("left_click"):
-		if IsSpawnable(tile):
+	if Input.is_action_just_pressed("left_click") and BuildingClass != DefaultBuildingClass:
+		if Helper.IsPlaceable(potentialSpawnArea):
 			var newInstance = BuildingClass.instantiate()
-			newInstance.Setup()
 			Finder.GetBuildings().add_child(newInstance)
 			newInstance.position = Finder.GetBuildTiles().map_to_local(tile)
-			newInstance.AdjustSpawnArea(tile)
 			newInstance.UpdateLevelNavigation()
 			PurchaseButton.Purchase()
-
+		else:
+			Helper.AddPopupText(get_global_mouse_position(), "Cannot\nplace object!")
 	if Input.is_action_just_pressed("right_click"):
-		var building = Helper.GetBuildingOnTile(tile)
-		if building:
-			building.queue_free()
+		SetBuildingClass(DefaultBuildingClass, null)
 
-	if IsSpawnable(tile):
-		$Sprite2D/GhostImage.modulate = "00bc68c9"
+	if Helper.IsPlaceable(potentialSpawnArea):
+		$Sprite2D/GhostImage.modulate = GameResources.COLOR_ACCEPT
 	else:
-		$Sprite2D/GhostImage.modulate = "ee3327ad"
+		$Sprite2D/GhostImage.modulate = GameResources.COLOR_DECLINE
 
-func IsSpawnable(tile):
-	return IsWaterTile(tile) == false and null == Helper.GetBuildingOnTile(tile) and Helper.IsValidSpawnLocation(ClassInstance.GetCachedSpawnArea(), tile) and CanPurchase()
-
-func IsWaterTile(tile):
-	var tileInfo = Helper.GetTileInfo(tile)
-	if tileInfo != null:
-		if tileInfo == GameResources.Tiles["Water"]:
-			return true
-	return false
-
-func CanPlace():
-	return get_local_mouse_position().x > -200
 
 func ProcessMenuMode(_delta):
 	if Helper.IsPopupVisible() == false:
@@ -141,14 +134,11 @@ func ProcessMenuMode(_delta):
 	Helper.ShowBuildTileOutline(false)
 
 	var Tilemap = Finder.GetBuildTiles()
-	var TargetPosition = get_global_mouse_position() - Offset
+	var TargetPosition = Helper.GetCustomMousePosition()
 	var tile = Tilemap.local_to_map(TargetPosition)
-	var building = Helper.GetBuildingOnTile(tile)
-
-	InputManager.Hovered(building)
 
 func MoveGhost(_delta):
-	var TargetPosition = get_global_mouse_position() - Offset
+	var TargetPosition = Helper.GetCustomMousePosition()
 	var tile = Helper.GetTileInTilemap(TargetPosition)
 	$Sprite2D.global_position = Finder.GetBuildTiles().map_to_local(tile)
 

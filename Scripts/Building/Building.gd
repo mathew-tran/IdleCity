@@ -17,28 +17,31 @@ var PeepleInBuilding = []
 
 @export var HappinessAmount: int = 3
 
-@export var bShowClickable = false
+var bCanBeClicked = false
+
+var bIsInMoveMode = false
+var LastPosition = Vector2(0,0)
+
+var BlockedTiles = []
 
 @export var BuildingPrefix = ""
 var CachedSpawnArea = []
 
 signal OnDestroyed
 
+var OldZIndex = 0
+
 func _ready():
+	OldZIndex = z_index
 	SaveManager.AddToPersistGroup(self)
 	var _OnHalfHourUpdate = GameClock.connect("OnHalfHourUpdate", Callable(self, "HalfHourUpdate"))
+	$Area2D.connect("mouse_entered", Callable(self, "OnMouseEntered"))
+	$Area2D.connect("mouse_exited", Callable(self, "OnMouseExited"))
 	name = BuildingPrefix
+	LastPosition = global_position
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
-func Setup():
-	if CachedSpawnArea.is_empty():
-		CachedSpawnArea = GetSpawnArea()
-
-func AdjustSpawnArea(tileDisplacement):
-	for area in range(0, len(CachedSpawnArea)):
-		CachedSpawnArea[area].x += tileDisplacement.x
-		CachedSpawnArea[area].y += tileDisplacement.y
-
-func GetSpawnArea():
+func GetTileOffsets():
 	#This only captures squares.
 	var area = []
 	var spawnWidth = int(texture.get_width() / 32.0)
@@ -48,51 +51,113 @@ func GetSpawnArea():
 			area.append(Vector2i(x,y))
 	return area
 
-func GetCachedSpawnArea():
-	return CachedSpawnArea
+func GetGlobalSpawnArea():
+	var globalTilePositions = []
+	for tile in GetTileOffsets():
+		globalTilePositions.append(tile * 32 + Vector2i(global_position))
+	return globalTilePositions
 
 func HalfHourUpdate():
 	for peeple in PeepleInBuilding:
 		peeple.AddHappiness(HappinessAmount)
 
-func OnHover():
-	if bShowClickable:
-		modulate = "dedede"
-		pass
+func _input(event):
+	if InputManager.CanInteractWithBuilding() == false:
+		return
 
-func OnClick():
-	if bShowClickable:
-		modulate = "7d7d7d"
-		pass
+	if bCanBeClicked and !bIsInMoveMode and InputManager.IsContextObject(self) == false:
+		if event.is_action_pressed("left_click") and Finder.GetPlayer().IsInBuildMode() == false:
+			OnLeftClick()
+		if event.is_action_pressed("right_click") and  Finder.GetPlayer().IsInBuildMode():
+			OnRightClick()
+
+func IsInMoveMode():
+	return bIsInMoveMode
+
+func _process(delta):
+	if bIsInMoveMode:
+		z_index = 100
+		var TargetPosition = Helper.GetCustomMousePosition()
+		var tile = Helper.GetTileInTilemap(TargetPosition)
+		global_position = Finder.GetBuildTiles().map_to_local(tile)
+		var bIsPlaceable = Helper.IsPlaceable(GetGlobalSpawnArea())
+		print(GetGlobalSpawnArea())
+
+		if bIsPlaceable:
+			modulate =  GameResources.COLOR_ACCEPT
+		else:
+			modulate =  GameResources.COLOR_DECLINE
+
+		if Input.is_action_just_released("left_click"):
+			if bIsPlaceable:
+				bIsInMoveMode = false
+				UpdateLevelNavigation()
+				modulate = Color.WHITE
+				z_index = OldZIndex
+			else:
+				Helper.AddPopupText(get_global_mouse_position(), "Cannot\nplace object!")
+		if Input.is_action_just_released("right_click"):
+			bIsInMoveMode = false
+			global_position = LastPosition
+			modulate = Color.WHITE
+			z_index = OldZIndex
+
+func SetMoveMode(bIsMoving):
+	await get_tree().create_timer(.1).timeout
+	bIsInMoveMode = bIsMoving
+	if bIsInMoveMode:
+		LastPosition = global_position
+
+func GetMoveMode():
+	return bIsInMoveMode
+
+func OnHover():
+	modulate = "dedede"
+
+func OnMouseEntered():
+	bCanBeClicked = true
+
+func OnMouseExited():
+	bCanBeClicked = false
+
+func OnLeftClick():
+	pass
+
+func OnRightClick():
+	InputManager.ContextClick(self)
 
 func OnExit():
-	if bShowClickable:
-		modulate = "ffffff"
-		pass
+	modulate = "ffffff"
 
 func UpdateLevelNavigation():
 	if bIsBlockingNavigation:
-		for area in CachedSpawnArea:
-			Helper.SetTile(area, GameResources.Tiles["Water"])
+		RemoveNavBlockers()
+		CachedSpawnArea = GetGlobalSpawnArea()
+		AddNavBlockers()
 
+func AddNavBlockers():
+	for area in CachedSpawnArea:
+		var tile = Helper.GetTileInTilemap(area)
+		Helper.SetTile(tile, GameResources.Tiles["Water"])
+		BlockedTiles.append(tile)
+
+func RemoveNavBlockers():
+	for tile in BlockedTiles:
+		Helper.SetTile(tile, GameResources.Tiles["Grass"])
+	BlockedTiles.clear()
 
 func Save():
-	var tile = (CachedSpawnArea[0] - GetSpawnArea()[0])
 	var dictionary = {
 		"type" : "object",
 		"filename" : get_scene_file_path(),
 		"pos_x" : position.x,
 		"pos_y" : position.y,
-		"tile_x" : tile.x,
-		"tile_y" : tile.y
 		}
 	return dictionary
 
 func Load(dictData):
 	position.x = dictData["pos_x"]
 	position.y = dictData["pos_y"]
-	Setup()
-	AdjustSpawnArea(Vector2(dictData["tile_x"], dictData["tile_y"]))
 
 	Finder.GetBuildings().add_child(self)
 	UpdateLevelNavigation()
@@ -136,5 +201,4 @@ func OnDeactivated():
 func _exit_tree():
 	emit_signal("OnDestroyed")
 	if bIsBlockingNavigation:
-		for area in CachedSpawnArea:
-			Helper.SetTile(area, GameResources.Tiles["Grass"])
+		RemoveNavBlockers()

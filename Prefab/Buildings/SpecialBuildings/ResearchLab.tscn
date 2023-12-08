@@ -4,7 +4,8 @@
 [ext_resource type="PackedScene" path="res://Prefab/Particles/ActiveHouseParticle.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://bk8w0teeuwnmj" path="res://Art/Buildings/SpecialBuildings/Know.png" id="3"]
 
-[sub_resource type="RectangleShape2D" id="1"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fnsjx"]
+size = Vector2(64, 32)
 
 [node name="ResearchLab" type="Sprite2D"]
 texture = ExtResource("3")
@@ -15,7 +16,6 @@ BuildingType = 2
 RequirementType = Array[int]([1])
 RequirementAmount = Array[int]([5])
 Description = "Learn things!"
-bShowClickable = true
 BuildingPrefix = "ResearchLab"
 
 [node name="ActiveParticle" parent="." instance=ExtResource("2")]
@@ -26,12 +26,5 @@ emission_sphere_radius = 1.0
 position = Vector2(-1, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("1")
-
-[node name="Button" type="Button" parent="."]
-modulate = Color(1, 1, 1, 0)
-offset_right = 32.0
-offset_bottom = 33.0
-icon = ExtResource("3")
-
-[connection signal="button_down" from="Button" to="." method="_on_Button_button_down"]
+position = Vector2(33, 16)
+shape = SubResource("RectangleShape2D_fnsjx")

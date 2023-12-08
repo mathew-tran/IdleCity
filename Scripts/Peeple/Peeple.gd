@@ -13,8 +13,6 @@ signal OnHappinessUpdate
 signal OnJobUpdate
 signal OnHouseUpdate
 
-var TargetOffset = Vector2(16,16)
-
 var colors = [Color(1.0, 1.0, 1.0, 1.0),
 		  Color(.20, 1.0, 0.2, 1.0),
 		  Color(0.5, 0.6, 1.0, 1.0)]
@@ -200,13 +198,13 @@ func GetWork():
 	return WorkPlace
 
 func GetWorkPlacePosition():
-	return WorkPlace.global_position + TargetOffset
+	return Vector2i(WorkPlace.global_position) + GameResources.TileOffset
 
 func GetHouse():
 	return House
 
 func GetHousePosition():
-	return House.global_position + TargetOffset
+	return Vector2i(House.global_position) + GameResources.TileOffset
 
 func GetRandomPosition():
 	return Vector2(randi() % 30, randi() % 30)
@@ -255,7 +253,7 @@ func OnHouseDeath():
 
 
 func IsAtPosition(positionToCheck):
-	return global_position == positionToCheck
+	return Vector2i(global_position) == positionToCheck
 
 
 func CheckWorkPlace():
@@ -271,7 +269,8 @@ func CheckHouse():
 	return true
 
 func SetTargetPosition(newTargetPosition):
-	if global_position == newTargetPosition:
+	newTargetPosition = Vector2i(newTargetPosition)
+	if Vector2i(global_position) == newTargetPosition:
 		return
 	# Check if exiting from workplace
 	if CheckWorkPlace():

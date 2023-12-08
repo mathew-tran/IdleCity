@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://h7k00cd651nj"]
+[gd_scene load_steps=9 format=3 uid="uid://h7k00cd651nj"]
 
 [ext_resource type="Texture2D" uid="uid://dnpgwmt22ocj3" path="res://Art/WhitePixel.png" id="1_kk1i6"]
 [ext_resource type="Script" path="res://Scripts/Environment/Lighting.gd" id="2_6jn4j"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c4a8wugy53o8b" path="res://Prefab/UI/PeepleUI.tscn" id="5_pb7i5"]
 [ext_resource type="PackedScene" uid="uid://bjtgjvs7p60mj" path="res://Prefab/UI/ContentPopup.tscn" id="6_6rn30"]
 [ext_resource type="Script" path="res://Scripts/UI/Buttons/ResetButton.gd" id="7_v73u1"]
+[ext_resource type="PackedScene" uid="uid://l1yhjgh8cnxg" path="res://Prefab/UI/PlacementContext.tscn" id="8_2xnc0"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 process_mode = 3
@@ -91,5 +92,7 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "Reset"
 script = ExtResource("7_v73u1")
+
+[node name="PlacementContext" parent="." instance=ExtResource("8_2xnc0")]
 
 [connection signal="button_down" from="Button" to="Button" method="_on_Button_button_down"]

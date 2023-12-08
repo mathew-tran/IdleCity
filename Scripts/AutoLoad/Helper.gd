@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 var PopupTextClass = preload("res://Prefab/UI/PopupText.tscn")
 func GetScriptName(object):
@@ -52,24 +52,14 @@ func ReparentNode(child: Node, new_parent: Node):
 	old_parent.remove_child(child)
 	new_parent.add_child(child)
 
-func IsValidSpawnLocation(spawnArea, location):
-	var buildings = Finder.GetBuildings()
-	var takenSpots = []
-	for building in buildings.get_children():
-		for area in building.CachedSpawnArea:
-			takenSpots.append(area)
-	for area in spawnArea:
-		if takenSpots.find(area + location) != -1:
-			return false
-	return true
 
-func GetBuildingOnTile(tileLocation):
-	tileLocation = Vector2i(tileLocation)
-	var tiles = Finder.GetBuildings()
-	for tile in tiles.get_children():
-		for area in tile.CachedSpawnArea:
-			if area == tileLocation:
-				return tile
+func GetBuildingFromGlobalSpawnArea(globalSpawnArea):
+	var buildings = Finder.GetBuildings()
+	for building in buildings.get_children():
+		if building.IsInMoveMode() == false:
+			for buildingArea in building.GetGlobalSpawnArea():
+				if buildingArea in globalSpawnArea:
+					return building
 	return null
 
 func GetTileInfo(tile):
@@ -83,7 +73,24 @@ func SetTile(tile, tileTypeIndex):
 	var Tilemap = Finder.GetBuildTiles()
 	Tilemap.set_cell(0, tile, tileTypeIndex, Vector2i(0,0))
 
+func IsWaterTile(tile):
+	var tileInfo = Helper.GetTileInfo(tile)
+	if tileInfo != null:
+		if tileInfo == GameResources.Tiles["Water"]:
+			return true
+	return false
 
+func IsPlaceable(globalSpawnArea):
+	if Helper.GetBuildingFromGlobalSpawnArea(globalSpawnArea):
+			return false
+	for area in globalSpawnArea:
+		var tile = GetTileInTilemap(area)
+		if Helper.IsWaterTile(tile):
+			return false
+	return true
+
+func GetCustomMousePosition():
+	return Vector2i(get_global_mouse_position()) - GameResources.TileOffset
 
 func GetTileInTilemap(globalPosition):
 	var Tilemap = Finder.GetBuildTiles()

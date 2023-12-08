@@ -14,6 +14,6 @@ func Show():
 func Hide():
 	$ActiveParticle.emitting = false
 
-func _on_Button_button_down():
+func OnLeftClick():
 	InputManager.Click(self)
 	Helper.AddPopup("Tavern", "Recruit Peeple!", Content)

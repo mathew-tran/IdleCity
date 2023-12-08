@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://l1yhjgh8cnxg"]
+
+[ext_resource type="Script" path="res://Scripts/UI/PlacementContext.gd" id="1_k0r3l"]
+
+[node name="PlacementContext" type="VBoxContainer"]
+process_mode = 3
+offset_right = 195.0
+offset_bottom = 40.0
+script = ExtResource("1_k0r3l")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Object: Bush 22"
+
+[node name="MoveButton" type="Button" parent="."]
+layout_mode = 2
+text = "Move"
+
+[node name="DeleteButton" type="Button" parent="."]
+layout_mode = 2
+text = "Delete"
+
+[node name="CancelButton" type="Button" parent="."]
+layout_mode = 2
+text = "Cancel"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="button_up" from="MoveButton" to="." method="_on_move_button_button_up"]
+[connection signal="button_down" from="DeleteButton" to="." method="_on_delete_button_button_down"]
+[connection signal="button_up" from="DeleteButton" to="." method="_on_delete_button_button_up"]
+[connection signal="button_up" from="CancelButton" to="." method="_on_cancel_button_button_up"]

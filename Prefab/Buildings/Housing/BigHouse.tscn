@@ -1,11 +1,36 @@
-[gd_scene load_steps=3 format=3 uid="uid://cw2aw54uyor8t"]
+[gd_scene load_steps=5 format=3 uid="uid://cw2aw54uyor8t"]
 
-[ext_resource type="PackedScene" uid="uid://dreybwy6svxjc" path="res://Prefab/Buildings/Housing/House.tscn" id="1"]
-[ext_resource type="Texture2D" uid="uid://dta2wndi0eo6p" path="res://Art/Buildings/Housing/BigHouse.png" id="2_rliq8"]
+[ext_resource type="Texture2D" uid="uid://dta2wndi0eo6p" path="res://Art/Buildings/Housing/BigHouse.png" id="2_qhxud"]
+[ext_resource type="Script" path="res://Scripts/Building/Housing.gd" id="2_y04uj"]
+[ext_resource type="PackedScene" path="res://Prefab/Particles/ActiveHouseParticle.tscn" id="3_ubxff"]
 
-[node name="Housing" instance=ExtResource("1")]
-texture = ExtResource("2_rliq8")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_agy7l"]
+size = Vector2(32, 32)
+
+[node name="Housing" type="Sprite2D" groups=["House"]]
+texture = ExtResource("2_qhxud")
+centered = false
+script = ExtResource("2_y04uj")
+BuildingLimit = 4
 BuildingName = "Duplex"
+RequirementType = Array[int]([0])
 RequirementAmount = Array[int]([100])
+Description = "Houses 4 Tenants"
 HappinessAmount = 6
 BuildingPrefix = "TownDuplex"
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-1, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(16.5, 17.5)
+shape = SubResource("RectangleShape2D_agy7l")
+
+[node name="ActiveParticle" parent="." instance=ExtResource("3_ubxff")]
+position = Vector2(17, 4)
+emission_sphere_radius = 1.0
+gravity = Vector2(0, 20)
+initial_velocity_min = 30.0
+initial_velocity_max = 50.0
+scale_amount_min = 0.2
+scale_amount_max = 0.2
