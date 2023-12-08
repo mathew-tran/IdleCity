@@ -66,7 +66,7 @@ func _input(event):
 		return
 
 	if bCanBeClicked and !bIsInMoveMode and InputManager.IsContextObject(self) == false:
-		if event.is_action_pressed("left_click"):
+		if event.is_action_pressed("left_click") and Finder.GetPlayer().IsInBuildMode() == false:
 			OnLeftClick()
 		if event.is_action_pressed("right_click") and  Finder.GetPlayer().IsInBuildMode():
 			OnRightClick()
