@@ -12,7 +12,7 @@ func OnContextClicked(obj):
 	global_position = get_viewport().get_mouse_position()
 	ObjectToInteractWith = obj
 	$Label.text = "Object: " + ObjectToInteractWith.name
-	ObjectToInteractWith.modulate = Color(2000, 2000, 2000, ObjectToInteractWith.modulate.a)
+	ObjectToInteractWith.modulate = Color(400, 400, 400, ObjectToInteractWith.modulate.a)
 
 func OnClicked(obj):
 	visible = false
@@ -39,3 +39,5 @@ func _on_visibility_changed():
 	if visible == false:
 		if ObjectToInteractWith:
 			ObjectToInteractWith.modulate = Color.WHITE
+		ObjectToInteractWith = null
+		InputManager.LastContextObject = null

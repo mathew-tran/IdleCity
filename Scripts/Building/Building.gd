@@ -62,10 +62,13 @@ func HalfHourUpdate():
 		peeple.AddHappiness(HappinessAmount)
 
 func _input(event):
-	if bCanBeClicked and !bIsInMoveMode:
-		if event.is_action_released("left_click"):
+	if InputManager.CanInteractWithBuilding() == false:
+		return
+
+	if bCanBeClicked and !bIsInMoveMode and InputManager.IsContextObject(self) == false:
+		if event.is_action_pressed("left_click"):
 			OnLeftClick()
-		if event.is_action_released("right_click"):
+		if event.is_action_pressed("right_click") and  Finder.GetPlayer().IsInBuildMode():
 			OnRightClick()
 
 func IsInMoveMode():

@@ -22,8 +22,14 @@ func Hovered(object):
 		LastHoveredObject = object
 		LastHoveredObject.OnHover()
 
+func IsContextObject(obj):
+	return obj == LastContextObject
+
 func ContextClick(object):
 	if LastContextObject:
 		LastContextObject.modulate = Color.WHITE
 	LastContextObject = object
 	emit_signal("OnContextClicked", object)
+
+func CanInteractWithBuilding():
+	return LastContextObject == null

@@ -40,8 +40,11 @@ func SetBuildingClass(newclass, purchaseButton):
 	$Sprite2D/GhostImage.texture = ClassInstance.texture
 	$Sprite2D/GhostImage.visible = newclass != DefaultBuildingClass
 
+func IsInBuildMode():
+	return CurrentPlayerMode == GameResources.UI_MODE.BUILD
+
 func _process(delta):
-	if CurrentPlayerMode == GameResources.UI_MODE.BUILD:
+	if IsInBuildMode():
 		ProcessBuildMode(delta)
 	else:
 		ProcessMenuMode(delta)
