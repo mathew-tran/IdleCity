@@ -2,6 +2,7 @@ extends Node
 
 
 var LastClickedObject = null
+var LastContextObject = null
 var LastHoveredObject = null
 
 signal OnContextClicked(obj)
@@ -22,4 +23,7 @@ func Hovered(object):
 		LastHoveredObject.OnHover()
 
 func ContextClick(object):
+	if LastContextObject:
+		LastContextObject.modulate = Color.WHITE
+	LastContextObject = object
 	emit_signal("OnContextClicked", object)

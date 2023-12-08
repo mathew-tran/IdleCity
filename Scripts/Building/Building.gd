@@ -39,6 +39,7 @@ func _ready():
 	$Area2D.connect("mouse_exited", Callable(self, "OnMouseExited"))
 	name = BuildingPrefix
 	LastPosition = global_position
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func GetTileOffsets():
 	#This only captures squares.

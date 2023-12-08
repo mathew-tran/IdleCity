@@ -7,6 +7,7 @@ var MinZoom = .5
 @onready var Highlight = $Sprite2D
 
 var BuildingClass = preload("res://Prefab/Buildings/Factories/Factory.tscn")
+var DefaultBuildingClass = preload("res://Prefab/Buildings/Factories/Factory.tscn")
 var ClassInstance = null
 var PurchaseButton = null
 
@@ -26,7 +27,7 @@ func _ready():
 	Helper.ShowBuildTileOutline(true)
 	Finder.GetMenuUI().connect("tab_changed", Callable(self, "_on_TabContainer_tab_changed"))
 
-	$Sprite2D/GhostImage.visible = false
+
 
 func SetBuildingClass(newclass, purchaseButton):
 	if ClassInstance:
@@ -37,7 +38,7 @@ func SetBuildingClass(newclass, purchaseButton):
 
 	ClassInstance = BuildingClass.instantiate()
 	$Sprite2D/GhostImage.texture = ClassInstance.texture
-	$Sprite2D/GhostImage.visible = true
+	$Sprite2D/GhostImage.visible = newclass != DefaultBuildingClass
 
 func _process(delta):
 	if CurrentPlayerMode == GameResources.UI_MODE.BUILD:
@@ -104,7 +105,7 @@ func ProcessBuildMode(delta):
 	#print(potentialSpawnArea)
 	if Helper.IsMouseOnControl():
 		return
-	if Input.is_action_just_pressed("left_click"):
+	if Input.is_action_just_pressed("left_click") and BuildingClass != DefaultBuildingClass:
 		if Helper.IsPlaceable(potentialSpawnArea):
 			var newInstance = BuildingClass.instantiate()
 			Finder.GetBuildings().add_child(newInstance)
@@ -113,7 +114,8 @@ func ProcessBuildMode(delta):
 			PurchaseButton.Purchase()
 		else:
 			Helper.AddPopupText(get_global_mouse_position(), "Cannot\nplace object!")
-
+	if Input.is_action_just_pressed("right_click"):
+		SetBuildingClass(DefaultBuildingClass, null)
 
 	if Helper.IsPlaceable(potentialSpawnArea):
 		$Sprite2D/GhostImage.modulate = GameResources.COLOR_ACCEPT

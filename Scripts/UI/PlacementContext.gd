@@ -12,6 +12,7 @@ func OnContextClicked(obj):
 	global_position = get_viewport().get_mouse_position()
 	ObjectToInteractWith = obj
 	$Label.text = "Object: " + ObjectToInteractWith.name
+	ObjectToInteractWith.modulate = Color(2000, 2000, 2000, ObjectToInteractWith.modulate.a)
 
 func OnClicked(obj):
 	visible = false
@@ -27,3 +28,14 @@ func _on_delete_button_button_up():
 func _on_move_button_button_up():
 	ObjectToInteractWith.SetMoveMode(true)
 	visible = false
+
+func _input(event):
+	if visible:
+		if event.is_action_pressed("escape"):
+			visible = false
+
+
+func _on_visibility_changed():
+	if visible == false:
+		if ObjectToInteractWith:
+			ObjectToInteractWith.modulate = Color.WHITE
