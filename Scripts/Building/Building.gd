@@ -29,7 +29,10 @@ var CachedSpawnArea = []
 
 signal OnDestroyed
 
+var OldZIndex = 0
+
 func _ready():
+	OldZIndex = z_index
 	SaveManager.AddToPersistGroup(self)
 	var _OnHalfHourUpdate = GameClock.connect("OnHalfHourUpdate", Callable(self, "HalfHourUpdate"))
 	$Area2D.connect("mouse_entered", Callable(self, "OnMouseEntered"))
@@ -50,7 +53,7 @@ func GetTileOffsets():
 func GetGlobalSpawnArea():
 	var globalTilePositions = []
 	for tile in GetTileOffsets():
-		globalTilePositions.append(tile + Vector2i(global_position))
+		globalTilePositions.append(tile * 32 + Vector2i(global_position))
 	return globalTilePositions
 
 func HalfHourUpdate():
@@ -69,18 +72,30 @@ func IsInMoveMode():
 
 func _process(delta):
 	if bIsInMoveMode:
+		z_index = 100
 		var TargetPosition = get_global_mouse_position() - Vector2(16,16)
 		var tile = Helper.GetTileInTilemap(TargetPosition)
 		global_position = Finder.GetBuildTiles().map_to_local(tile)
+		var bIsPlaceable = Helper.IsPlaceable(GetGlobalSpawnArea())
+		print(GetGlobalSpawnArea())
+
+		if bIsPlaceable:
+			modulate = "00bc68c9"
+		else:
+			modulate = "ee3327ad"
 		if Input.is_action_just_released("left_click"):
-			if Helper.IsPlaceable(GetTileOffsets(), TargetPosition):
+			if bIsPlaceable:
 				bIsInMoveMode = false
 				UpdateLevelNavigation()
+				modulate = Color.WHITE
+				z_index = OldZIndex
 			else:
 				Helper.AddPopupText(get_global_mouse_position(), "Cannot\nplace object!")
 		if Input.is_action_just_released("right_click"):
 			bIsInMoveMode = false
 			global_position = LastPosition
+			modulate = Color.WHITE
+			z_index = OldZIndex
 
 func SetMoveMode(bIsMoving):
 	await get_tree().create_timer(.1).timeout

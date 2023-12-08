@@ -52,25 +52,13 @@ func ReparentNode(child: Node, new_parent: Node):
 	old_parent.remove_child(child)
 	new_parent.add_child(child)
 
-func IsValidSpawnLocation(spawnArea, location):
-	var buildings = Finder.GetBuildings()
-	var takenSpots = []
-	for building in buildings.get_children():
-		for area in building.GetSpawnArea():
-			takenSpots.append(area)
-	for area in spawnArea:
-		if takenSpots.find(area + location) != -1:
-			return false
-	return true
 
-func GetBuildingOnTile(tileLocation):
-	tileLocation = Vector2i(tileLocation)
+func GetBuildingFromGlobalSpawnArea(globalSpawnArea):
 	var buildings = Finder.GetBuildings()
 	for building in buildings.get_children():
 		if building.IsInMoveMode() == false:
-			for area in building.GetGlobalSpawnArea():
-				var areaTile = Helper.GetTileInTilemap(area)
-				if areaTile == tileLocation:
+			for buildingArea in building.GetGlobalSpawnArea():
+				if buildingArea in globalSpawnArea:
 					return building
 	return null
 
@@ -92,17 +80,14 @@ func IsWaterTile(tile):
 			return true
 	return false
 
-func IsPlaceable(spawnArea, offset = Vector2i.ZERO):
-	for area in spawnArea:
-		var tile = GetTileInTilemap(Vector2i(offset))
-		tile += area
-		print(tile)
+func IsPlaceable(globalSpawnArea):
+	if Helper.GetBuildingFromGlobalSpawnArea(globalSpawnArea):
+			return false
+	for area in globalSpawnArea:
+		var tile = GetTileInTilemap(area)
 		if Helper.IsWaterTile(tile):
 			return false
-		if Helper.GetBuildingOnTile(tile):
-			return false
 	return true
-	#return Helper.IsWaterTile(tile) == false and null == Helper.GetBuildingOnTile(tile) and Helper.IsValidSpawnLocation(spawnArea, tile)
 
 func GetTileInTilemap(globalPosition):
 	var Tilemap = Finder.GetBuildTiles()
