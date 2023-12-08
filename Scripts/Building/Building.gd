@@ -73,16 +73,17 @@ func IsInMoveMode():
 func _process(delta):
 	if bIsInMoveMode:
 		z_index = 100
-		var TargetPosition = get_global_mouse_position() - Vector2(16,16)
+		var TargetPosition = Helper.GetCustomMousePosition()
 		var tile = Helper.GetTileInTilemap(TargetPosition)
 		global_position = Finder.GetBuildTiles().map_to_local(tile)
 		var bIsPlaceable = Helper.IsPlaceable(GetGlobalSpawnArea())
 		print(GetGlobalSpawnArea())
 
 		if bIsPlaceable:
-			modulate = "00bc68c9"
+			modulate =  GameResources.COLOR_ACCEPT
 		else:
-			modulate = "ee3327ad"
+			modulate =  GameResources.COLOR_DECLINE
+
 		if Input.is_action_just_released("left_click"):
 			if bIsPlaceable:
 				bIsInMoveMode = false

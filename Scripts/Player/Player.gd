@@ -4,7 +4,6 @@ var MoveSpeed = 200
 var ZoomSpeed = 10
 var MaxZoom = 1.6
 var MinZoom = .5
-var Offset = Vector2i(16, 16)
 @onready var Highlight = $Sprite2D
 
 var BuildingClass = preload("res://Prefab/Buildings/Factories/Factory.tscn")
@@ -94,15 +93,13 @@ func ProcessBuildMode(delta):
 	Helper.ShowBuildTileOutline(true)
 	MoveGhost(delta)
 	$Sprite2D.visible = true
-	var TargetPosition = Vector2i(get_global_mouse_position()) - Offset
+	var TargetPosition =  Helper.GetCustomMousePosition()
 	var tile = Helper.GetTileInTilemap(TargetPosition)
-	var tileOffset = Finder.GetBuildTiles().map_to_local(tile)
+	var tileOffset = Vector2i(Finder.GetBuildTiles().map_to_local(tile))
 	var potentialSpawnArea = ClassInstance.GetGlobalSpawnArea()
 
-
-
 	for i in range(0, len(potentialSpawnArea)):
-		potentialSpawnArea[i] += Vector2i(tileOffset)
+		potentialSpawnArea[i] += tileOffset
 
 	#print(potentialSpawnArea)
 	if Helper.IsMouseOnControl():
@@ -114,12 +111,14 @@ func ProcessBuildMode(delta):
 			newInstance.position = Finder.GetBuildTiles().map_to_local(tile)
 			newInstance.UpdateLevelNavigation()
 			PurchaseButton.Purchase()
+		else:
+			Helper.AddPopupText(get_global_mouse_position(), "Cannot\nplace object!")
 
 
 	if Helper.IsPlaceable(potentialSpawnArea):
-		$Sprite2D/GhostImage.modulate = "00bc68c9"
+		$Sprite2D/GhostImage.modulate = GameResources.COLOR_ACCEPT
 	else:
-		$Sprite2D/GhostImage.modulate = "ee3327ad"
+		$Sprite2D/GhostImage.modulate = GameResources.COLOR_DECLINE
 
 
 func ProcessMenuMode(_delta):
@@ -130,11 +129,11 @@ func ProcessMenuMode(_delta):
 	Helper.ShowBuildTileOutline(false)
 
 	var Tilemap = Finder.GetBuildTiles()
-	var TargetPosition = Vector2i(get_global_mouse_position()) - Offset
+	var TargetPosition = Helper.GetCustomMousePosition()
 	var tile = Tilemap.local_to_map(TargetPosition)
 
 func MoveGhost(_delta):
-	var TargetPosition = Vector2i(get_global_mouse_position()) - Offset
+	var TargetPosition = Helper.GetCustomMousePosition()
 	var tile = Helper.GetTileInTilemap(TargetPosition)
 	$Sprite2D.global_position = Finder.GetBuildTiles().map_to_local(tile)
 

@@ -4,6 +4,12 @@ var Tiles = {
 	"Grass" : 0,
 	"Water" : 1
 }
+
+var TileOffset = Vector2i(16, 16)
+
+var COLOR_ACCEPT = "00bc68c9"
+var COLOR_DECLINE = "ee3327ad"
+
 enum BUILDING_TYPE {
 	HOUSE,
 	FACTORY,

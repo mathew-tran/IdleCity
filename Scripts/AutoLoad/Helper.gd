@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 var PopupTextClass = preload("res://Prefab/UI/PopupText.tscn")
 func GetScriptName(object):
@@ -88,6 +88,9 @@ func IsPlaceable(globalSpawnArea):
 		if Helper.IsWaterTile(tile):
 			return false
 	return true
+
+func GetCustomMousePosition():
+	return Vector2i(get_global_mouse_position()) - GameResources.TileOffset
 
 func GetTileInTilemap(globalPosition):
 	var Tilemap = Finder.GetBuildTiles()
