@@ -32,7 +32,7 @@ InventoryManager="*res://Scripts/AutoLoad/DataHolder/InventoryManager.gd"
 
 [display]
 
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
 
 [gui]
 
