@@ -4,6 +4,7 @@ var TargetPosition = Vector2()
 var bHasNewTarget = false
 var WorkPlace = null
 var House = null
+var RecPlace = null
 
 @export var Speed = 125
 
@@ -12,6 +13,7 @@ var Happiness = 50
 signal OnHappinessUpdate
 signal OnJobUpdate
 signal OnHouseUpdate
+signal OnRecUpdate
 
 var colors = [Color(1.0, 1.0, 1.0, 1.0),
 		  Color(.20, 1.0, 0.2, 1.0),
@@ -26,6 +28,8 @@ enum AI_STATES {
 	WANDER,
 	GOWORK,
 	FINDWORK,
+	GOREC,
+	FINDREC,
 	GOHOME,
 	FINDHOME,
 	STAY,
@@ -121,6 +125,10 @@ func RunAI():
 		AIGOWORK()
 	elif currentAIState == AI_STATES.FINDWORK:
 		AIFINDWORK()
+	elif currentAIState == AI_STATES.GOREC:
+		AIGOREC()
+	elif currentAIState == AI_STATES.FINDREC:
+		AIFINDREC()
 	elif currentAIState == AI_STATES.GOHOME:
 		AIGOHOME()
 	elif currentAIState == AI_STATES.FINDHOME:
@@ -172,6 +180,25 @@ func AIFINDWORK():
 		ChangeAIState(AI_STATES.WANDER)
 		emit_signal("OnJobUpdate")
 
+func AIGOREC():
+	if CheckRec():
+		if IsAtPosition(GetRecPosition()):
+			RecPlace.Enter(self)
+			ChangeAIState(AI_STATES.STAY, true)
+			return
+		SetTargetPosition(GetRecPosition())
+	else:
+		ChangeAIState(AI_STATES.FINDREC, true)
+
+func AIFINDREC():
+	FindRec()
+	if CheckRec():
+		ChangeAIState(AI_STATES.GOREC, true)
+		emit_signal("OnRecUpdate")
+	else:
+		ChangeAIState(AI_STATES.WANDER)
+		emit_signal("OnRecUpdate")
+
 func AIGOHOME():
 	if CheckHouse():
 		if IsAtPosition(GetHousePosition()):
@@ -206,6 +233,9 @@ func GetHouse():
 func GetHousePosition():
 	return Vector2i(House.global_position) + GameResources.TileOffset
 
+func GetRecPosition():
+	return Vector2i(RecPlace.global_position) + GameResources.TileOffset
+
 func GetRandomPosition():
 	return Vector2(randi() % 30, randi() % 30)
 
@@ -235,6 +265,14 @@ func FindHouse():
 	else:
 		PeepleManager.DeclareUnhoused(self)
 
+func FindRec():
+	RecPlace = RecManager.FindRec(self)
+	if RecPlace:
+		RecPlace.connect("OnDestroyed", Callable(self, "OnHouseDeath"))
+		RecPlace.Subscribe(self)
+		PeepleManager.DeclaredRecd(self)
+	else:
+		PeepleManager.DeclaredUnRecd(self)
 
 func OnFactoryDeath():
 	WorkPlace.disconnect("OnDestroyed", Callable(self, "OnFactoryDeath"))
@@ -265,6 +303,12 @@ func CheckHouse():
 		return false
 	return true
 
+func CheckRec():
+	if RecPlace == null or is_instance_valid(RecPlace) == false:
+		RecPlace = null
+		return false
+	return true
+
 func SetTargetPosition(newTargetPosition):
 	newTargetPosition = Vector2i(newTargetPosition)
 	if Vector2i(global_position) == newTargetPosition:
@@ -279,11 +323,16 @@ func SetTargetPosition(newTargetPosition):
 		if IsAtPosition(GetHousePosition()):
 			House.Exit(self)
 
+	if CheckRec():
+		if IsAtPosition(GetRecPosition()):
+			RecPlace.Exit(self)
+
 	bHasNewTarget = true
 	TargetPosition = newTargetPosition
 	$NavigationAgent2D.target_position = newTargetPosition
 
 func MoveToTargetPosition():
+	# TODO: MT: we should try to refactor this. I feel like the code is pretty identical
 	if CheckWorkPlace() and GameClock.IsWorkTime():
 		if IsAtPosition(GetWorkPlacePosition()):
 			RunAI()
@@ -298,7 +347,7 @@ func _physics_process(delta):
 	if $NavigationAgent2D.is_navigation_finished():
 		if global_position.distance_to(TargetPosition) < 5:
 			global_position = TargetPosition
-			return
+			RunAI()
 			return
 
 	SpeedDelta = Speed * delta
@@ -324,6 +373,10 @@ func OnHourUpdate():
 		bProcessLostSubscription = false
 		return
 	if GameClock.IsStartingWorkDay():
+		ChangeAIState(AI_STATES.GOWORK)
+	elif GameClock.IsLunchTime():
+		ChangeAIState(AI_STATES.GOREC)
+	elif GameClock.IsLunchFinishedTime():
 		ChangeAIState(AI_STATES.GOWORK)
 	elif GameClock.IsFinishingWorkDay():
 		ChangeAIState(AI_STATES.GOHOME)
