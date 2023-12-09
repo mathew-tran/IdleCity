@@ -16,7 +16,7 @@ func AddToPersistGroup(node):
 
 func _ready():
 
-	var _OnDayUpdate = GameClock.connect("OnDayUpdate", Callable(self, "Save"))
+	var _OnDayUpdate = GameClock.connect("OnMorningTime", Callable(self, "Save"))
 	await get_tree().create_timer(0.2).timeout
 	Load()
 

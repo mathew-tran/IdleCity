@@ -29,16 +29,16 @@ func _ready():
 	add_child(MinuteTimer)
 	MinuteTimer.connect("timeout", Callable(self, "OnTimerUpdate"))
 	StartTime()
-	
+
 func OnLoadComplete():
 	emit_signal("OnMidnightTime")
-	
+
 func OnDelete():
 	TimeInHours = 5
 	TimeInMinutes = 55
 	DayAmount = 0
 	YearAmount = 0
-	
+
 func Save():
 	var dict = {
 		"type" : "auto",
@@ -49,20 +49,20 @@ func Save():
 		"year" : YearAmount
 	}
 	return dict
-	
+
 func Load(data):
 	if data.is_empty() == false:
 		TimeInMinutes = data["minutes"]
 		TimeInHours = data["hours"]
 		DayAmount = data["day"]
 		YearAmount = data["year"]
-	
+
 func StartTime():
 	MinuteTimer.start()
 
 func StopTime():
 	MinuteTimer.stop()
-	
+
 func OnTimerUpdate():
 	TimeInMinutes += MinuteIncreaseRate
 	if TimeInMinutes >= 60:
@@ -75,9 +75,9 @@ func OnTimerUpdate():
 		emit_signal("OnDayUpdate")
 		if DayAmount >= 365:
 			emit_signal("OnYearUpdate")
-			YearAmount += 1 
+			YearAmount += 1
 			DayAmount = 0
-	
+
 	if TimeInHours == 4 and TimeInMinutes == 0:
 		emit_signal("OnMorningTime")
 	if TimeInHours == 7 and TimeInMinutes == 0:
@@ -91,20 +91,20 @@ func OnTimerUpdate():
 	emit_signal("OnTimeUpdate")
 	if TimeInMinutes == 0 or TimeInMinutes == 30:
 		emit_signal("OnHalfHourUpdate")
-	
+
 
 func IsDayTime():
 	return TimeInHours < 16
-	
+
 func IsWorkTime():
 	return TimeInHours >= 7 and TimeInHours < 16
-	
+
 func IsStartingWorkDay():
 	return TimeInHours == 7
-	
+
 func IsFinishingWorkDay():
 	return TimeInHours == 16
-	
+
 func GetTimeString():
 	var hours = str(TimeInHours).pad_zeros(2)
 	var minutes = str(TimeInMinutes).pad_zeros(2)
@@ -115,4 +115,4 @@ func Pause():
 
 func Resume():
 	get_tree().paused = false
-	
+
