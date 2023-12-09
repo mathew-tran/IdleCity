@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c4s4aup13f2jl"]
+[gd_scene load_steps=12 format=3 uid="uid://c4s4aup13f2jl"]
 
 [ext_resource type="Script" path="res://Scripts/UI/Buttons/BuildingButton.gd" id="1"]
 [ext_resource type="Theme" uid="uid://c4ae6f21yxbj7" path="res://Font/Themes/TitleFont.tres" id="2"]
@@ -25,6 +25,17 @@ modulate_color = Color(0.341176, 0.647059, 0.333333, 1)
 Button/styles/disabled = SubResource("1")
 Button/styles/hover = SubResource("4")
 Button/styles/normal = SubResource("3")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dc5os"]
+bg_color = Color(0.145098, 0.14902, 0.164706, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_ebr85"]
+Panel/styles/panel = SubResource("StyleBoxFlat_dc5os")
 
 [node name="BuildingButton" type="Button"]
 light_mask = 0
@@ -72,5 +83,13 @@ offset_right = 251.0
 offset_bottom = 39.0
 theme = ExtResource("3")
 text = "Houses 4 people."
+
+[node name="Panel" type="Panel" parent="."]
+show_behind_parent = true
+layout_mode = 0
+offset_right = 304.0
+offset_bottom = 58.0
+mouse_filter = 2
+theme = SubResource("Theme_ebr85")
 
 [connection signal="pressed" from="." to="." method="_on_FactoryButton_pressed"]
