@@ -1,6 +1,10 @@
 # IdleCity
 ![image](image.png)
 
+# Setting up
+- This is currently running on Godot 4.2
+- After you open up the Godot Editor. Goto Editor Settings and tick on `Trim Trailing Whitespace on Save`
+
 # How to play
 - Place down a factory for a `Peeple` to work in
 - During `Work hours` Peeple will work, gaining resources
