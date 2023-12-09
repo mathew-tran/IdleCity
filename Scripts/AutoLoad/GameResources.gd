@@ -43,7 +43,7 @@ func GetHappinessGrading(amount):
 		return GRADE.C
 	return GRADE.D
 
-enum UI_MODE {BUILD, MENU}
+enum UI_MODE {BUILD, PLAY}
 
 func GetResName(resourceInt):
 	return str(GameResources.RESOURCE_TYPE.keys()[resourceInt])

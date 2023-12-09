@@ -42,7 +42,6 @@ func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func GetTileOffsets():
-	#This only captures squares.
 	var area = []
 	var spawnWidth = int(texture.get_width() / 32.0)
 	var spawnHeight = int(texture.get_height() / 32.0)
@@ -81,7 +80,6 @@ func _process(delta):
 		var tile = Helper.GetTileInTilemap(TargetPosition)
 		global_position = Finder.GetBuildTiles().map_to_local(tile)
 		var bIsPlaceable = Helper.IsPlaceable(GetGlobalSpawnArea())
-		print(GetGlobalSpawnArea())
 
 		if bIsPlaceable:
 			modulate =  GameResources.COLOR_ACCEPT
