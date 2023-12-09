@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://bv6ehlvitib7f"]
+
+[ext_resource type="Texture2D" uid="uid://ktrunya3s8bm" path="res://Art/Buildings/Recreation/Arcade.png" id="1_f8ljo"]
+[ext_resource type="Script" path="res://Scripts/Building/RecHouse.gd" id="2_kp62v"]
+[ext_resource type="PackedScene" uid="uid://fdiatj5sep31" path="res://Prefab/Particles/ActiveParticle.tscn" id="3_3si5p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mo24u"]
+size = Vector2(64, 64)
+
+[node name="Arcade" type="Sprite2D" groups=["Rec"]]
+texture = ExtResource("1_f8ljo")
+centered = false
+script = ExtResource("2_kp62v")
+BuildingLimit = 4
+RequirementType = Array[int]([1, 0])
+RequirementAmount = Array[int]([50, 100])
+HappinessAmount = 4
+BuildingPrefix = "Arcade"
+
+[node name="ActiveParticle" parent="." instance=ExtResource("3_3si5p")]
+show_behind_parent = true
+position = Vector2(16, 16)
+emission_sphere_radius = 1.0
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(32, 32)
+shape = SubResource("RectangleShape2D_mo24u")
