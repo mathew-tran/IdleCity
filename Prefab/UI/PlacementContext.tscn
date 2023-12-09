@@ -25,6 +25,7 @@ script = ExtResource("1_k0r3l")
 
 [node name="PlacementContext" type="VBoxContainer" parent="."]
 process_mode = 3
+layout_mode = 0
 offset_left = 5.0
 offset_top = 5.0
 offset_right = 200.0
