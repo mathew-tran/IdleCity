@@ -14,7 +14,7 @@ var PurchaseButton = null
 var previousMode = null
 
 
-var CurrentPlayerMode = GameResources.UI_MODE.MENU
+var CurrentPlayerMode = GameResources.UI_MODE.PLAY
 
 
 var FollowTarget = null
@@ -105,7 +105,6 @@ func ProcessBuildMode(delta):
 	for i in range(0, len(potentialSpawnArea)):
 		potentialSpawnArea[i] += tileOffset
 
-	#print(potentialSpawnArea)
 	if Helper.IsMouseOnControl():
 		return
 	if Input.is_action_just_pressed("left_click") and BuildingClass != DefaultBuildingClass:
@@ -147,4 +146,4 @@ func _on_TabContainer_tab_changed(tab):
 	if tab == 1:
 		ChangePlayerMode(GameResources.UI_MODE.BUILD)
 	else:
-		ChangePlayerMode(GameResources.UI_MODE.MENU)
+		ChangePlayerMode(GameResources.UI_MODE.PLAY)

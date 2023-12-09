@@ -13,7 +13,7 @@ func ShowPopup(contentTitle, contentDescription, content):
 	var newChild = content.instantiate()
 	$Panel/Content.add_child(newChild)
 	visible = true
-	Finder.GetPlayer().PushMode(GameResources.UI_MODE.MENU)
+	Finder.GetPlayer().PushMode(GameResources.UI_MODE.PLAY)
 
 func GetTitle():
 	return $Panel/Title.text

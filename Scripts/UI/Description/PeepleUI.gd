@@ -68,7 +68,7 @@ func UpdateUI():
 func JobUpdate():
 	if trackedPeeple:
 		WorkControl.Update(trackedPeeple)
-#
+
 func HouseUpdate():
 	if trackedPeeple:
 		HouseControl.Update(trackedPeeple)

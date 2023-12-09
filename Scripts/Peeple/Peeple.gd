@@ -241,9 +241,6 @@ func OnFactoryDeath():
 	WorkPlace = null
 	PeepleManager.DeclaredUnEmployed(self)
 	ProcessBuildingDeath()
-	# Wait for factory to die.
-
-
 
 func OnHouseDeath():
 	House.disconnect("OnDestroyed", Callable(self, "OnHouseDeath"))

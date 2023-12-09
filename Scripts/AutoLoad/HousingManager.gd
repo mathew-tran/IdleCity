@@ -10,8 +10,5 @@ func FindHouse(tenant):
 			if deltaDistance < closestPosition:
 				closestHouse = house
 
-	if closestHouse == null:
-		#print("Could not find house for: " + tenant.name)
-		pass
 	return closestHouse
 
