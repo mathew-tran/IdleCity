@@ -96,6 +96,8 @@ func OnTimerUpdate():
 func IsDayTime():
 	return TimeInHours < 16
 
+
+# TODO: MT: in the future. I think the work place should define the time to work, and the time for a break, as well as time for sleeping!
 func IsWorkTime():
 	return TimeInHours >= 6 and TimeInHours < 16
 

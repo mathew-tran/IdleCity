@@ -332,6 +332,7 @@ func SetTargetPosition(newTargetPosition):
 	$NavigationAgent2D.target_position = newTargetPosition
 
 func MoveToTargetPosition():
+	# TODO: MT: we should try to refactor this. I feel like the code is pretty identical
 	if CheckWorkPlace() and GameClock.IsWorkTime():
 		if IsAtPosition(GetWorkPlacePosition()):
 			RunAI()
