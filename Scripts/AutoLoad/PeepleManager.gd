@@ -9,6 +9,9 @@ signal OnPeepleHouseUpdate
 var UnemployedPeeple = []
 signal OnPeepleEmploymentUpdate
 
+var RecPeeple =[]
+signal OnRecPeepleUpdate
+
 var SpeedBuff = 1
 var PeepleClass = preload("res://Prefab/Peeple/Peeple.tscn")
 var PeepleNames = []
@@ -83,6 +86,17 @@ func DeclareEmployed(currentPeeple):
 		var index = UnemployedPeeple.find(currentPeeple)
 		UnemployedPeeple.remove_at(index)
 		emit_signal("OnPeepleEmploymentUpdate")
+
+func DeclaredUnRecd(newPeeple):
+	if RecPeeple.has(newPeeple) == false:
+		RecPeeple.append(newPeeple)
+		emit_signal("OnRecPeepleUpdate")
+
+func DeclaredRecd(currentPeeple):
+	if RecPeeple.has(currentPeeple):
+		var index = RecPeeple.find(currentPeeple)
+		RecPeeple.remove_at(index)
+		emit_signal("OnRecPeepleUpdate")
 
 func GetUnEmployedPeepleAmount():
 	return UnemployedPeeple.size()

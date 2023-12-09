@@ -22,6 +22,8 @@ func _ready():
 	AddButton(preload("res://Prefab/Buildings/SpecialBuildings/Tavern.tscn"))
 	AddButton(preload("res://Prefab/Buildings/SpecialBuildings/ResearchLab.tscn"))
 
+	AddButton(preload("res://Prefab/Buildings/Recreation/Arcade.tscn"))
+
 func AddButton(buildingClass):
 	var instance = buildingClass.instantiate()
 	var buildingType = instance.BuildingType

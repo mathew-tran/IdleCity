@@ -2,8 +2,8 @@ extends "res://Scripts/AutoLoad/DataHolder/PersistentData.gd"
 
 
 var MinuteTimer = null
-var MinuteIncreaseRate = 5
-var MinuteDelayTime = .1
+var MinuteIncreaseRate = 1
+var MinuteDelayTime = .05
 
 var TimeInMinutes = 55
 var TimeInHours = 5
@@ -97,13 +97,19 @@ func IsDayTime():
 	return TimeInHours < 16
 
 func IsWorkTime():
-	return TimeInHours >= 7 and TimeInHours < 16
+	return TimeInHours >= 6 and TimeInHours < 16
 
 func IsStartingWorkDay():
-	return TimeInHours == 7
+	return TimeInHours == 6
+
+func IsLunchTime():
+	return TimeInHours == 12
+
+func IsLunchFinishedTime():
+	return TimeInHours == 14
 
 func IsFinishingWorkDay():
-	return TimeInHours == 16
+	return TimeInHours == 20
 
 func GetTimeString():
 	var hours = str(TimeInHours).pad_zeros(2)

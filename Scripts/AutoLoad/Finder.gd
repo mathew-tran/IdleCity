@@ -15,6 +15,9 @@ func GetBuildTiles():
 func GetFactories():
 	return get_tree().get_nodes_in_group("Factory")
 
+func GetRecHouses():
+	return get_tree().get_nodes_in_group("Rec")
+
 func GetHousing():
 	return get_tree().get_nodes_in_group("House")
 
