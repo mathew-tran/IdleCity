@@ -16,6 +16,7 @@
 
 ### Play Mode  Controls
 - Right click `Peeple` to check their stats or follow
+- Right click buildings to check info on them
 
 ## Gameplay
 *Game is in early development!*
