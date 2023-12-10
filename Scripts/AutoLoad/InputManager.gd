@@ -7,6 +7,7 @@ var LastHoveredObject = null
 
 signal OnBuildContextClicked(obj)
 signal OnPlayContextClicked(obj)
+signal OnPeepleClicked(obj)
 signal OnClicked(obj)
 
 func Click(object):
@@ -38,6 +39,9 @@ func BuildContextClick(object):
 func PlayContextClick(object):
 	Internal_ContextClick(object)
 	emit_signal("OnPlayContextClicked", object)
+
+func PeepleClick(object):
+	emit_signal("OnPeepleClicked", object)
 
 func CanInteractWithBuilding():
 	return LastContextObject == null

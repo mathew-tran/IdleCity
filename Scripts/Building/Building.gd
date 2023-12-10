@@ -61,8 +61,6 @@ func HalfHourUpdate():
 		peeple.AddHappiness(HappinessAmount)
 
 func _input(event):
-	if InputManager.CanInteractWithBuilding() == false:
-		return
 
 	if bCanBeClicked and !bIsInMoveMode and InputManager.IsContextObject(self) == false:
 		if event.is_action_pressed("left_click") and Finder.GetPlayer().IsInBuildMode() == false:

@@ -16,14 +16,16 @@ var bIsActive : bool = false
 
 func _ready():
 	Finder.GetPlayer().connect("OnPlayerModeChange", Callable(self, "PlayerModeChange"))
+	InputManager.connect("OnPlayContextClicked", Callable(self, "OnPlayContextClicked"))
 	visible = false
+
+
+func OnPlayContextClicked(obj):
+	_on_ToolButton_button_up()
 
 func PlayerModeChange(bIsBuildMode):
 	if bIsBuildMode:
 		visible = false
-	else:
-		if bIsActive:
-			visible = true
 
 
 func Show(peeple):

@@ -54,10 +54,11 @@ offset_bottom = 193.0
 scale = Vector2(2, 2)
 
 [node name="BuildingUI" parent="." instance=ExtResource("6_ja2vr")]
-offset_left = 436.0
-offset_top = 467.0
-offset_right = 640.0
-offset_bottom = 552.0
+offset_left = 338.0
+offset_top = 432.0
+offset_right = 542.0
+offset_bottom = 517.0
+scale = Vector2(2, 2)
 
 [node name="MessageContainer" type="VBoxContainer" parent="." groups=["MessageContainer"]]
 process_mode = 3
