@@ -1,11 +1,26 @@
 extends Panel
 
+var ObjectToInteractWith = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	visible = false
+	InputManager.connect("OnPlayContextClicked", Callable(self, "OnPlayContextClicked"))
+
+func OnPlayContextClicked(obj):
+	visible = true
+	ObjectToInteractWith = obj
+	ObjectToInteractWith.modulate = Color(400, 400, 400, ObjectToInteractWith.modulate.a)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func _on_exit_button_button_up():
+	visible = false
+
+
+func _on_visibility_changed():
+	if visible == false:
+		if ObjectToInteractWith:
+			ObjectToInteractWith.modulate = Color.WHITE
+		ObjectToInteractWith = null
+		InputManager.LastContextObject = null
+

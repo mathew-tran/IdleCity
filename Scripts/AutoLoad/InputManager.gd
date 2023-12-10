@@ -5,7 +5,8 @@ var LastClickedObject = null
 var LastContextObject = null
 var LastHoveredObject = null
 
-signal OnContextClicked(obj)
+signal OnBuildContextClicked(obj)
+signal OnPlayContextClicked(obj)
 signal OnClicked(obj)
 
 func Click(object):
@@ -25,11 +26,18 @@ func Hovered(object):
 func IsContextObject(obj):
 	return obj == LastContextObject
 
-func ContextClick(object):
+func Internal_ContextClick(object):
 	if LastContextObject:
 		LastContextObject.modulate = Color.WHITE
 	LastContextObject = object
-	emit_signal("OnContextClicked", object)
+
+func BuildContextClick(object):
+	Internal_ContextClick(object)
+	emit_signal("OnBuildContextClicked", object)
+
+func PlayContextClick(object):
+	Internal_ContextClick(object)
+	emit_signal("OnPlayContextClicked", object)
 
 func CanInteractWithBuilding():
 	return LastContextObject == null

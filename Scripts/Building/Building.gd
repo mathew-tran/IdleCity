@@ -67,7 +67,7 @@ func _input(event):
 	if bCanBeClicked and !bIsInMoveMode and InputManager.IsContextObject(self) == false:
 		if event.is_action_pressed("left_click") and Finder.GetPlayer().IsInBuildMode() == false:
 			OnLeftClick()
-		if event.is_action_pressed("right_click") and  Finder.GetPlayer().IsInBuildMode():
+		if event.is_action_pressed("right_click"):
 			OnRightClick()
 
 func IsInMoveMode():
@@ -122,7 +122,10 @@ func OnLeftClick():
 	pass
 
 func OnRightClick():
-	InputManager.ContextClick(self)
+	if Finder.GetPlayer().IsInBuildMode():
+		InputManager.BuildContextClick(self)
+	else:
+		InputManager.PlayContextClick(self)
 
 func OnExit():
 	modulate = "ffffff"

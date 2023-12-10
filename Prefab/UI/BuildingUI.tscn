@@ -361,12 +361,25 @@ offset_top = 6.0
 offset_right = 33.0
 offset_bottom = 46.0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="RightSide"]
-layout_mode = 0
+[node name="TenantLabel" type="Label" parent="RightSide"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
 offset_left = 90.0
 offset_top = 12.0
-offset_right = 198.0
-offset_bottom = 72.0
+offset_right = 190.0
+offset_bottom = 18.0
+size_flags_horizontal = 2
+theme = ExtResource("4_dxfl7")
+theme_override_fonts/font = SubResource("10")
+text = "Tenants (0/4)"
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="RightSide"]
+layout_mode = 0
+offset_left = 91.0
+offset_top = 21.0
+offset_right = 189.0
+offset_bottom = 69.0
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
 metadata/_edit_group_ = true
@@ -374,15 +387,6 @@ metadata/_edit_group_ = true
 [node name="VBoxContainer" type="VBoxContainer" parent="RightSide/ScrollContainer"]
 layout_mode = 2
 metadata/_edit_group_ = true
-
-[node name="TenantLabel" type="Label" parent="RightSide/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_horizontal = 2
-theme = ExtResource("4_dxfl7")
-theme_override_fonts/font = SubResource("10")
-text = "Tenants (0/4)"
-vertical_alignment = 1
 
 [node name="Tenant" type="Control" parent="RightSide/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
@@ -464,4 +468,5 @@ offset_bottom = 40.0
 scale = Vector2(0.4, 0.4)
 icon = ExtResource("8_o2in4")
 
-[connection signal="button_up" from="ExitButton" to="." method="_on_ToolButton_button_up"]
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="button_up" from="ExitButton" to="." method="_on_exit_button_button_up"]

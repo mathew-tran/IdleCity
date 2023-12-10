@@ -6,11 +6,11 @@ var ObjectToInteractWith = null
 
 func _ready():
 	visible = false
-	InputManager.connect("OnContextClicked", Callable(self, "OnContextClicked"))
+	InputManager.connect("OnBuildContextClicked", Callable(self, "OnBuildContextClicked"))
 	InputManager.connect("OnClicked", Callable(self, "OnClicked"))
 	Finder.GetPlayer().connect("OnPlayerModeChange", Callable(self, "OnPlayerModeChanged"))
 
-func OnContextClicked(obj):
+func OnBuildContextClicked(obj):
 	visible = true
 	global_position = get_viewport().get_mouse_position()
 	ObjectToInteractWith = obj
