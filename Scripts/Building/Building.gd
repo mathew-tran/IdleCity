@@ -201,3 +201,15 @@ func _exit_tree():
 	emit_signal("OnDestroyed")
 	if bIsBlockingNavigation:
 		RemoveNavBlockers()
+
+func GetBuildingName():
+	return BuildingName
+
+func GetBuildingDescription():
+	return Description
+
+func GetHappinessString():
+	return "Happiness: " + str(HappinessAmount)
+
+func GetBuildingTexture():
+	return texture

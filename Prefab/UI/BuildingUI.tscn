@@ -335,7 +335,7 @@ theme_override_fonts/font = SubResource("10")
 text = "Building Name"
 vertical_alignment = 1
 
-[node name="BuildingName2" type="Label" parent="LeftSide/VBoxContainer"]
+[node name="BuildingHappiness" type="Label" parent="LeftSide/VBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 2
