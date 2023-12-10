@@ -306,5 +306,6 @@ cache/0/14/0/kerning_overrides/13/0 = Vector2(0, 0)
 cache/0/14/0/kerning_overrides/14/0 = Vector2(0, 0)
 
 [resource]
+resource_local_to_scene = true
 default_font = SubResource("1")
 default_font_size = 6

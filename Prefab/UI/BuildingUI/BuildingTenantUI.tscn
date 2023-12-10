@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://by34xcp4f86hi"]
+
+[ext_resource type="Script" path="res://Scripts/UI/BuildingUI/BuildingTenantUI.gd" id="1_o7ep4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rc6xk"]
+bg_color = Color(0.376471, 0.690196, 0.309804, 1)
+
+[sub_resource type="Theme" id="Theme_sbrlb"]
+Button/styles/normal = SubResource("StyleBoxFlat_rc6xk")
+
+[node name="Tenant" type="Control"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_o7ep4")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 72.0
+offset_bottom = 14.0
+scale = Vector2(0.4, 0.4)
+
+[node name="Button" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme = SubResource("Theme_sbrlb")
+text = "Follow"
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Mark"
+
+[connection signal="button_up" from="HBoxContainer/Button" to="." method="_on_button_button_up"]

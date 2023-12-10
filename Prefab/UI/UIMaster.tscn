@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://h7k00cd651nj"]
+[gd_scene load_steps=10 format=3 uid="uid://h7k00cd651nj"]
 
 [ext_resource type="Texture2D" uid="uid://dnpgwmt22ocj3" path="res://Art/WhitePixel.png" id="1_kk1i6"]
 [ext_resource type="Script" path="res://Scripts/Environment/Lighting.gd" id="2_6jn4j"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://our2ymq12s7u" path="res://Prefab/UI/MenuUI.tscn" id="4_fxgjd"]
 [ext_resource type="PackedScene" uid="uid://c4a8wugy53o8b" path="res://Prefab/UI/PeepleUI.tscn" id="5_pb7i5"]
 [ext_resource type="PackedScene" uid="uid://bjtgjvs7p60mj" path="res://Prefab/UI/ContentPopup.tscn" id="6_6rn30"]
+[ext_resource type="PackedScene" uid="uid://c7jm3mnr17o6r" path="res://Prefab/UI/BuildingUI.tscn" id="6_ja2vr"]
 [ext_resource type="Script" path="res://Scripts/UI/Buttons/ResetButton.gd" id="7_v73u1"]
 [ext_resource type="PackedScene" uid="uid://l1yhjgh8cnxg" path="res://Prefab/UI/PlacementContext.tscn" id="8_2xnc0"]
 
@@ -46,10 +47,19 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -814.0
+offset_left = -838.0
 offset_top = 108.0
-offset_right = -610.0
+offset_right = -634.0
 offset_bottom = 193.0
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(2, 2)
+
+[node name="BuildingUI" parent="." instance=ExtResource("6_ja2vr")]
+offset_left = 726.0
+offset_top = 432.0
+offset_right = 930.0
+offset_bottom = 517.0
 scale = Vector2(2, 2)
 
 [node name="MessageContainer" type="VBoxContainer" parent="." groups=["MessageContainer"]]
@@ -68,6 +78,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="ContentPopup" parent="." instance=ExtResource("6_6rn30")]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

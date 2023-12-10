@@ -51,10 +51,10 @@ func GetPeepleName():
 func GetHappiness():
 	return Happiness
 
-func GetTexture():
-	return $Sprite2D.texture
+func GetFaceTexture():
+	return $Face.texture
 
-func GetModulation():
+func GetShirtColor():
 	return $Sprite2D.modulate
 
 func _exit_tree():
@@ -66,6 +66,8 @@ func _ready():
 	var _OnDayTime = GameClock.connect("OnDayTime", Callable(self, "OnDayTimeExecute"))
 	var _OnNightTime = GameClock.connect("OnNightTime", Callable(self, "OnNightTimeExecute"))
 	var _OnHourUpdate = GameClock.connect("OnHourUpdate", Callable(self, "OnHourUpdate"))
+
+	var _OnPeepleClick = InputManager.connect("OnPeepleClicked", Callable(self, "OnPeepleClick"))
 	randomize()
 
 	if bHasBeenSet == false:
@@ -383,9 +385,10 @@ func OnHourUpdate():
 	RunAI()
 
 func _on_Button_button_down():
-	Helper.FocusCamera(self)
-	Helper.AddDescriptionPopup(self)
+	InputManager.PeepleClick(self)
 
+func OnPeepleClick(obj):
+	Helper.AddDescriptionPopup(obj)
 
 func _on_navigation_agent_2d_velocity_computed(safe_velocity):
 	global_position = global_position.move_toward(global_position + safe_velocity, SpeedDelta)

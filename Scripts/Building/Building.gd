@@ -28,6 +28,7 @@ var BlockedTiles = []
 var CachedSpawnArea = []
 
 signal OnDestroyed
+signal OnBuildingUpdate
 
 var OldZIndex = 0
 
@@ -61,13 +62,11 @@ func HalfHourUpdate():
 		peeple.AddHappiness(HappinessAmount)
 
 func _input(event):
-	if InputManager.CanInteractWithBuilding() == false:
-		return
 
 	if bCanBeClicked and !bIsInMoveMode and InputManager.IsContextObject(self) == false:
 		if event.is_action_pressed("left_click") and Finder.GetPlayer().IsInBuildMode() == false:
 			OnLeftClick()
-		if event.is_action_pressed("right_click") and  Finder.GetPlayer().IsInBuildMode():
+		if event.is_action_pressed("right_click"):
 			OnRightClick()
 
 func IsInMoveMode():
@@ -122,7 +121,10 @@ func OnLeftClick():
 	pass
 
 func OnRightClick():
-	InputManager.ContextClick(self)
+	if Finder.GetPlayer().IsInBuildMode():
+		InputManager.BuildContextClick(self)
+	else:
+		InputManager.PlayContextClick(self)
 
 func OnExit():
 	modulate = "ffffff"
@@ -166,6 +168,7 @@ func Enter(peeple):
 	PeepleInBuilding.append(peeple)
 	if PeepleInBuilding.size() == 1:
 		OnActivated()
+	emit_signal("OnBuildingUpdate")
 
 func Exit(peeple):
 	if PeepleInBuilding.has(peeple):
@@ -173,6 +176,7 @@ func Exit(peeple):
 		PeepleInBuilding.remove_at(index)
 	if PeepleInBuilding.size() == 0:
 		OnDeactivated()
+	emit_signal("OnBuildingUpdate")
 
 func IsActive():
 	return GetPeepleInBuildingAmount() > 0
@@ -182,6 +186,9 @@ func GetPeepleInBuildingAmount():
 
 func CanSubscribe():
 	return SubscribedPeeple.size() < BuildingLimit
+
+func GetMaxBuildingLimit():
+	return BuildingLimit
 
 func Subscribe(peeple):
 	if CanSubscribe():
@@ -200,3 +207,21 @@ func _exit_tree():
 	emit_signal("OnDestroyed")
 	if bIsBlockingNavigation:
 		RemoveNavBlockers()
+
+func GetBuildingName():
+	return BuildingName
+
+func GetBuildingDescription():
+	return Description
+
+func GetHappinessString():
+	return "Happiness: " + str(HappinessAmount)
+
+func GetBuildingTexture():
+	return texture
+
+func GetHappiness():
+	return HappinessAmount
+
+func GetPeeple():
+	return PeepleInBuilding

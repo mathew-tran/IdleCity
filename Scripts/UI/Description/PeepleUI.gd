@@ -6,7 +6,8 @@ var bIsActive : bool = false
 
 @onready var HappinessBar : ProgressBar = $RightSide/ProgressBar
 @onready var PeepleNameLabel : Label = $LeftSide/PeepleName
-@onready var PeepleTexture : Sprite2D = $LeftSide/PeepleFace
+@onready var PeepleFace : Sprite2D = $LeftSide/PeepleFace
+@onready var PeepleBody : Sprite2D = $LeftSide/PeepleBody
 
 @onready var FollowButton : Button = $LeftSide/FollowButton
 
@@ -17,12 +18,10 @@ func _ready():
 	Finder.GetPlayer().connect("OnPlayerModeChange", Callable(self, "PlayerModeChange"))
 	visible = false
 
+
 func PlayerModeChange(bIsBuildMode):
 	if bIsBuildMode:
 		visible = false
-	else:
-		if bIsActive:
-			visible = true
 
 
 func Show(peeple):
@@ -40,8 +39,8 @@ func Show(peeple):
 	HouseControl.connect("HouseFollowClicked", Callable(self, "HouseFollowClicked"))
 	WorkControl.connect("JobFollowClicked", Callable(self, "JobFollowClicked"))
 	PeepleNameLabel.text = peeple.GetPeepleName()
-	PeepleTexture.texture = peeple.GetTexture()
-	PeepleTexture.modulate = peeple.GetModulation()
+	PeepleFace.texture = peeple.GetFaceTexture()
+	PeepleBody.modulate = peeple.GetShirtColor()
 
 	UpdateUI()
 	JobUpdate()
@@ -98,6 +97,7 @@ func JobFollowClicked():
 	if trackedPeeple:
 		if trackedPeeple.GetWork():
 			Helper.FocusCamera(trackedPeeple.GetWork())
+			InputManager.PlayContextClick(trackedPeeple.GetWork())
 			StopFollowing()
 
 
@@ -105,4 +105,5 @@ func HouseFollowClicked():
 		if trackedPeeple:
 			if trackedPeeple.GetHouse():
 				Helper.FocusCamera(trackedPeeple.GetHouse())
+				InputManager.PlayContextClick(trackedPeeple.GetHouse())
 				StopFollowing()

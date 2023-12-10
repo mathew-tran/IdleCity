@@ -1,7 +1,7 @@
 extends Camera2D
 
 var MoveSpeed = 200
-var ZoomSpeed = 10
+var ZoomSpeed = 7
 var MaxZoom = 1.6
 var MinZoom = .5
 @onready var Highlight = $Sprite2D

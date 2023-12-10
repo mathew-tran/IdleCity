@@ -11,11 +11,13 @@ size = Vector2(64, 32)
 texture = ExtResource("3")
 centered = false
 script = ExtResource("1")
+BuildingLimit = 0
 BuildingName = "Research Lab"
 BuildingType = 2
 RequirementType = Array[int]([1])
 RequirementAmount = Array[int]([5])
 Description = "Learn things!"
+HappinessAmount = 0
 BuildingPrefix = "ResearchLab"
 
 [node name="ActiveParticle" parent="." instance=ExtResource("2")]
