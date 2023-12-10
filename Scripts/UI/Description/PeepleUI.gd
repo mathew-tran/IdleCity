@@ -16,12 +16,8 @@ var bIsActive : bool = false
 
 func _ready():
 	Finder.GetPlayer().connect("OnPlayerModeChange", Callable(self, "PlayerModeChange"))
-	InputManager.connect("OnPlayContextClicked", Callable(self, "OnPlayContextClicked"))
 	visible = false
 
-
-func OnPlayContextClicked(obj):
-	_on_ToolButton_button_up()
 
 func PlayerModeChange(bIsBuildMode):
 	if bIsBuildMode:
@@ -101,6 +97,7 @@ func JobFollowClicked():
 	if trackedPeeple:
 		if trackedPeeple.GetWork():
 			Helper.FocusCamera(trackedPeeple.GetWork())
+			InputManager.PlayContextClick(trackedPeeple.GetWork())
 			StopFollowing()
 
 
@@ -108,4 +105,5 @@ func HouseFollowClicked():
 		if trackedPeeple:
 			if trackedPeeple.GetHouse():
 				Helper.FocusCamera(trackedPeeple.GetHouse())
+				InputManager.PlayContextClick(trackedPeeple.GetHouse())
 				StopFollowing()

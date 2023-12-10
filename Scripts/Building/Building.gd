@@ -28,6 +28,7 @@ var BlockedTiles = []
 var CachedSpawnArea = []
 
 signal OnDestroyed
+signal OnBuildingUpdate
 
 var OldZIndex = 0
 
@@ -167,6 +168,7 @@ func Enter(peeple):
 	PeepleInBuilding.append(peeple)
 	if PeepleInBuilding.size() == 1:
 		OnActivated()
+	emit_signal("OnBuildingUpdate")
 
 func Exit(peeple):
 	if PeepleInBuilding.has(peeple):
@@ -174,6 +176,7 @@ func Exit(peeple):
 		PeepleInBuilding.remove_at(index)
 	if PeepleInBuilding.size() == 0:
 		OnDeactivated()
+	emit_signal("OnBuildingUpdate")
 
 func IsActive():
 	return GetPeepleInBuildingAmount() > 0
@@ -183,6 +186,9 @@ func GetPeepleInBuildingAmount():
 
 func CanSubscribe():
 	return SubscribedPeeple.size() < BuildingLimit
+
+func GetMaxBuildingLimit():
+	return BuildingLimit
 
 func Subscribe(peeple):
 	if CanSubscribe():
@@ -213,3 +219,9 @@ func GetHappinessString():
 
 func GetBuildingTexture():
 	return texture
+
+func GetHappiness():
+	return HappinessAmount
+
+func GetPeeple():
+	return PeepleInBuilding

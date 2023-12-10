@@ -17,6 +17,7 @@ BuildingType = 2
 RequirementType = Array[int]([0])
 RequirementAmount = Array[int]([1])
 Description = "Recruit a single Peeple daily."
+HappinessAmount = 0
 
 [node name="ActiveParticle" parent="." instance=ExtResource("3")]
 position = Vector2(18, 0)
