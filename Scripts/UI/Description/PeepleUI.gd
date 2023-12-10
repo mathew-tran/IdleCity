@@ -6,7 +6,8 @@ var bIsActive : bool = false
 
 @onready var HappinessBar : ProgressBar = $RightSide/ProgressBar
 @onready var PeepleNameLabel : Label = $LeftSide/PeepleName
-@onready var PeepleTexture : Sprite2D = $LeftSide/PeepleFace
+@onready var PeepleFace : Sprite2D = $LeftSide/PeepleFace
+@onready var PeepleBody : Sprite2D = $LeftSide/PeepleBody
 
 @onready var FollowButton : Button = $LeftSide/FollowButton
 
@@ -40,8 +41,8 @@ func Show(peeple):
 	HouseControl.connect("HouseFollowClicked", Callable(self, "HouseFollowClicked"))
 	WorkControl.connect("JobFollowClicked", Callable(self, "JobFollowClicked"))
 	PeepleNameLabel.text = peeple.GetPeepleName()
-	PeepleTexture.texture = peeple.GetTexture()
-	PeepleTexture.modulate = peeple.GetModulation()
+	PeepleFace.texture = peeple.GetFaceTexture()
+	PeepleBody.modulate = peeple.GetShirtColor()
 
 	UpdateUI()
 	JobUpdate()

@@ -51,10 +51,10 @@ func GetPeepleName():
 func GetHappiness():
 	return Happiness
 
-func GetTexture():
-	return $Sprite2D.texture
+func GetFaceTexture():
+	return $Face.texture
 
-func GetModulation():
+func GetShirtColor():
 	return $Sprite2D.modulate
 
 func _exit_tree():
