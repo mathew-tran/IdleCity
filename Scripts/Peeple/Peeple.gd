@@ -16,8 +16,12 @@ signal OnHouseUpdate
 signal OnRecUpdate
 
 var colors = [Color(1.0, 1.0, 1.0, 1.0),
-		  Color(.20, 1.0, 0.2, 1.0),
-		  Color(0.5, 0.6, 1.0, 1.0)]
+			Color(.20, 1.0, 0.2, 1.0),
+			Color(0.5, 0.6, 1.0, 1.0),
+			Color(1.0, 0.0, 0.0, 1.0),
+			Color(0.0, 1.0, 0.0, 1.0),
+			Color(0.0, 0.0, 1.0, 1.0)
+		]
 
 var bProcessLostSubscription = false
 var PeepleName = ""
@@ -80,6 +84,7 @@ func _ready():
 	PeepleManager.AddPeeple(self)
 	var _OnHappinessUpdate = connect("OnHappinessUpdate", Callable(self, "HappinessUpdate"))
 	emit_signal("OnHappinessUpdate")
+	RunAI()
 
 func AddHappiness(amount):
 	Happiness += amount
@@ -119,6 +124,7 @@ func Load(dictData):
 	SetPeepleName(dictData["name"])
 
 	Finder.GetPeepleGroup().add_child(self)
+	RunAI()
 
 func RunAI():
 	if currentAIState == AI_STATES.WANDER:
@@ -235,6 +241,9 @@ func GetHouse():
 func GetHousePosition():
 	return Vector2i(House.global_position) + GameResources.TileOffset
 
+func GetRecPlace():
+	return RecPlace
+
 func GetRecPosition():
 	return Vector2i(RecPlace.global_position) + GameResources.TileOffset
 
@@ -311,23 +320,25 @@ func CheckRec():
 		return false
 	return true
 
-func SetTargetPosition(newTargetPosition):
-	newTargetPosition = Vector2i(newTargetPosition)
-	if Vector2i(global_position) == newTargetPosition:
-		return
-	# Check if exiting from workplace
+func ExitCurrentBuilding():
 	if CheckWorkPlace():
-		if IsAtPosition(GetWorkPlacePosition()):
+		if GetWork().IsAPeepleInBuilding(self):
 			WorkPlace.Exit(self)
 
 	# Check if exiting from home
 	if CheckHouse():
-		if IsAtPosition(GetHousePosition()):
+		if GetHouse().IsAPeepleInBuilding(self):
 			House.Exit(self)
 
 	if CheckRec():
-		if IsAtPosition(GetRecPosition()):
+		if GetRecPlace().IsAPeepleInBuilding(self):
 			RecPlace.Exit(self)
+
+func SetTargetPosition(newTargetPosition):
+	newTargetPosition = Vector2i(newTargetPosition)
+
+	# Check if exiting from workplace
+	ExitCurrentBuilding()
 
 	bHasNewTarget = true
 	TargetPosition = newTargetPosition
