@@ -110,6 +110,10 @@ ScrollBackward={
 ]
 }
 
+[navigation]
+
+2d/use_edge_connections=false
+
 [physics]
 
 common/enable_pause_aware_picking=true
