@@ -164,9 +164,10 @@ func Load(dictData):
 
 func Enter(peeple):
 	if PeepleInBuilding.has(peeple):
+		emit_signal("OnBuildingUpdate")
 		return
 	PeepleInBuilding.append(peeple)
-	if PeepleInBuilding.size() == 1:
+	if PeepleInBuilding.size() >= 1:
 		OnActivated()
 	emit_signal("OnBuildingUpdate")
 
@@ -174,9 +175,12 @@ func Exit(peeple):
 	if PeepleInBuilding.has(peeple):
 		var index = PeepleInBuilding.find(peeple)
 		PeepleInBuilding.remove_at(index)
-	if PeepleInBuilding.size() == 0:
+	if PeepleInBuilding.size() <= 0:
 		OnDeactivated()
 	emit_signal("OnBuildingUpdate")
+
+func IsAPeepleInBuilding(peeple):
+	return PeepleInBuilding.has(peeple)
 
 func IsActive():
 	return GetPeepleInBuildingAmount() > 0
