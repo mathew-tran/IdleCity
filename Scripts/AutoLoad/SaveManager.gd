@@ -14,18 +14,14 @@ signal OnLoadComplete
 func AddToPersistGroup(node):
 	node.add_to_group(PersistTag)
 
-func _ready():
-
+func StartGame(newGame: bool):
+	GameClock.Start()
 	var _OnDayUpdate = GameClock.connect("OnMorningTime", Callable(self, "Save"))
 	await get_tree().create_timer(0.2).timeout
-	Load()
-
-func _process(_delta):
-	pass
-
+	if !newGame:
+		Load()
 
 func Save():
-
 	var saveGame = FileAccess.open(SaveFilePath, FileAccess.WRITE)
 	var saveNodes = get_tree().get_nodes_in_group(PersistTag)
 	for savedNode in saveNodes:

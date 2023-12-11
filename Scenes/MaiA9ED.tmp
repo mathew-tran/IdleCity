@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bbfud0yccmq8m"]
+[gd_scene load_steps=20 format=3 uid="uid://bbfud0yccmq8m"]
 
 [ext_resource type="Texture2D" uid="uid://clblx6k8l11ea" path="res://Art/UI/GridOutline.png" id="1"]
 [ext_resource type="PackedScene" uid="uid://h7k00cd651nj" path="res://Prefab/UI/UIMaster.tscn" id="1_qg2o7"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://foxlaxf1cs8k" path="res://Prefab/Player.tscn" id="3"]
 [ext_resource type="Script" path="res://Scripts/UI/BuildTileOutline.gd" id="4"]
 [ext_resource type="Texture2D" uid="uid://muf4k5ch7p4v" path="res://Art/Tiles/Water.png" id="7"]
-[ext_resource type="PackedScene" uid="uid://tgcyw26sirqj" path="res://Scenes/GameMenu.tscn" id="7_1o2ue"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_pli5n"]
 vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
@@ -166,6 +165,8 @@ sources/0 = SubResource("TileSetAtlasSource_7uw13")
 
 [node name="Main" type="Node2D"]
 
+[node name="CanvasLayer" parent="." instance=ExtResource("1_qg2o7")]
+
 [node name="BuildTiles" type="TileMap" parent="." groups=["BuildTiles", "Navigation"]]
 position = Vector2(16, 16)
 tile_set = SubResource("5")
@@ -185,8 +186,3 @@ script = ExtResource("4")
 z_as_relative = false
 
 [node name="Player" parent="." instance=ExtResource("3")]
-
-[node name="CanvasLayer" parent="." instance=ExtResource("1_qg2o7")]
-
-[node name="GameMenu" parent="." instance=ExtResource("7_1o2ue")]
-visible = false

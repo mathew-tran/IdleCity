@@ -1,0 +1,74 @@
+[gd_scene load_steps=3 format=3 uid="uid://tgcyw26sirqj"]
+
+[ext_resource type="Script" path="res://Scripts/UI/GameMenu.gd" id="1_s07cs"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_b11vu"]
+font_size = 45
+
+[node name="GameMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_s07cs")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(1152, 648)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 2.0
+offset_right = 1152.0
+offset_bottom = 650.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.239216, 0.239216, 0.239216, 0.305882)
+
+[node name="RichTextLabel" type="Label" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -82.0
+offset_top = 91.0
+offset_right = 83.0
+offset_bottom = 154.0
+grow_horizontal = 2
+text = "IdleCity"
+label_settings = SubResource("LabelSettings_b11vu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -65.0
+offset_top = -68.0
+offset_right = 65.0
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="New Game" type="Button" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "New Game"
+
+[node name="Load Game" type="Button" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "Load Game"
+
+[node name="Settings" type="Button" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Settings
+"
+
+[node name="Exit" type="Button" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+text = "Exit"
+
+[connection signal="pressed" from="ColorRect/VBoxContainer/New Game" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="ColorRect/VBoxContainer/Load Game" to="." method="_on_load_game_pressed"]
+[connection signal="pressed" from="ColorRect/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="ColorRect/VBoxContainer/Exit" to="." method="_on_exit_pressed"]

@@ -5,6 +5,8 @@ var ZoomSpeed = 7
 var MaxZoom = 1.6
 var MinZoom = .5
 @onready var Highlight = $Sprite2D
+@onready var game_menu = $"../GameMenu"
+@onready var canvas_layer = $"../CanvasLayer"
 
 var BuildingClass = preload("res://Prefab/Buildings/Factories/Factory.tscn")
 var DefaultBuildingClass = preload("res://Prefab/Buildings/Factories/Factory.tscn")
@@ -21,19 +23,17 @@ var FollowTarget = null
 
 signal OnPlayerModeChange(bIsBuildMode)
 
-
 func _ready():
+	game_menu.GameRunning = true
+	game_menu.hide()
 	SetBuildingClass(BuildingClass, null)
 	Helper.ShowBuildTileOutline(true)
 	Finder.GetMenuUI().connect("tab_changed", Callable(self, "_on_TabContainer_tab_changed"))
-
-
 
 func SetBuildingClass(newclass, purchaseButton):
 	if ClassInstance:
 		ClassInstance.queue_free()
 	BuildingClass = newclass
-
 	PurchaseButton = purchaseButton
 
 	ClassInstance = BuildingClass.instantiate()
@@ -70,6 +70,16 @@ func _process(delta):
 		position.y -= delta * MoveSpeed
 	if Input.is_action_pressed("ui_down"):
 		position.y += delta * MoveSpeed
+	
+	if Input.is_action_just_pressed("escape"):
+		if !game_menu.visible:
+			GameClock.StopTime()
+			GameClock.paused = true
+			game_menu.show()
+		else:
+			GameClock.StartTime()
+			GameClock.paused = false
+			game_menu.hide()
 
 func ChangePlayerMode(newMode):
 	CurrentPlayerMode = newMode

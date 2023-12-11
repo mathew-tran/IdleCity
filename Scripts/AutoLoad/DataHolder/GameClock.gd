@@ -1,5 +1,6 @@
 extends "res://Scripts/AutoLoad/DataHolder/PersistentData.gd"
 
+var paused: bool
 
 var MinuteTimer = null
 var MinuteIncreaseRate = 1
@@ -22,7 +23,7 @@ signal OnHalfHourUpdate
 signal OnDayUpdate
 signal OnYearUpdate
 
-func _ready():
+func Start():
 	MinuteTimer = Timer.new()
 	MinuteTimer.wait_time = MinuteDelayTime
 	MinuteTimer.one_shot = false
@@ -123,4 +124,3 @@ func Pause():
 
 func Resume():
 	get_tree().paused = false
-

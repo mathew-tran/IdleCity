@@ -357,19 +357,21 @@ func MoveToTargetPosition():
 
 
 func _physics_process(delta):
-	if $NavigationAgent2D.is_navigation_finished():
-		if global_position.distance_to(TargetPosition) < 5:
-			global_position = TargetPosition
-			RunAI()
-			return
+	if !GameClock.paused:
+		if $NavigationAgent2D.is_navigation_finished():
+			if global_position.distance_to(TargetPosition) < 5:
+				global_position = TargetPosition
+				RunAI()
+				return
 
-	SpeedDelta = Speed * delta
-	var nextPathPosition : Vector2 = $NavigationAgent2D.get_next_path_position()
-	var new_velocity: Vector2 = global_position.direction_to(nextPathPosition) * SpeedDelta
-	_on_navigation_agent_2d_velocity_computed(new_velocity)
+		SpeedDelta = Speed * delta
+		var nextPathPosition : Vector2 = $NavigationAgent2D.get_next_path_position()
+		var new_velocity: Vector2 = global_position.direction_to(nextPathPosition) * SpeedDelta
+		_on_navigation_agent_2d_velocity_computed(new_velocity)
 
-func _process(delta):
-	MoveToTargetPosition()
+func _process(_delta):
+	if !GameClock.paused:
+		MoveToTargetPosition()
 
 func OnDayTimeExecute():
 	if CheckHouse():
