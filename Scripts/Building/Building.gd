@@ -138,12 +138,12 @@ func UpdateLevelNavigation():
 func AddNavBlockers():
 	for area in CachedSpawnArea:
 		var tile = Helper.GetTileInTilemap(area)
-		Helper.SetTile(tile, GameResources.Tiles["Water"])
+		Helper.SetTileOnGrid(tile, false)
 		BlockedTiles.append(tile)
 
 func RemoveNavBlockers():
 	for tile in BlockedTiles:
-		Helper.SetTile(tile, GameResources.Tiles["Grass"])
+		Helper.SetTileOnGrid(tile, true)
 	BlockedTiles.clear()
 
 func Save():

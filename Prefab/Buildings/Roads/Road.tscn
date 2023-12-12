@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://dcgshf2sgbgkq"]
+
+[ext_resource type="Texture2D" uid="uid://dpy52gisdjy02" path="res://Art/Buildings/Roads/Road.png" id="1_o80wd"]
+[ext_resource type="Script" path="res://Scripts/Building/Building.gd" id="2_y31y8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3w7uc"]
+size = Vector2(32, 32)
+
+[node name="Road" type="Sprite2D" groups=["Factory"]]
+texture = ExtResource("1_o80wd")
+centered = false
+script = ExtResource("2_y31y8")
+BuildingLimit = 0
+BuildingName = "Road"
+BuildingType = 3
+RequirementType = Array[int]([1])
+RequirementAmount = Array[int]([5])
+Description = "Move Faster!"
+HappinessAmount = 0
+BuildingPrefix = "Road"
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-1, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(16.5, 17.5)
+shape = SubResource("RectangleShape2D_3w7uc")
+
+[node name="NavigationLink2D" type="NavigationLink2D" parent="."]
+start_position = Vector2(0, 16)
+end_position = Vector2(32, 16)
+travel_cost = 0.0
+
+[node name="NavigationLink2D2" type="NavigationLink2D" parent="."]
+start_position = Vector2(16, 0)
+end_position = Vector2(16, 32)
+travel_cost = 0.0
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

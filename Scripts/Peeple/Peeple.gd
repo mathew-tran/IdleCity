@@ -6,6 +6,9 @@ var WorkPlace = null
 var House = null
 var RecPlace = null
 
+var CurrentPath = []
+var CurrentPathIndex = 0
+
 @export var Speed = 125
 
 var Happiness = 50
@@ -342,7 +345,8 @@ func SetTargetPosition(newTargetPosition):
 
 	bHasNewTarget = true
 	TargetPosition = newTargetPosition
-	$NavigationAgent2D.target_position = newTargetPosition
+	CurrentPath = Helper.GetPathOnGrid(position, newTargetPosition)
+	CurrentPathIndex = 0
 
 func MoveToTargetPosition():
 	# TODO: MT: we should try to refactor this. I feel like the code is pretty identical
@@ -357,16 +361,16 @@ func MoveToTargetPosition():
 
 
 func _physics_process(delta):
-	if $NavigationAgent2D.is_navigation_finished():
-		if global_position.distance_to(TargetPosition) < 5:
-			global_position = TargetPosition
-			RunAI()
-			return
-
-	SpeedDelta = Speed * delta
-	var nextPathPosition : Vector2 = $NavigationAgent2D.get_next_path_position()
-	var new_velocity: Vector2 = global_position.direction_to(nextPathPosition) * SpeedDelta
-	_on_navigation_agent_2d_velocity_computed(new_velocity)
+	if CurrentPathIndex >= len(CurrentPath):
+		global_position = TargetPosition
+		RunAI()
+	else:
+		SpeedDelta = Speed * delta
+		if global_position.distance_to(CurrentPath[CurrentPathIndex]) < 5:
+			CurrentPathIndex += 1
+		if CurrentPathIndex < len(CurrentPath):
+			var new_velocity: Vector2 = global_position.direction_to(CurrentPath[CurrentPathIndex]) * SpeedDelta
+			_on_navigation_agent_2d_velocity_computed(new_velocity)
 
 func _process(delta):
 	MoveToTargetPosition()

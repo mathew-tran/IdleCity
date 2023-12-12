@@ -1,0 +1,15 @@
+extends TileMap
+
+var AStarRef
+
+func _ready():
+	AStarRef = AStarGrid2D.new()
+	AStarRef.region = get_used_rect()
+	AStarRef.cell_size = Vector2(32, 32)
+	AStarRef.default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
+	AStarRef.default_compute_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
+	AStarRef.offset = position
+	AStarRef.update()
+
+func GetAStarGrid():
+	return AStarRef

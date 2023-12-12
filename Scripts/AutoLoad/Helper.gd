@@ -104,6 +104,20 @@ func SendLogMessageToPlayer(message):
 	MessageContainer.add_child(instance)
 	instance.UpdateText(message)
 
+func GetAStarGrid():
+	return Finder.GetBuildTiles().GetAStarGrid()
+
+
+
+func GetPathOnGrid(startPos, endPos):
+	var grid = GetAStarGrid()
+	var p1 = GetTileInTilemap(startPos)
+	var p2 = GetTileInTilemap(endPos)
+	return grid.get_point_path(p1, p2)
+
+func SetTileOnGrid(tileID, bPassable = true):
+	GetAStarGrid().set_point_solid(tileID, bPassable == false)
+	print("Set Tile:" + str(tileID) + " to" + str(bPassable))
 func FocusCamera(object):
 	Finder.GetPlayer().Focus(object)
 
