@@ -92,9 +92,9 @@ func IsPlaceable(globalSpawnArea):
 func GetCustomMousePosition():
 	return Vector2i(get_global_mouse_position()) - GameResources.TileOffset
 
-func GetTileInTilemap(globalPosition):
+func GetTileInTilemap(globalPosition, offset = Vector2.ZERO):
 	var Tilemap = Finder.GetBuildTiles()
-	var tile = Tilemap.local_to_map(globalPosition)
+	var tile = Tilemap.local_to_map(Vector2(globalPosition) + offset)
 	return tile
 
 func SendLogMessageToPlayer(message):

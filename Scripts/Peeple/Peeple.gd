@@ -346,6 +346,8 @@ func SetTargetPosition(newTargetPosition):
 	bHasNewTarget = true
 	TargetPosition = newTargetPosition
 	CurrentPath = Helper.GetPathOnGrid(position, newTargetPosition)
+	for x in range(0, len(CurrentPath)):
+		CurrentPath[x] -= Vector2(GameResources.TileOffset)
 	CurrentPathIndex = 0
 
 func MoveToTargetPosition():
@@ -361,6 +363,8 @@ func MoveToTargetPosition():
 
 
 func _physics_process(delta):
+	if CurrentPath.is_empty():
+		return
 	if CurrentPathIndex >= len(CurrentPath):
 		global_position = TargetPosition
 		RunAI()

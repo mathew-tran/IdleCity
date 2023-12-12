@@ -137,7 +137,7 @@ func UpdateLevelNavigation():
 
 func AddNavBlockers():
 	for area in CachedSpawnArea:
-		var tile = Helper.GetTileInTilemap(area)
+		var tile = Helper.GetTileInTilemap(area, Vector2(16, 16))
 		Helper.SetTileOnGrid(tile, false)
 		BlockedTiles.append(tile)
 

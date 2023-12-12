@@ -8,8 +8,10 @@ func _ready():
 	AStarRef.cell_size = Vector2(32, 32)
 	AStarRef.default_estimate_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	AStarRef.default_compute_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
+	AStarRef.diagonal_mode =AStarGrid2D.DIAGONAL_MODE_NEVER
 	AStarRef.offset = position
 	AStarRef.update()
+
 
 func GetAStarGrid():
 	return AStarRef
