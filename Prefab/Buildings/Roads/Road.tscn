@@ -11,7 +11,7 @@ texture = ExtResource("1_o80wd")
 centered = false
 script = ExtResource("2_y31y8")
 BuildingLimit = 0
-TravelCost = 10
+TravelCost = 20
 BuildingName = "Road"
 BuildingType = 3
 RequirementType = Array[int]([1])
@@ -28,15 +28,5 @@ position = Vector2(-1, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(16.5, 17.5)
 shape = SubResource("RectangleShape2D_3w7uc")
-
-[node name="NavigationLink2D" type="NavigationLink2D" parent="."]
-start_position = Vector2(0, 16)
-end_position = Vector2(32, 16)
-travel_cost = 0.0
-
-[node name="NavigationLink2D2" type="NavigationLink2D" parent="."]
-start_position = Vector2(16, 0)
-end_position = Vector2(16, 32)
-travel_cost = 0.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

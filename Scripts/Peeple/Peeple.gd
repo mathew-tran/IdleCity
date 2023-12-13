@@ -158,14 +158,18 @@ func ChangeAIState(newState, bIsImmediate = false):
 	visible = currentAIState != AI_STATES.STAY
 
 
+func IsPathComplete():
+	return CurrentPathIndex >= len(CurrentPath)
+
 func AIWANDER():
-	var bIsPositive = randi() % 2
-	var newPosition = global_position
-	if bIsPositive:
-		newPosition += GetRandomPosition()
-	else:
-		newPosition -= GetRandomPosition()
-	SetTargetPosition(newPosition)
+	if IsPathComplete():
+		var bIsPositive = randi() % 2
+		var newPosition = global_position
+		if bIsPositive:
+			newPosition += GetRandomPosition()
+		else:
+			newPosition -= GetRandomPosition()
+		SetTargetPosition(newPosition)
 	if GameClock.IsWorkTime():
 		ChangeAIState(AI_STATES.GOWORK, true)
 	else:
@@ -419,6 +423,9 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity):
 
 
 func _on_timer_timeout():
+	if CurrentPath.is_empty():
+		return
+
 	var tile = Helper.GetTileInTilemap(global_position)
 	if tile:
 		var travelSpeed = Helper.GetTileOnGridWeight(tile)
@@ -429,7 +436,7 @@ func _on_timer_timeout():
 		if travelSpeed == GameResources.DefaultTravelWeight:
 			SpeedBonus = 0
 		elif travelSpeed < GameResources.DefaultTravelWeight:
-			SpeedBonus = lerp(0.0, Speed, 1 - (travelSpeed / GameResources.DefaultTravelWeight))
+			SpeedBonus = lerp(0.0, Speed*2, 1 - (travelSpeed / GameResources.DefaultTravelWeight))
 		else:
 			# TODO: have a calculation for this when it's travel cost is horrid.Think of travelling through the mud.
 			SpeedBonus = - 10
