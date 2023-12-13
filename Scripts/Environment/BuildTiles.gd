@@ -10,7 +10,9 @@ func _ready():
 	AStarRef.default_compute_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
 	AStarRef.diagonal_mode =AStarGrid2D.DIAGONAL_MODE_NEVER
 	AStarRef.offset = position
+
 	AStarRef.update()
+	AStarRef.fill_weight_scale_region(AStarRef.region, GameResources.DefaultTravelWeight)
 
 
 func GetAStarGrid():

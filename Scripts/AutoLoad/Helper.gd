@@ -107,17 +107,21 @@ func SendLogMessageToPlayer(message):
 func GetAStarGrid():
 	return Finder.GetBuildTiles().GetAStarGrid()
 
-
-
 func GetPathOnGrid(startPos, endPos):
 	var grid = GetAStarGrid()
 	var p1 = GetTileInTilemap(startPos)
 	var p2 = GetTileInTilemap(endPos)
 	return grid.get_point_path(p1, p2)
 
-func SetTileOnGrid(tileID, bPassable = true):
-	GetAStarGrid().set_point_solid(tileID, bPassable == false)
-	print("Set Tile:" + str(tileID) + " to" + str(bPassable))
+func SetTileOnGridSolid(tileID, bSolid = true):
+	GetAStarGrid().set_point_solid(tileID, bSolid)
+
+func SetTileOnGridWeight(tileID, weight = 1.0):
+	GetAStarGrid().set_point_weight_scale(tileID, weight)
+
+func GetTileOnGridWeight(tileID):
+	return GetAStarGrid().get_point_weight_scale(tileID)
+
 func FocusCamera(object):
 	Finder.GetPlayer().Focus(object)
 

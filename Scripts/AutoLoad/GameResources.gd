@@ -6,6 +6,7 @@ var Tiles = {
 }
 
 var TileOffset = Vector2i(16, 16)
+var DefaultTravelWeight = 100.0
 
 var COLOR_ACCEPT = "00bc68c9"
 var COLOR_DECLINE = "ee3327ad"

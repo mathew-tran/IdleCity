@@ -11,6 +11,7 @@ texture = ExtResource("1_o80wd")
 centered = false
 script = ExtResource("2_y31y8")
 BuildingLimit = 0
+TravelCost = 10
 BuildingName = "Road"
 BuildingType = 3
 RequirementType = Array[int]([1])
