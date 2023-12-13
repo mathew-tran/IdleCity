@@ -56,10 +56,9 @@ libraries = {
 "": SubResource("AnimationLibrary_sptuk")
 }
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-path_postprocessing = 1
-avoidance_enabled = true
-radius = 1.0
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
 
 [connection signal="button_down" from="Button" to="." method="_on_Button_button_down"]
-[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

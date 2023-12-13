@@ -6,7 +6,11 @@ var WorkPlace = null
 var House = null
 var RecPlace = null
 
-@export var Speed = 125
+var CurrentPath = []
+var CurrentPathIndex = 0
+
+@export var Speed = 125.0
+var SpeedBonus = 0
 
 var Happiness = 50
 
@@ -14,6 +18,7 @@ signal OnHappinessUpdate
 signal OnJobUpdate
 signal OnHouseUpdate
 signal OnRecUpdate
+
 
 var colors = [Color(1.0, 1.0, 1.0, 1.0),
 			Color(.20, 1.0, 0.2, 1.0),
@@ -153,14 +158,18 @@ func ChangeAIState(newState, bIsImmediate = false):
 	visible = currentAIState != AI_STATES.STAY
 
 
+func IsPathComplete():
+	return CurrentPathIndex >= len(CurrentPath)
+
 func AIWANDER():
-	var bIsPositive = randi() % 2
-	var newPosition = global_position
-	if bIsPositive:
-		newPosition += GetRandomPosition()
-	else:
-		newPosition -= GetRandomPosition()
-	SetTargetPosition(newPosition)
+	if IsPathComplete():
+		var bIsPositive = randi() % 2
+		var newPosition = global_position
+		if bIsPositive:
+			newPosition += GetRandomPosition()
+		else:
+			newPosition -= GetRandomPosition()
+		SetTargetPosition(newPosition)
 	if GameClock.IsWorkTime():
 		ChangeAIState(AI_STATES.GOWORK, true)
 	else:
@@ -335,6 +344,9 @@ func ExitCurrentBuilding():
 			RecPlace.Exit(self)
 
 func SetTargetPosition(newTargetPosition):
+	if Vector2i(newTargetPosition) == Vector2i(TargetPosition):
+		return
+
 	newTargetPosition = Vector2i(newTargetPosition)
 
 	# Check if exiting from workplace
@@ -342,7 +354,10 @@ func SetTargetPosition(newTargetPosition):
 
 	bHasNewTarget = true
 	TargetPosition = newTargetPosition
-	$NavigationAgent2D.target_position = newTargetPosition
+	CurrentPath = Helper.GetPathOnGrid(position, newTargetPosition)
+	for x in range(0, len(CurrentPath)):
+		CurrentPath[x] -= Vector2(GameResources.TileOffset)
+	CurrentPathIndex = 0
 
 func MoveToTargetPosition():
 	# TODO: MT: we should try to refactor this. I feel like the code is pretty identical
@@ -357,16 +372,18 @@ func MoveToTargetPosition():
 
 
 func _physics_process(delta):
-	if $NavigationAgent2D.is_navigation_finished():
-		if global_position.distance_to(TargetPosition) < 5:
-			global_position = TargetPosition
-			RunAI()
-			return
-
-	SpeedDelta = Speed * delta
-	var nextPathPosition : Vector2 = $NavigationAgent2D.get_next_path_position()
-	var new_velocity: Vector2 = global_position.direction_to(nextPathPosition) * SpeedDelta
-	_on_navigation_agent_2d_velocity_computed(new_velocity)
+	if CurrentPath.is_empty():
+		return
+	if CurrentPathIndex >= len(CurrentPath):
+		global_position = TargetPosition
+		RunAI()
+	else:
+		SpeedDelta = (Speed + SpeedBonus) * delta
+		if global_position.distance_to(CurrentPath[CurrentPathIndex]) < 5:
+			CurrentPathIndex += 1
+		if CurrentPathIndex < len(CurrentPath):
+			var new_velocity: Vector2 = global_position.direction_to(CurrentPath[CurrentPathIndex]) * SpeedDelta
+			_on_navigation_agent_2d_velocity_computed(new_velocity)
 
 func _process(delta):
 	MoveToTargetPosition()
@@ -403,3 +420,25 @@ func OnPeepleClick(obj):
 
 func _on_navigation_agent_2d_velocity_computed(safe_velocity):
 	global_position = global_position.move_toward(global_position + safe_velocity, SpeedDelta)
+
+
+func _on_timer_timeout():
+	if CurrentPath.is_empty():
+		return
+
+	var tile = Helper.GetTileInTilemap(global_position)
+	if tile:
+		var travelSpeed = Helper.GetTileOnGridWeight(tile)
+		# If you are above default, you are really slow
+		# If you are at default, the speed bonus should be 0
+		# If the travel speed is lower than default, you should move faster
+
+		if travelSpeed == GameResources.DefaultTravelWeight:
+			SpeedBonus = 0
+		elif travelSpeed < GameResources.DefaultTravelWeight:
+			SpeedBonus = lerp(0.0, Speed*2, 1 - (travelSpeed / GameResources.DefaultTravelWeight))
+		else:
+			# TODO: have a calculation for this when it's travel cost is horrid.Think of travelling through the mud.
+			SpeedBonus = - 10
+	else:
+		SpeedBonus = 0

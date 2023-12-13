@@ -2,6 +2,7 @@ extends Sprite2D
 
 @export var BuildingLimit = 1
 @export var bIsBlockingNavigation = false
+@export var TravelCost = 0
 var SubscribedPeeple = []
 var SpawnArea = [Vector2.ZERO]
 
@@ -41,6 +42,16 @@ func _ready():
 	name = BuildingPrefix
 	LastPosition = global_position
 	process_mode = Node.PROCESS_MODE_ALWAYS
+
+
+func SetTravelCost(bSet = true):
+
+	var newCost = GameResources.DefaultTravelWeight
+	if bSet:
+		newCost = TravelCost
+	for area in CachedSpawnArea:
+		var tile = Helper.GetTileInTilemap(area, Vector2(16, 16))
+		Helper.SetTileOnGridWeight(tile, newCost)
 
 func GetTileOffsets():
 	var area = []
@@ -130,20 +141,21 @@ func OnExit():
 	modulate = "ffffff"
 
 func UpdateLevelNavigation():
+	CachedSpawnArea = GetGlobalSpawnArea()
 	if bIsBlockingNavigation:
 		RemoveNavBlockers()
-		CachedSpawnArea = GetGlobalSpawnArea()
 		AddNavBlockers()
+	SetTravelCost(true)
 
 func AddNavBlockers():
 	for area in CachedSpawnArea:
-		var tile = Helper.GetTileInTilemap(area)
-		Helper.SetTile(tile, GameResources.Tiles["Water"])
+		var tile = Helper.GetTileInTilemap(area, Vector2(16, 16))
+		Helper.SetTileOnGridSolid(tile, true)
 		BlockedTiles.append(tile)
 
 func RemoveNavBlockers():
 	for tile in BlockedTiles:
-		Helper.SetTile(tile, GameResources.Tiles["Grass"])
+		Helper.SetTileOnGridSolid(tile, false)
 	BlockedTiles.clear()
 
 func Save():
@@ -209,6 +221,7 @@ func OnDeactivated():
 
 func _exit_tree():
 	emit_signal("OnDestroyed")
+	SetTravelCost(false)
 	if bIsBlockingNavigation:
 		RemoveNavBlockers()
 
