@@ -31,7 +31,7 @@ func _ready():
 	StartTime()
 
 func OnLoadComplete():
-	emit_signal("OnMidnightTime")
+	emit_signal("OnHourUpdate")
 
 func OnDelete():
 	TimeInHours = 5
@@ -78,28 +78,32 @@ func OnTimerUpdate():
 			YearAmount += 1
 			DayAmount = 0
 
-	if TimeInHours == 4 and TimeInMinutes == 0:
+	if IsMorning() and TimeInMinutes == 0:
 		emit_signal("OnMorningTime")
-	if TimeInHours == 7 and TimeInMinutes == 0:
+	elif IsStartingWorkDay() and TimeInMinutes == 0:
 		emit_signal("OnDayTime")
 		Helper.SendLogMessageToPlayer("Work time!")
-	elif TimeInHours == 16 and TimeInMinutes == 0:
+	elif IsFinishingWorkDay() and TimeInMinutes == 0:
 		emit_signal("OnNightTime")
 		Helper.SendLogMessageToPlayer("After work time!")
-	elif TimeInHours == 23 and TimeInMinutes == 0:
+	elif IsMidnight() and TimeInMinutes == 0:
 		emit_signal("OnMidnightTime")
-	emit_signal("OnTimeUpdate")
 	if TimeInMinutes == 0 or TimeInMinutes == 30:
 		emit_signal("OnHalfHourUpdate")
+	emit_signal("OnTimeUpdate")
 
-
+# TODO: MT: in the future. I think the work place should define the time to work, and the time for a break, as well as time for sleeping!
 func IsDayTime():
 	return TimeInHours < 16
 
-
-# TODO: MT: in the future. I think the work place should define the time to work, and the time for a break, as well as time for sleeping!
 func IsWorkTime():
 	return TimeInHours >= 6 and TimeInHours < 16
+
+func IsMorning():
+	return TimeInHours == 4
+
+func IsMidnight():
+	return TimeInHours == 23
 
 func IsStartingWorkDay():
 	return TimeInHours == 6
@@ -114,9 +118,20 @@ func IsFinishingWorkDay():
 	return TimeInHours == 20
 
 func GetTimeString():
-	var hours = str(TimeInHours).pad_zeros(2)
+
+	var hours12 = TimeInHours
+	var suffix = "AM"
+
+	if hours12 >= 12 and hours12 <= 23:
+		suffix = "PM"
+
+	if hours12 > 12:
+		hours12 -= 12
+
+	var hours = str(hours12).pad_zeros(2)
 	var minutes = str(TimeInMinutes).pad_zeros(2)
-	return str(hours) + ":" + str(minutes)
+
+	return str(hours) + ":" + str(minutes) + " " + suffix
 
 func Pause():
 	get_tree().paused = true

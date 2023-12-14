@@ -1,19 +1,32 @@
 extends Sprite2D
 
-var MorningColor = "0ac8bc00"
-var DayColor = "28c8bc00"
-var NightColor = "28003782"
-var MidnightColor = "47002eb9"
+@export var MorningColor = Color("0ac8bc00")
+@export var DayColor = Color("28c8bc00")
+@export var NightColor = Color("28003782")
+@export var MidnightColor = Color("47002eb9")
 
 func _ready():
-	var _OnMorningTime = GameClock.connect("OnMorningTime", Callable(self, "OnMorningTime"))
-	var _OnDayTime = GameClock.connect("OnDayTime", Callable(self, "OnDayTime"))
-	var _OnNightTime = GameClock.connect("OnNightTime", Callable(self, "OnNightTime"))
-	var _OnMidnightTime = GameClock.connect("OnMidnightTime", Callable(self, "OnMidnightTime"))
-	if GameClock.IsDayTime():
-		OnDayTime()
-	else:
-		OnNightTime()
+	var _onHourUpdate = GameClock.connect("OnHourUpdate", Callable(self, "OnHourUpdate"))
+
+func GetColorForTime(currentTime, startTime, endTime, startColor, endColor):
+	if currentTime < startTime or currentTime > endTime:
+		return null
+	var ratio = (float(currentTime) - startTime) / (endTime - startTime)
+	return startColor.lerp(endColor, ratio)
+
+func OnHourUpdate():
+	var time = GameClock.TimeInHours
+	var color = GetColorForTime(time, 0, 4, MidnightColor, MorningColor)
+	if color == null:
+		color = GetColorForTime(time, 4, 17, MorningColor, DayColor)
+	if color == null:
+		color = GetColorForTime(time, 17, 21, DayColor, NightColor)
+	if color == null:
+		color = GetColorForTime(time, 21, 23, NightColor, MidnightColor)
+	if color == null:
+		color = MidnightColor
+	modulate = color
+
 
 func OnMorningTime():
 	modulate = MorningColor
