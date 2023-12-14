@@ -306,10 +306,8 @@ func OnHouseDeath():
 	PeepleManager.DeclareUnhoused(self)
 	ProcessBuildingDeath()
 
-
 func IsAtPosition(positionToCheck):
 	return Vector2i(global_position) == positionToCheck
-
 
 func CheckWorkPlace():
 	if WorkPlace == null or is_instance_valid(WorkPlace) == false:

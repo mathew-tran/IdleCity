@@ -22,6 +22,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 1152, 648)
 script = ExtResource("2_6jn4j")
+DayColor = Color(0.952941, 0.588235, 0, 0.152941)
 
 [node name="Clock" parent="." instance=ExtResource("3_u8r83")]
 light_mask = 0
