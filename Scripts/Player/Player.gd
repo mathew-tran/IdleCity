@@ -108,14 +108,17 @@ func ProcessBuildMode(delta):
 	if Helper.IsMouseOnControl():
 		return
 	if Input.is_action_just_pressed("left_click") and BuildingClass != DefaultBuildingClass:
-		if Helper.IsPlaceable(potentialSpawnArea):
-			var newInstance = BuildingClass.instantiate()
-			Finder.GetBuildings().add_child(newInstance)
-			newInstance.position = Finder.GetBuildTiles().map_to_local(tile)
-			newInstance.UpdateLevelNavigation()
-			PurchaseButton.Purchase()
+		if CanPurchase():
+			if Helper.IsPlaceable(potentialSpawnArea):
+				var newInstance = BuildingClass.instantiate()
+				Finder.GetBuildings().add_child(newInstance)
+				newInstance.position = Finder.GetBuildTiles().map_to_local(tile)
+				newInstance.UpdateLevelNavigation()
+				PurchaseButton.Purchase()
+			else:
+				Helper.AddPopupText(get_global_mouse_position(), "Cannot\nplace object!")
 		else:
-			Helper.AddPopupText(get_global_mouse_position(), "Cannot\nplace object!")
+			Helper.AddPopupText(get_global_mouse_position(), "Missing Resources!")
 	if Input.is_action_just_pressed("right_click"):
 		SetBuildingClass(DefaultBuildingClass, null)
 
