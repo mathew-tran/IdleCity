@@ -70,6 +70,7 @@ modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_right = 1030.0
 offset_bottom = 601.0
+action_mode = 0
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -120,5 +121,10 @@ offset_top = 101.0
 offset_right = 858.0
 offset_bottom = 454.0
 
+[node name="ButtonDelay" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="button_up" from="BG/Button" to="." method="_on_Button_button_up"]
 [connection signal="button_up" from="Panel/Button" to="." method="_on_ToolButton_button_up"]
