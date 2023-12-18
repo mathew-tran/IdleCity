@@ -1,6 +1,7 @@
 extends Sprite2D
 
 var TargetPosition = Vector2()
+var StartPosition = Vector2()
 var bHasNewTarget = false
 var WorkPlace = null
 var House = null
@@ -163,13 +164,7 @@ func IsPathComplete():
 
 func AIWANDER():
 	if IsPathComplete():
-		var bIsPositive = randi() % 2
-		var newPosition = global_position
-		if bIsPositive:
-			newPosition += GetRandomPosition()
-		else:
-			newPosition -= GetRandomPosition()
-		SetTargetPosition(newPosition)
+		SetTargetPosition(GetRandomPosition())
 	if GameClock.IsWorkTime():
 		ChangeAIState(AI_STATES.GOWORK, true)
 	else:
@@ -257,7 +252,12 @@ func GetRecPosition():
 	return Vector2i(RecPlace.global_position) + GameResources.TileOffset
 
 func GetRandomPosition():
-	return Vector2(randi() % 30, randi() % 30)
+
+	var tile = Helper.GetTileInTilemap(global_position, Vector2(randf_range(-200, 200), randf_range(-200, 200)))
+	if tile:
+		if Helper.IsWaterTile(tile) == false:
+			return Helper.GetTileGlobalCoord(tile)
+	return global_position
 
 
 func FindJob():
@@ -301,7 +301,6 @@ func OnFactoryDeath():
 	ProcessBuildingDeath()
 
 func OnHouseDeath():
-	House.disconnect("OnDestroyed", Callable(self, "OnHouseDeath"))
 	House = null
 	PeepleManager.DeclareUnhoused(self)
 	ProcessBuildingDeath()
@@ -356,6 +355,7 @@ func SetTargetPosition(newTargetPosition):
 	for x in range(0, len(CurrentPath)):
 		CurrentPath[x] -= Vector2(GameResources.TileOffset)
 	CurrentPathIndex = 0
+	StartPosition = global_position
 
 func MoveToTargetPosition():
 	# TODO: MT: we should try to refactor this. I feel like the code is pretty identical
@@ -373,15 +373,21 @@ func _physics_process(delta):
 	if CurrentPath.is_empty():
 		return
 	if CurrentPathIndex >= len(CurrentPath):
-		global_position = TargetPosition
+		StartPosition = TargetPosition
+		CurrentPath.clear()
 		RunAI()
 	else:
-		SpeedDelta = (Speed + SpeedBonus) * delta
-		if global_position.distance_to(CurrentPath[CurrentPathIndex]) < 5:
+		var distance = (Vector2(CurrentPath[CurrentPathIndex]) - global_position).length()
+		if distance <= 0.0:
 			CurrentPathIndex += 1
+			return
+
+		StartPosition = global_position
+		SpeedDelta = (Speed + SpeedBonus) * delta
+		var progress = SpeedDelta / distance
+		progress = clampf(progress, 0.0, 1.0)
 		if CurrentPathIndex < len(CurrentPath):
-			var new_velocity: Vector2 = global_position.direction_to(CurrentPath[CurrentPathIndex]) * SpeedDelta
-			_on_navigation_agent_2d_velocity_computed(new_velocity)
+			global_position = lerp(StartPosition, Vector2(CurrentPath[CurrentPathIndex]), progress)
 
 func _process(delta):
 	MoveToTargetPosition()
