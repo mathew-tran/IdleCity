@@ -22,6 +22,7 @@ func _ready():
 func PlayerModeChange(bIsBuildMode):
 	if bIsBuildMode:
 		visible = false
+		StopFollowing()
 
 
 func Show(peeple):
@@ -38,6 +39,8 @@ func Show(peeple):
 
 	HouseControl.connect("HouseFollowClicked", Callable(self, "HouseFollowClicked"))
 	WorkControl.connect("JobFollowClicked", Callable(self, "JobFollowClicked"))
+
+
 	PeepleNameLabel.text = peeple.GetPeepleName()
 	PeepleFace.texture = peeple.GetFaceTexture()
 	PeepleBody.modulate = peeple.GetShirtColor()

@@ -43,4 +43,11 @@ func _on_ToolButton_button_up():
 	ClosePopup()
 
 func _on_Button_button_up():
-	ClosePopup()
+	if $ButtonDelay.time_left == 0.0:
+		ClosePopup()
+
+
+func _on_visibility_changed():
+	if visible:
+		$ButtonDelay.start()
+
