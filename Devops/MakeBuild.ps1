@@ -9,13 +9,14 @@ Write-Host $ProjectPath
 
 $BuildVersionScript = "$PSScriptRoot/../Scripts/AutoLoad/BuildVersion.gd"
 
-$ExportFolder = "C:\IdleCityBuild/index.html"
+$ExportFolder = "C:\IdleCityBuild/"
 
 function UpdateBuildHash {
     Write-Host "== Updating Build Hash =="
     ResetFile -filepath $BuildVersionScript
     $searchString = "XX_BUILD_HASH_XX"
     $hashValue = git log --pretty=format:'%h' -n 1
+    $hashValue = $BuildVersion + $hashValue
     (Get-Content $BuildVersionScript) | ForEach-Object {$_ -replace $searchString, $hashValue} | Set-Content $BuildVersionScript
     Get-Content $BuildVersionScript | Write-Host
 
@@ -24,7 +25,7 @@ function UpdateBuildHash {
 function MakeBuildAndPackageToContent {
     Write-Host "===MAKE BUILD AND PACKAGE TO CONTENT==="
 
-    Start-Process -Wait -FilePath $Godot -ArgumentList "$ProjectPath $type WindowsDesktop --quiet --no-window"
+    Start-Process -Wait -FilePath $Godot -ArgumentList "$ProjectPath --export-release Web --quiet --no-window"
 
 }
 
@@ -39,8 +40,8 @@ function main {
     UpdateBuildHash
     MakeBuildAndPackageToContent
 
-    Write-Host "SEE: $ContentFolder"
-    Start $ContentFolder
+    Write-Host "SEE: $ExportFolder"
+    Start $ExportFolder
 
     ResetFile -filePath $BuildVersionScript
 
