@@ -97,6 +97,12 @@ func GetTileInTilemap(globalPosition, offset = Vector2.ZERO):
 	var tile = Tilemap.local_to_map(Vector2(globalPosition) + offset)
 	return tile
 
+func GetTileGlobalCoord(tile):
+	if tile:
+		var Tilemap = Finder.GetBuildTiles()
+		return Tilemap.map_to_local(tile)
+	return Vector2.ZERO
+
 func SendLogMessageToPlayer(message):
 	var instance = load("res://Prefab/UI/MessageLog.tscn").instantiate()
 
