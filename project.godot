@@ -30,6 +30,7 @@ ResearchManager="*res://Scripts/AutoLoad/DataHolder/ResearchManager.gd"
 Finder="*res://Scripts/AutoLoad/Finder.gd"
 InventoryManager="*res://Scripts/AutoLoad/DataHolder/InventoryManager.gd"
 RecManager="*res://Scripts/AutoLoad/RecManager.gd"
+BuildVersion="*res://Scripts/AutoLoad/BuildVersion.gd"
 
 [display]
 

@@ -3,6 +3,10 @@
 
 # How to play
 
+Playable on itch.io!
+
+https://ichit.itch.io/idle-city
+
 ## Controls
 - (F1) - to enter play mode
 - (F2) - to enter build mode
