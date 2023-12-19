@@ -90,7 +90,7 @@ func _ready():
 	PeepleManager.AddPeeple(self)
 	var _OnHappinessUpdate = connect("OnHappinessUpdate", Callable(self, "HappinessUpdate"))
 	emit_signal("OnHappinessUpdate")
-	RunAI()
+	ChangeAIState(AI_STATES.GOHOME, true)
 
 func AddHappiness(amount):
 	Happiness += amount
