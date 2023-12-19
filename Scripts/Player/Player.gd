@@ -62,14 +62,16 @@ func _process(delta):
 		global_position = FollowTarget.position
 		return
 
+	var adjustedDelta = 1.0 / 60.0
+
 	if Input.is_action_pressed("ui_left"):
-		position.x -= delta * MoveSpeed
+		position.x -= adjustedDelta * MoveSpeed
 	if Input.is_action_pressed("ui_right"):
-		position.x += delta * MoveSpeed
+		position.x += adjustedDelta * MoveSpeed
 	if Input.is_action_pressed("ui_up"):
-		position.y -= delta * MoveSpeed
+		position.y -= adjustedDelta * MoveSpeed
 	if Input.is_action_pressed("ui_down"):
-		position.y += delta * MoveSpeed
+		position.y += adjustedDelta * MoveSpeed
 
 func ChangePlayerMode(newMode):
 	CurrentPlayerMode = newMode
@@ -129,9 +131,6 @@ func ProcessBuildMode(delta):
 
 
 func ProcessMenuMode(_delta):
-	if Helper.IsPopupVisible() == false:
-		GameClock.Resume()
-
 	$Sprite2D.visible = false
 	Helper.ShowBuildTileOutline(false)
 

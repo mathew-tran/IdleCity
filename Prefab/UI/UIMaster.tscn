@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://h7k00cd651nj"]
+[gd_scene load_steps=12 format=3 uid="uid://h7k00cd651nj"]
 
 [ext_resource type="Texture2D" uid="uid://dnpgwmt22ocj3" path="res://Art/WhitePixel.png" id="1_kk1i6"]
 [ext_resource type="Script" path="res://Scripts/Environment/Lighting.gd" id="2_6jn4j"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/Buttons/ResetButton.gd" id="7_v73u1"]
 [ext_resource type="PackedScene" uid="uid://l1yhjgh8cnxg" path="res://Prefab/UI/PlacementContext.tscn" id="8_2xnc0"]
 [ext_resource type="Script" path="res://Scripts/UI/BuildVersionString.gd" id="10_qmfwy"]
+[ext_resource type="PackedScene" uid="uid://cicikslktxqg7" path="res://Prefab/UI/TimeControl.tscn" id="11_r16hf"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 process_mode = 3
@@ -30,10 +31,11 @@ light_mask = 0
 anchors_preset = 0
 anchor_left = 0.0
 anchor_right = 0.0
-offset_left = 977.0
-offset_top = 9.0
-offset_right = 1143.0
-offset_bottom = 57.0
+offset_left = 974.0
+offset_top = 7.0
+offset_right = 1140.0
+offset_bottom = 55.0
+grow_horizontal = 1
 
 [node name="MenuUI" parent="." groups=["MenuUI"] instance=ExtResource("4_fxgjd")]
 anchors_preset = 0
@@ -49,10 +51,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -838.0
-offset_top = 108.0
-offset_right = -634.0
-offset_bottom = 193.0
+offset_left = -426.0
+offset_top = -69.0
+offset_right = -222.0
+offset_bottom = 16.0
 grow_horizontal = 0
 grow_vertical = 2
 scale = Vector2(2, 2)
@@ -116,5 +118,18 @@ offset_top = -23.0
 offset_right = 117.0
 grow_vertical = 0
 script = ExtResource("10_qmfwy")
+
+[node name="TimeControl" parent="." groups=["controls"] instance=ExtResource("11_r16hf")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 394.0
+offset_top = -587.0
+offset_right = 566.0
+offset_bottom = -547.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [connection signal="button_down" from="Button" to="Button" method="_on_Button_button_down"]
