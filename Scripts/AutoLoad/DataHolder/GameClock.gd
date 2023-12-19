@@ -3,7 +3,7 @@ extends "res://Scripts/AutoLoad/DataHolder/PersistentData.gd"
 
 var MinuteTimer = null
 var MinuteIncreaseRate = 1
-var MinuteDelayTime = .05
+var MinuteDelayTime = .09
 
 var TimeInMinutes = 55
 var TimeInHours = 5
@@ -138,4 +138,12 @@ func Pause():
 
 func Resume():
 	get_tree().paused = false
+
+func SetGameTime(amount):
+	if amount == 0:
+		Pause()
+		Engine.time_scale = 1
+	else:
+		Engine.time_scale = amount
+		Resume()
 
