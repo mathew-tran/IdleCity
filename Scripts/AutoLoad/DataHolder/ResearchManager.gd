@@ -13,18 +13,18 @@ var ResearchMenus = {
 
 func _ready():
 	pass
-	
+
 func OnLoadComplete():
 	emit_signal("OnResearchGained")
 	for button in UnlockedButtons:
 		var unlocked = load(UnlockedButtons[button]["filename"]).instantiate()
 		unlocked.Load((UnlockedButtons[button]["data"]))
 		unlocked.RunUnlockFunction()
-	
+
 func OnDelete():
 	UnlockLevels = {}
 	UnlockedButtons = {}
-	
+
 func Save():
 	var dict = {
 	"type" : "auto",
@@ -37,23 +37,23 @@ func Save():
 func Load(data):
 	UnlockLevels = data["unlocklevels"]
 	UnlockedButtons = data["unlockbuttons"]
-	
+
 func GetUnlockLevel(category):
 	if UnlockLevels.has(str(category)):
 		return UnlockLevels[str(category)]
 	return 0
-	
+
 func IncrementUnlockLevel(category):
 	if UnlockLevels.has(str(category)):
 		UnlockLevels[str(category)] += 1
 	else:
 		UnlockLevels[str(category)] = 1
-	
+
 
 func CacheUnlockedButton(button):
 	if UnlockedButtons.has(button.name):
 		return
-		
+
 	var time = Time.get_datetime_dict_from_system()
 	var display_string : String = "%02d/%02d/%02d %02d:%02d:%02d" % [time.year, time.month, time.day, time.hour, time.minute, time.second];
 	UnlockedButtons[button.name] = {
@@ -70,7 +70,7 @@ func GetButtonUnlockedTime(button):
 	if IsButtonUnlocked(button):
 		return UnlockedButtons[button.name]["time"]
 	return "null"
-	
+
 func IsCategoryUnlocked(category):
 	if UnlockLevels.has(str(category)):
 		return UnlockLevels[str(category)] > 0
