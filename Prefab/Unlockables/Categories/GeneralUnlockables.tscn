@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://es3gpjrtt7mi"]
+[gd_scene load_steps=12 format=3 uid="uid://es3gpjrtt7mi"]
 
 [ext_resource type="PackedScene" uid="uid://b0jt3rssldous" path="res://Prefab/Buttons/ResearchUnlockableCategory.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://Prefab/Buttons/ResearchUnlockableIncreaseSpeed.tscn" id="2"]
+[ext_resource type="Script" path="res://Scripts/Unlocks/UnlockContainer.gd" id="1_c5ivq"]
+[ext_resource type="PackedScene" uid="uid://eqt48xfbi74h" path="res://Prefab/Buttons/ResearchUnlockableIncreaseSpeed.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://dreybwy6svxjc" path="res://Prefab/Buildings/Housing/House.tscn" id="3_k0jtd"]
 [ext_resource type="Script" path="res://Scripts/Unlocks/UnlockBuilding.gd" id="3_u0dso"]
 [ext_resource type="PackedScene" uid="uid://dmhf8m62xrt4w" path="res://Prefab/Buildings/SpecialBuildings/Tavern.tscn" id="4_2t08q"]
@@ -19,6 +20,7 @@ offset_left = 4.0
 offset_top = 32.0
 offset_right = -4.0
 offset_bottom = -4.0
+script = ExtResource("1_c5ivq")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 0
@@ -34,6 +36,7 @@ layout_mode = 2
 layout_mode = 2
 script = ExtResource("3_u0dso")
 BuildingToUnlock = ExtResource("3_k0jtd")
+UnlockID = "HOUSE"
 DescriptionTitle = "Research Housing"
 DescriptionText = "Allows a place for your Peeple to rest. Making them more efficient at work!"
 
@@ -41,17 +44,20 @@ DescriptionText = "Allows a place for your Peeple to rest. Making them more effi
 layout_mode = 2
 script = ExtResource("3_u0dso")
 BuildingToUnlock = ExtResource("4_2t08q")
+UnlockID = "TAVERN"
 RequirementAmount = Array[int]([30])
 DescriptionTitle = "Research Tavern"
 DescriptionText = "Allows you to recruit Peeple Daily"
 
 [node name="UnlockBotany" parent="ScrollContainer/VBoxContainer" instance=ExtResource("1")]
 layout_mode = 2
+UnlockID = "BOTANY_CATEGORY"
 
 [node name="UnlockStone" parent="ScrollContainer/VBoxContainer" instance=ExtResource("1")]
 layout_mode = 2
 script = ExtResource("3_u0dso")
 BuildingToUnlock = ExtResource("4_vcheb")
+UnlockID = "STONE_FACTORY"
 RequirementAmount = Array[int]([100])
 DescriptionTitle = "Research Stone"
 DescriptionText = "Allows you to create Stone Factories!"
@@ -60,6 +66,7 @@ DescriptionText = "Allows you to create Stone Factories!"
 layout_mode = 2
 script = ExtResource("3_u0dso")
 BuildingToUnlock = ExtResource("6_6av5e")
+UnlockID = "DUPLEX"
 RequirementType = Array[int]([0, 1])
 RequirementAmount = Array[int]([30, 30])
 DescriptionTitle = "Research Housing II"
@@ -69,6 +76,7 @@ DescriptionText = "Allows you to create Duplex, which can hold more Peeple!"
 layout_mode = 2
 script = ExtResource("3_u0dso")
 BuildingToUnlock = ExtResource("7_cm4bi")
+UnlockID = "COAL_FACTORY"
 RequirementType = Array[int]([0, 1])
 RequirementAmount = Array[int]([80, 80])
 DescriptionTitle = "Research Coal"
@@ -78,6 +86,7 @@ DescriptionText = "Allows you to make factories to produce Coal."
 layout_mode = 2
 script = ExtResource("3_u0dso")
 BuildingToUnlock = ExtResource("4_f4f71")
+UnlockID = "ROAD"
 RequirementType = Array[int]([2])
 DescriptionTitle = "Research Roads"
 DescriptionText = "Make your city more efficient by placing down roads!"
@@ -86,9 +95,11 @@ DescriptionText = "Make your city more efficient by placing down roads!"
 layout_mode = 2
 script = ExtResource("3_u0dso")
 BuildingToUnlock = ExtResource("9_r0ras")
+UnlockID = "ARCADE"
 RequirementType = Array[int]([2])
 DescriptionTitle = "Research Arcade"
 DescriptionText = "Let Peeple regain happiness during their lunch hours! Making them more efficient"
 
 [node name="Hustle I" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2")]
 layout_mode = 2
+DescriptionTitle = "HUSTLE_1"

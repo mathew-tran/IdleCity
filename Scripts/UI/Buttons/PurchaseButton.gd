@@ -35,6 +35,7 @@ func UpdateUI():
 	Price.text = Price.text.strip_edges()
 	Price.text = Price.text.trim_suffix("|")
 
+
 func Purchase():
 	InventoryManager.Purchase(RequirementType, RequirementAmount)
 	ResearchManager.BroadcastOnResearchGained()

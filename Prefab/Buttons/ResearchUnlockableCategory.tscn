@@ -101,12 +101,6 @@ theme = SubResource("8")
 text = "Requirements:
 200 / 200 WOOD | 500/600 STONE"
 
-[node name="TimePurchased" type="Label" parent="Panel/HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 40)
-layout_mode = 2
-theme = SubResource("8")
-text = "PURCHASED: 202020"
-
 [node name="Button" type="Button" parent="Panel/HBoxContainer"]
 custom_minimum_size = Vector2(200, 80)
 layout_mode = 2

@@ -9,23 +9,9 @@ extends Panel
 var BuildingClass = preload("res://Prefab/Buttons/BuildingButton.tscn")
 
 func _ready():
-
-	# Add housing
-	#AddButton(preload("res://Prefab/Buildings/Housing/House.tscn"))
-	#AddButton(preload("res://Prefab/Buildings/Housing/BigHouse.tscn"))
-#
-	## Add factories
-	#AddButton(preload("res://Prefab/Buildings/Factories/StoneFactory.tscn"))
 	AddButton(preload("res://Prefab/Buildings/SpecialBuildings/ResearchLab.tscn"))
 	AddButton(preload("res://Prefab/Buildings/Factories/WoodFactory.tscn"))
-#
-	## Add special
-	#AddButton(preload("res://Prefab/Buildings/SpecialBuildings/Tavern.tscn"))
 
-#
-	#AddButton(preload("res://Prefab/Buildings/Recreation/Arcade.tscn"))
-#
-	#AddButton(preload("res://Prefab/Buildings/Roads/Road.tscn"))
 
 func AddButton(buildingClass):
 	var instance = buildingClass.instantiate()

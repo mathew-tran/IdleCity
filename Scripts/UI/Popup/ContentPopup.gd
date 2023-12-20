@@ -37,7 +37,6 @@ func ClosePopup():
 	CleanPopup()
 	Finder.GetPlayer().PopMode()
 	visible = false
-	GameClock.Resume()
 
 func _on_ToolButton_button_up():
 	ClosePopup()

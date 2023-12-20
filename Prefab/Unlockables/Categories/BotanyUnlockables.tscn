@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://bde5ls7boh0hu"]
+[gd_scene load_steps=3 format=3 uid="uid://bde5ls7boh0hu"]
 
 [ext_resource type="PackedScene" uid="uid://looofhkuxsk2" path="res://Prefab/Buttons/ResearchUnlockableBuilding.tscn" id="1"]
+[ext_resource type="Script" path="res://Scripts/Unlocks/UnlockContainer.gd" id="1_7npc0"]
 
 [node name="Botany" type="Panel"]
 visible = false
@@ -11,6 +12,7 @@ offset_left = 4.0
 offset_top = 24.0
 offset_right = -4.0
 offset_bottom = -4.0
+script = ExtResource("1_7npc0")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 0
@@ -24,3 +26,4 @@ layout_mode = 2
 
 [node name="UnlockBushes" parent="ScrollContainer/VBoxContainer" instance=ExtResource("1")]
 layout_mode = 2
+UnlockID = "BUSH"
