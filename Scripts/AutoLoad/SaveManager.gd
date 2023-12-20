@@ -1,6 +1,6 @@
 extends Node
 
-var SaveFilePath = "user://savegame.save"
+var SaveFilePath = "user://game.save"
 
 var PersistTag = "Persist"
 

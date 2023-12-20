@@ -3,14 +3,14 @@ extends Control
 func _ready():
 	var _OnResearchGained = ResearchManager.connect("OnResearchGained", Callable(self, "OnResearchGained"))
 	UpdateUI()
-				
+
 func OnResearchGained():
 	var popup = Finder.GetContentPopup()
 	await get_tree().create_timer(.2).timeout
 	Finder.GetPlayer().PopMode()
 	Helper.AddPopup(popup.GetTitle(), popup.GetDescription(), popup.GetContentClass())
-	
-	
+
+
 func UpdateUI():
 	if ResearchManager.IsCategoryUnlocked(GameResources.CATEGORY_TYPE.BOTANY):
 		var instance = load(ResearchManager.ResearchMenus["BOTANY"]).instantiate()
