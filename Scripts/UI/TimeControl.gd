@@ -20,19 +20,19 @@ func UpdateButtons(buttonToModulate):
 	buttonToModulate.release_focus()
 
 func _on_pause_button_up():
-	GameClock.SetGameTime(0)
+	GameClock.SetGameTime(GameClock.TIME_SPEED.STOPPED)
 	UpdateButtons($Pause)
 
 func _on_play_button_up():
-	GameClock.SetGameTime(1)
+	GameClock.SetGameTime(GameClock.TIME_SPEED.NORMAL)
 	UpdateButtons($Play)
 
 func _on_fast_forward_button_up():
-	GameClock.SetGameTime(2)
+	GameClock.SetGameTime(GameClock.TIME_SPEED.FAST)
 	UpdateButtons($FastForward)
 
 func _on_super_fast_forward_button_up():
-	GameClock.SetGameTime(3)
+	GameClock.SetGameTime(GameClock.TIME_SPEED.ULTRA_FAST)
 	UpdateButtons($SuperFastForward)
 
 func _input(event):

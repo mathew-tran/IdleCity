@@ -11,6 +11,17 @@ var TimeInHours = 5
 var DayAmount = 0
 var YearAmount = 0
 
+var NormalTime = 1
+var FastTime = 2
+var UltraFastTime = 3
+
+enum TIME_SPEED {
+	STOPPED,
+	NORMAL,
+	FAST,
+	ULTRA_FAST
+}
+
 signal OnDayTime
 signal OnNightTime
 signal OnMidnightTime
@@ -21,6 +32,7 @@ signal OnHourUpdate
 signal OnHalfHourUpdate
 signal OnDayUpdate
 signal OnYearUpdate
+signal OnTimeSpeedChange(eTimeSpeed)
 
 func _ready():
 	MinuteTimer = Timer.new()
@@ -139,11 +151,23 @@ func Pause():
 func Resume():
 	get_tree().paused = false
 
-func SetGameTime(amount):
+func SetGameTime(eTimeSpeed):
+	var amount = 0
+	if eTimeSpeed == TIME_SPEED.STOPPED:
+		amount = 0
+	elif eTimeSpeed == TIME_SPEED.NORMAL:
+		amount = 1
+	elif eTimeSpeed == TIME_SPEED.FAST:
+		amount = 2
+	elif eTimeSpeed == TIME_SPEED.ULTRA_FAST:
+		amount = 3
+
 	if amount == 0:
 		Pause()
 		Engine.time_scale = 1
 	else:
 		Engine.time_scale = amount
 		Resume()
+
+	emit_signal("OnTimeSpeedChange", eTimeSpeed)
 
