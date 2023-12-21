@@ -16,7 +16,7 @@ function UpdateBuildHash {
     ResetFile -filepath $BuildVersionScript
     $searchString = "XX_BUILD_HASH_XX"
     $hashValue = git log --pretty=format:'%h' -n 1
-    $hashValue = $BuildVersion + $hashValue
+    $hashValue = $BuildVersion + "." + $hashValue
     (Get-Content $BuildVersionScript) | ForEach-Object {$_ -replace $searchString, $hashValue} | Set-Content $BuildVersionScript
     Get-Content $BuildVersionScript | Write-Host
 
