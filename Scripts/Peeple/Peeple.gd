@@ -165,10 +165,6 @@ func IsPathComplete():
 func AIWANDER():
 	if IsPathComplete():
 		SetTargetPosition(GetRandomPosition())
-	if GameClock.IsWorkTime():
-		ChangeAIState(AI_STATES.GOWORK, true)
-	else:
-		ChangeAIState(AI_STATES.GOHOME, true)
 
 func AIGOWORK():
 	if GameClock.IsWorkTime():
@@ -253,7 +249,7 @@ func GetRecPosition():
 
 func GetRandomPosition():
 
-	var tile = Helper.GetTileInTilemap(global_position, Vector2(randf_range(-200, 200), randf_range(-200, 200)))
+	var tile = Helper.GetTileInTilemap(global_position, Vector2(randf_range(-100, 100), randf_range(-100, 100)))
 	if tile:
 		if Helper.IsWaterTile(tile) == false:
 			return Helper.GetTileGlobalCoord(tile)
