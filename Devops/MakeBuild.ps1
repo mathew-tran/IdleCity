@@ -1,6 +1,6 @@
 param(
     $Branch = "main",
-    $BuildVersion = "r0.0.1"
+    $BuildVersion = "r0.0.2"
 )
 
 $ProjectPath =  "$PSScriptRoot/../project.godot"
