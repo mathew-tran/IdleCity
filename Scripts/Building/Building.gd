@@ -33,6 +33,7 @@ signal OnBuildingUpdate
 
 var OldZIndex = 0
 
+
 func _ready():
 	OldZIndex = z_index
 	SaveManager.AddToPersistGroup(self)

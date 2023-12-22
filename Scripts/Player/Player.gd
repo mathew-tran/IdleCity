@@ -95,7 +95,6 @@ func Follow(object):
 	FollowTarget = object
 
 func ProcessBuildMode(delta):
-	GameClock.Pause()
 	Helper.ShowBuildTileOutline(true)
 	MoveGhost(delta)
 	$Sprite2D.visible = true

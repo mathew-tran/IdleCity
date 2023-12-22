@@ -5,7 +5,6 @@ func _ready():
 	visible = false
 
 func ShowPopup(contentTitle, contentDescription, content):
-	GameClock.Pause()
 	CleanPopup()
 	$Panel/Title.text = contentTitle
 	$Panel/Description.text = contentDescription
