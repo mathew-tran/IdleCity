@@ -2,15 +2,7 @@ extends HBoxContainer
 
 
 func _ready():
-	Finder.GetPlayer().connect("OnPlayerModeChange", Callable(self, "PlayerModeChange"))
 	_on_play_button_up()
-
-func PlayerModeChange(bIsBuildMode):
-	if bIsBuildMode:
-		visible = false
-	else:
-		visible = true
-		_on_pause_button_up()
 
 func UpdateButtons(buttonToModulate):
 	for child in get_children():
