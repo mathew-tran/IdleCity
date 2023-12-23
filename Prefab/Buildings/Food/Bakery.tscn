@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://drfrxaw05dt4i"]
+
+[ext_resource type="Texture2D" uid="uid://cdjohsnsad86m" path="res://Art/Buildings/Food/Bakery.png" id="1_ji8ch"]
+[ext_resource type="Script" path="res://Scripts/Building/Restaraunt.gd" id="2_40kbs"]
+[ext_resource type="PackedScene" uid="uid://fdiatj5sep31" path="res://Prefab/Particles/ActiveParticle.tscn" id="3_8jocn"]
+[ext_resource type="PackedScene" uid="uid://b6dmun6ale2vd" path="res://Prefab/Buildings/UseGear.tscn" id="4_57kna"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gsuse"]
+size = Vector2(64, 64)
+
+[node name="Bakery" type="Sprite2D" groups=["Food"]]
+texture = ExtResource("1_ji8ch")
+centered = false
+script = ExtResource("2_40kbs")
+ResourceToConsume = 3
+ResourceToConsumeAmount = 4
+SatietyGained = 50
+BuildingLimit = 4
+BuildingName = "Bakery"
+BuildingType = 2
+RequirementType = Array[int]([2, 0])
+RequirementAmount = Array[int]([50, 200])
+Description = "Feed Peeple"
+HappinessAmount = 0
+BuildingPrefix = "Bakery"
+
+[node name="ActiveParticle" parent="." instance=ExtResource("3_8jocn")]
+show_behind_parent = true
+position = Vector2(32, 32)
+emission_sphere_radius = 1.0
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(32, 32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_gsuse")
+
+[node name="UseGear" parent="." instance=ExtResource("4_57kna")]
+position = Vector2(32, 32)

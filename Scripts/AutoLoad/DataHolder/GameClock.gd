@@ -3,7 +3,7 @@ extends "res://Scripts/AutoLoad/DataHolder/PersistentData.gd"
 
 var MinuteTimer = null
 var MinuteIncreaseRate = 1
-var MinuteDelayTime = .09
+var MinuteDelayTime = .2
 
 var TimeInMinutes = 55
 var TimeInHours = 5
@@ -127,7 +127,10 @@ func IsLunchFinishedTime():
 	return TimeInHours == 14
 
 func IsFinishingWorkDay():
-	return TimeInHours == 20
+	return TimeInHours == 19
+
+func IsGoHomeAfterWorkTime():
+	return TimeInHours == 23
 
 func GetTimeString():
 

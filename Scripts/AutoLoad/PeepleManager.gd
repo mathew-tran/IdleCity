@@ -12,6 +12,9 @@ signal OnPeepleEmploymentUpdate
 var RecPeeple =[]
 signal OnRecPeepleUpdate
 
+var FoodPeeple = []
+signal OnFoodPeepleUpdate
+
 var SpeedBuff = 1
 var PeepleClass = preload("res://Prefab/Peeple/Peeple.tscn")
 
@@ -101,6 +104,17 @@ func DeclaredRecd(currentPeeple):
 		var index = RecPeeple.find(currentPeeple)
 		RecPeeple.remove_at(index)
 		emit_signal("OnRecPeepleUpdate")
+
+func DeclaredHasFood(newPeeple):
+	if FoodPeeple.has(newPeeple) == false:
+		FoodPeeple.append(newPeeple)
+		emit_signal("OnFoodPeepleUpdate")
+
+func DeclaredHasNoFood(currentPeeple):
+	if FoodPeeple.has(currentPeeple):
+		var index = FoodPeeple.find(currentPeeple)
+		FoodPeeple.remove_at(index)
+		emit_signal("OnFoodPeepleUpdate")
 
 func GetUnEmployedPeepleAmount():
 	return UnemployedPeeple.size()

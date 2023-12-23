@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bde5ls7boh0hu"]
+[gd_scene load_steps=7 format=3 uid="uid://bde5ls7boh0hu"]
 
 [ext_resource type="PackedScene" uid="uid://looofhkuxsk2" path="res://Prefab/Buttons/ResearchUnlockableBuilding.tscn" id="1"]
 [ext_resource type="Script" path="res://Scripts/Unlocks/UnlockContainer.gd" id="1_7npc0"]
 [ext_resource type="PackedScene" uid="uid://b0jt3rssldous" path="res://Prefab/Buttons/ResearchUnlockableCategory.tscn" id="3_unf6t"]
 [ext_resource type="Script" path="res://Scripts/Unlocks/UnlockBuilding.gd" id="4_b1heh"]
 [ext_resource type="PackedScene" uid="uid://cn2o8fmctkjv" path="res://Prefab/Buildings/Factories/WheatFactory.tscn" id="5_tfli1"]
+[ext_resource type="PackedScene" uid="uid://drfrxaw05dt4i" path="res://Prefab/Buildings/Food/Bakery.tscn" id="6_kwebu"]
 
 [node name="Botany" type="Panel"]
 visible = false
@@ -41,3 +42,14 @@ RequirementType = Array[int]([0, 2])
 RequirementAmount = Array[int]([30, 30])
 DescriptionTitle = "Research Wheat"
 DescriptionText = "Produce Wheat for food!"
+
+[node name="UnlockBakery" parent="ScrollContainer/VBoxContainer" instance=ExtResource("3_unf6t")]
+layout_mode = 2
+script = ExtResource("4_b1heh")
+BuildingToUnlock = ExtResource("6_kwebu")
+Category = 1
+UnlockID = "BAKERY"
+RequirementType = Array[int]([0, 2])
+RequirementAmount = Array[int]([30, 30])
+DescriptionTitle = "Research Bakery"
+DescriptionText = "Feed Peeple!"

@@ -6,6 +6,7 @@ var bHasNewTarget = false
 var WorkPlace = null
 var House = null
 var RecPlace = null
+var FoodPlace = null
 
 var Faces = [
 	"res://Art/Minion/MinionFace.png",
@@ -26,7 +27,7 @@ var SpeedBonus = 0
 var Happiness = 50
 var Satiety = 100
 
-var SatietyDecay = 4
+var SatietyDecay = .5
 var FaceIndex = 0
 
 signal OnHappinessUpdate
@@ -59,6 +60,8 @@ enum AI_STATES {
 	FINDREC,
 	GOHOME,
 	FINDHOME,
+	GOFOOD,
+	FINDFOOD,
 	STAY,
 }
 
@@ -88,6 +91,9 @@ func GetHappiness():
 
 func GetSatiety():
 	return Satiety
+
+func IsFull():
+	return Satiety == 100
 
 func GetFaceTexture():
 	return $Face.texture
@@ -162,7 +168,8 @@ func Save():
 	"speed" : Speed,
 	"name" : GetPeepleName(),
 	"hobby" : GetPeepleHobby(),
-	"face" : FaceIndex
+	"face" : FaceIndex,
+	"satiety" : Satiety
 	}
 	return dictionary
 
@@ -183,6 +190,9 @@ func Load(dictData):
 	if dictData.has("face"):
 		$Face.texture = load(Faces[dictData["face"]])
 
+	if dictData.has("satiety"):
+		Satiety = dictData["satiety"]
+
 	Finder.GetPeepleGroup().add_child(self)
 	RunAI()
 
@@ -197,6 +207,10 @@ func RunAI():
 		AIGOREC()
 	elif currentAIState == AI_STATES.FINDREC:
 		AIFINDREC()
+	elif currentAIState == AI_STATES.GOFOOD:
+		AIGOFOOD()
+	elif currentAIState == AI_STATES.FINDFOOD:
+		AIFINDFOOD()
 	elif currentAIState == AI_STATES.GOHOME:
 		AIGOHOME()
 	elif currentAIState == AI_STATES.FINDHOME:
@@ -261,6 +275,25 @@ func AIFINDREC():
 		ChangeAIState(AI_STATES.WANDER)
 		emit_signal("OnRecUpdate")
 
+func AIGOFOOD():
+	if CheckFood():
+		if IsAtPosition(GetFoodPosition()):
+			FoodPlace.Enter(self)
+			ChangeAIState(AI_STATES.STAY, true)
+			return
+		SetTargetPosition(GetFoodPosition())
+	else:
+		ChangeAIState(AI_STATES.FINDFOOD, true)
+
+func AIFINDFOOD():
+	FindFood()
+	if CheckFood():
+		ChangeAIState(AI_STATES.GOFOOD, true)
+		emit_signal("OnFoodUpdate")
+	else:
+		ChangeAIState(AI_STATES.WANDER)
+		emit_signal("OnFoodUpdate")
+
 func AIGOHOME():
 	if CheckHouse():
 		if IsAtPosition(GetHousePosition()):
@@ -279,6 +312,7 @@ func AIFINDHOME():
 	else:
 		ChangeAIState(AI_STATES.WANDER)
 		emit_signal("OnHouseUpdate")
+
 
 func AISTAY():
 	pass
@@ -300,6 +334,12 @@ func GetRecPlace():
 
 func GetRecPosition():
 	return Vector2i(RecPlace.GetEnterPosition())
+
+func GetFoodPlace():
+	return FoodPlace
+
+func GetFoodPosition():
+	return Vector2i(FoodPlace.GetEnterPosition())
 
 func GetRandomPosition():
 
@@ -344,6 +384,15 @@ func FindRec():
 	else:
 		PeepleManager.DeclaredUnRecd(self)
 
+func FindFood():
+	FoodPlace = FoodManager.FindFood(self)
+	if FoodPlace:
+		FoodPlace.connect("OnDestroyed", Callable(self, "OnHouseDeath"))
+		FoodPlace.Subscribe(self)
+		PeepleManager.DeclaredHasFood(self)
+	else:
+		PeepleManager.DeclaredHasNoFood(self)
+
 func OnFactoryDeath():
 	WorkPlace.disconnect("OnDestroyed", Callable(self, "OnFactoryDeath"))
 	WorkPlace = null
@@ -376,6 +425,12 @@ func CheckRec():
 		return false
 	return true
 
+func CheckFood():
+	if FoodPlace == null or is_instance_valid(FoodPlace) == false:
+		FoodPlace = null
+		return false
+	return true
+
 func ExitCurrentBuilding():
 	if CheckWorkPlace():
 		if GetWork().IsAPeepleInBuilding(self):
@@ -389,6 +444,10 @@ func ExitCurrentBuilding():
 	if CheckRec():
 		if GetRecPlace().IsAPeepleInBuilding(self):
 			RecPlace.Exit(self)
+
+	if CheckFood():
+		if GetFoodPlace().IsAPeepleInBuilding(self):
+			FoodPlace.Exit(self)
 
 func SetTargetPosition(newTargetPosition):
 	if Vector2i(newTargetPosition) == Vector2i(TargetPosition):
@@ -456,6 +515,8 @@ func OnHourUpdate():
 	if bProcessLostSubscription:
 		bProcessLostSubscription = false
 		return
+	if GameClock.IsMorning():
+		ChangeAIState(AI_STATES.GOFOOD)
 	if GameClock.IsStartingWorkDay():
 		ChangeAIState(AI_STATES.GOWORK)
 	elif GameClock.IsLunchTime():
@@ -463,6 +524,8 @@ func OnHourUpdate():
 	elif GameClock.IsLunchFinishedTime():
 		ChangeAIState(AI_STATES.GOWORK)
 	elif GameClock.IsFinishingWorkDay():
+		ChangeAIState(AI_STATES.GOFOOD)
+	elif GameClock.IsGoHomeAfterWorkTime():
 		ChangeAIState(AI_STATES.GOHOME)
 	RunAI()
 
@@ -501,3 +564,11 @@ func _on_timer_timeout():
 func _on_hunger_timer_timeout():
 	AddSatiety(-SatietyDecay)
 	emit_signal("OnSatietyUpdate")
+
+func FindSomethingToDo():
+	var result = randi() % 2
+	if result == 1:
+		ChangeAIState(AI_STATES.WANDER)
+	else:
+		ChangeAIState(AI_STATES.GOREC)
+
