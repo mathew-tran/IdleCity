@@ -568,7 +568,7 @@ func _on_hunger_timer_timeout():
 func FindSomethingToDo():
 	var result = randi() % 2
 	if result == 1:
-		ChangeAIState(AI_STATES.WANDER, true)
+		ChangeAIState(AI_STATES.GOHOME, true)
 	else:
 		ChangeAIState(AI_STATES.GOREC,true)
 

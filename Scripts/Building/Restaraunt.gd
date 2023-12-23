@@ -21,6 +21,9 @@ func EatFood():
 					peeple.FindSomethingToDo()
 
 			InventoryManager.RemoveItem(GameResources.GetResName(ResourceToConsume), ResourceToConsumeAmount)
+		else:
+			for peeple in PeepleInBuilding:
+				peeple.FindSomethingToDo()
 
 
 func CanAffordFood():
