@@ -553,6 +553,7 @@ theme_override_fonts/font = SubResource("14")
 text = "WORK"
 
 [node name="Button" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_top = 5.0
 offset_right = 80.0

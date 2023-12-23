@@ -60,5 +60,9 @@ libraries = {
 wait_time = 0.2
 autostart = true
 
+[node name="HungerTimer" type="Timer" parent="."]
+wait_time = 10.0
+
 [connection signal="button_down" from="Button" to="." method="_on_Button_button_down"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="HungerTimer" to="." method="_on_hunger_timer_timeout"]
