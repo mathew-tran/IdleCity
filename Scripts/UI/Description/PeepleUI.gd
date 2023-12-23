@@ -6,6 +6,7 @@ var bIsActive : bool = false
 
 @onready var HappinessBar : ProgressBar = $RightSide/ProgressBar
 @onready var PeepleNameLabel : Label = $LeftSide/PeepleName
+@onready var PeepleHobbyLabel : Label = $LeftSide/PeepleHobby
 @onready var PeepleFace : Sprite2D = $LeftSide/PeepleFace
 @onready var PeepleBody : Sprite2D = $LeftSide/PeepleBody
 
@@ -44,6 +45,7 @@ func Show(peeple):
 	PeepleNameLabel.text = peeple.GetPeepleName()
 	PeepleFace.texture = peeple.GetFaceTexture()
 	PeepleBody.modulate = peeple.GetShirtColor()
+	PeepleHobbyLabel.text = peeple.GetPeepleHobby()
 
 	UpdateUI()
 	JobUpdate()

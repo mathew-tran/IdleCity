@@ -273,7 +273,7 @@ cache/0/4/0/kerning_overrides/5/0 = Vector2(0, 0)
 cache/0/4/0/kerning_overrides/4/0 = Vector2(0, 0)
 
 [sub_resource type="LabelSettings" id="LabelSettings_teou6"]
-font_size = 6
+font_size = 5
 
 [sub_resource type="FontFile" id="11"]
 fallbacks = Array[Font]([ExtResource("2")])
@@ -385,25 +385,27 @@ centered = false
 
 [node name="PeepleName" type="Label" parent="LeftSide"]
 layout_mode = 0
-offset_left = 12.0
+offset_left = 30.0
 offset_top = 3.0
-offset_right = 145.0
+offset_right = 163.0
 offset_bottom = 18.0
 scale = Vector2(0.6, 0.6)
 size_flags_horizontal = 2
 theme = ExtResource("3")
 theme_override_fonts/font = SubResource("10")
 text = "Michael Jordan"
-horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="Label" type="Label" parent="LeftSide"]
-layout_mode = 0
+[node name="PeepleHobby" type="Label" parent="LeftSide"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.075
+anchor_bottom = 2.085
 offset_left = 30.0
-offset_top = 8.0
-offset_right = 179.0
-offset_bottom = 33.0
+offset_top = 12.0
+offset_right = -20.95
+offset_bottom = -46.23
 theme_override_font_sizes/font_size = 5
 text = "\"Likes to eat Pasta\""
 label_settings = SubResource("LabelSettings_teou6")

@@ -2,7 +2,7 @@ extends Sprite2D
 
 @export var BuildingLimit = 1
 @export var bIsBlockingNavigation = false
-@export var TravelCost = 0
+@export var TravelCost = 100
 var SubscribedPeeple = []
 var SpawnArea = [Vector2.ZERO]
 

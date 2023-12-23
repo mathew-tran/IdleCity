@@ -14,25 +14,29 @@ signal OnRecPeepleUpdate
 
 var SpeedBuff = 1
 var PeepleClass = preload("res://Prefab/Peeple/Peeple.tscn")
-var PeepleNames = []
 
-func PopulateNames():
+func AssignRandomName(peeple):
 	var file = FileAccess.open("res://Content/names.txt", FileAccess.READ)
 	var test_json_conv = JSON.new()
 	test_json_conv.parse(file.get_as_text())
 	var data = test_json_conv.get_data()
-	PeepleNames = data["Names"]
+	var peepleNames = data["Names"]
 	file.close()
+	peeple.SetPeepleName(peepleNames[randi() % len(peepleNames)])
 
-
-func AssignRandomName(peeple):
-	peeple.SetPeepleName(PeepleNames[randi() % len(PeepleNames)])
+func AssignRandomHobby(peeple):
+	var file = FileAccess.open("res://Content/hobbies.txt", FileAccess.READ)
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(file.get_as_text())
+	var data = test_json_conv.get_data()
+	var activities = data["Activities"]
+	file.close()
+	peeple.SetPeepleHobby(activities[randi() % len(activities)])
 
 func _ready():
 
 	var _OnLoadComplete = SaveManager.connect("OnLoadComplete", Callable(self, "OnLoadComplete"))
 	var _OnReload = SaveManager.connect("OnReload", Callable(self, "OnReload"))
-	PopulateNames()
 
 func CheckMinPeepleSize():
 	await get_tree().create_timer(0.2).timeout

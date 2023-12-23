@@ -31,6 +31,7 @@ var colors = [Color(1.0, 1.0, 1.0, 1.0),
 
 var bProcessLostSubscription = false
 var PeepleName = ""
+var PeepleHobby = ""
 var bHasBeenSet = false
 var SpeedDelta : float
 
@@ -55,8 +56,16 @@ func GetStateName(index):
 func SetPeepleName(newName):
 	PeepleName = newName
 
+func SetPeepleHobby(newHobby):
+	PeepleHobby = newHobby
+
 func GetPeepleName():
 	return PeepleName
+
+func GetPeepleHobby():
+	if PeepleHobby == "":
+		PeepleManager.AssignRandomHobby(self)
+	return PeepleHobby
 
 func GetHappiness():
 	return Happiness
@@ -115,7 +124,8 @@ func Save():
 	"happiness" : Happiness,
 	"color" : savedColorIndex,
 	"speed" : Speed,
-	"name" : GetPeepleName()
+	"name" : GetPeepleName(),
+	"hobby" : GetPeepleHobby()
 	}
 	return dictionary
 
@@ -128,6 +138,9 @@ func Load(dictData):
 	savedColorIndex = dictData["color"]
 	$Sprite2D.modulate = colors[savedColorIndex]
 	SetPeepleName(dictData["name"])
+
+	if dictData.has("hobby"):
+		SetPeepleHobby(dictData["hobby"])
 
 	Finder.GetPeepleGroup().add_child(self)
 	RunAI()
