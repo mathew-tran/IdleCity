@@ -207,6 +207,9 @@ func CanSubscribe():
 func GetMaxBuildingLimit():
 	return BuildingLimit
 
+func GetEnterPosition():
+	return Vector2i(global_position) + GameResources.TileOffset
+
 func Subscribe(peeple):
 	if CanSubscribe():
 		SubscribedPeeple.append(peeple)

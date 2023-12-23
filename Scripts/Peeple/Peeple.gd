@@ -246,19 +246,19 @@ func GetWork():
 	return WorkPlace
 
 func GetWorkPlacePosition():
-	return Vector2i(WorkPlace.global_position) + GameResources.TileOffset
+	return Vector2i(WorkPlace.GetEnterPosition())
 
 func GetHouse():
 	return House
 
 func GetHousePosition():
-	return Vector2i(House.global_position) + GameResources.TileOffset
+	return Vector2i(House.GetEnterPosition())
 
 func GetRecPlace():
 	return RecPlace
 
 func GetRecPosition():
-	return Vector2i(RecPlace.global_position) + GameResources.TileOffset
+	return Vector2i(RecPlace.GetEnterPosition())
 
 func GetRandomPosition():
 
