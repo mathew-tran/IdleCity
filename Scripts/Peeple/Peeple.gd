@@ -7,6 +7,16 @@ var WorkPlace = null
 var House = null
 var RecPlace = null
 
+var Faces = [
+	"res://Art/Minion/MinionFace.png",
+	"res://Art/Minion/MinionFaceHappy.png",
+	"res://Art/Minion/MinionFaceMean.png",
+	"res://Art/Minion/MinionFaceStoic.png",
+	"res://Art/Minion/MinionFaceTired.png",
+	"res://Art/Minion/MinionFaceAngered.png",
+	"res://Art/Minion/MinionFaceMoustache.png"
+]
+
 var CurrentPath = []
 var CurrentPathIndex = 0
 
@@ -81,6 +91,7 @@ func _exit_tree():
 
 func _ready():
 	SaveManager.AddToPersistGroup(self)
+	$Face.texture = load(Faces[randi() % len(Faces)])
 	var _OnLoadComplete = SaveManager.connect("OnLoadComplete", Callable(self, "OnLoadComplete"))
 	var _OnDayTime = GameClock.connect("OnDayTime", Callable(self, "OnDayTimeExecute"))
 	var _OnNightTime = GameClock.connect("OnNightTime", Callable(self, "OnNightTimeExecute"))
