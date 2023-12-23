@@ -6,7 +6,7 @@ extends "res://Scripts/Building/Building.gd"
 func _ready():
 	super()
 	$ActiveParticle.emitting = false
-	var _OnHalfHourUpdate = GameClock.connect("OnHalfHourUpdate", Callable(self, "EatFood"))
+	var _OnHalfHourUpdate = GameClock.connect("OnFifteenUpdate", Callable(self, "EatFood"))
 
 func EatFood():
 	if IsActive():
