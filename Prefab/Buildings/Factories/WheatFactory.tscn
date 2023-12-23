@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://cn2o8fmctkjv"]
+
+[ext_resource type="Texture2D" uid="uid://t7830ei82ak" path="res://Art/Buildings/Factories/Factory_Wheat.png" id="1_ft32p"]
+[ext_resource type="Script" path="res://Scripts/Building/Factory.gd" id="2_d03i4"]
+[ext_resource type="PackedScene" uid="uid://fdiatj5sep31" path="res://Prefab/Particles/ActiveParticle.tscn" id="3_w0wgd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g0v0s"]
+size = Vector2(64, 63.875)
+
+[node name="Factory" type="Sprite2D" groups=["Factory"]]
+texture = ExtResource("1_ft32p")
+centered = false
+script = ExtResource("2_d03i4")
+ResourceType = 3
+BuildingName = "Wheat Factory"
+BuildingType = 1
+RequirementType = Array[int]([0])
+RequirementAmount = Array[int]([50])
+Description = "Generates Wheat"
+HappinessAmount = -4
+BuildingPrefix = "WheatFactory"
+
+[node name="ActiveParticle" parent="." instance=ExtResource("3_w0wgd")]
+show_behind_parent = true
+position = Vector2(16, 16)
+emission_sphere_radius = 1.0
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-1, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(33, 32.0625)
+shape = SubResource("RectangleShape2D_g0v0s")

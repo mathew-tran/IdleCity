@@ -21,7 +21,8 @@ enum BUILDING_TYPE {
 enum RESOURCE_TYPE {
 	WOOD,
 	STONE,
-	COAL
+	COAL,
+	WHEAT
 }
 
 enum CATEGORY_TYPE {
