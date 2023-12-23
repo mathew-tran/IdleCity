@@ -28,3 +28,6 @@ func EatFood():
 
 func CanAffordFood():
 	return InventoryManager.CheckIfItemExists(GameResources.GetResName(ResourceToConsume), ResourceToConsumeAmount)
+
+func CanSubscribe():
+	return super.CanSubscribe() and CanAffordFood()

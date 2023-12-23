@@ -7,21 +7,16 @@ light_mask = 0
 script = ExtResource("1_gqby8")
 
 [node name="SubBuildMenu" type="TabContainer" parent="."]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -8.0
-offset_right = 2.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 2
 tab_focus_mode = 0
-
-[node name="Housing" type="Panel" parent="SubBuildMenu"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SubBuildMenu/Housing"]
-layout_mode = 0
-offset_left = 5.0
-offset_right = 210.0
-offset_bottom = 538.0
 
 [node name="Factories" type="Panel" parent="SubBuildMenu"]
 visible = false
@@ -45,11 +40,10 @@ offset_left = 5.0
 offset_right = 217.0
 offset_bottom = 563.0
 
-[node name="Decor" type="Panel" parent="SubBuildMenu"]
-visible = false
+[node name="Housing" type="Panel" parent="SubBuildMenu"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SubBuildMenu/Decor"]
+[node name="VBoxContainer" type="VBoxContainer" parent="SubBuildMenu/Housing"]
 layout_mode = 0
 offset_left = 5.0
 offset_right = 210.0
@@ -60,6 +54,26 @@ visible = false
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SubBuildMenu/Rec"]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 210.0
+offset_bottom = 538.0
+
+[node name="Food" type="Panel" parent="SubBuildMenu"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubBuildMenu/Food"]
+layout_mode = 0
+offset_left = 5.0
+offset_right = 210.0
+offset_bottom = 538.0
+
+[node name="Decor" type="Panel" parent="SubBuildMenu"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubBuildMenu/Decor"]
 layout_mode = 0
 offset_left = 5.0
 offset_right = 210.0
