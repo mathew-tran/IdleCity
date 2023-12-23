@@ -24,9 +24,14 @@ var CurrentPathIndex = 0
 var SpeedBonus = 0
 
 var Happiness = 50
+var Satiety = 100
+
+var SatietyDecay = 4
 var FaceIndex = 0
 
 signal OnHappinessUpdate
+signal OnSatietyUpdate
+
 signal OnJobUpdate
 signal OnHouseUpdate
 signal OnRecUpdate
@@ -81,6 +86,9 @@ func GetPeepleHobby():
 func GetHappiness():
 	return Happiness
 
+func GetSatiety():
+	return Satiety
+
 func GetFaceTexture():
 	return $Face.texture
 
@@ -113,6 +121,8 @@ func _ready():
 	PeepleManager.AddPeeple(self)
 	var _OnHappinessUpdate = connect("OnHappinessUpdate", Callable(self, "HappinessUpdate"))
 	emit_signal("OnHappinessUpdate")
+	var _OnHungerUpdate = connect("OnSatietyUpdate", Callable(self, "SatietyUpdate"))
+	emit_signal("OnSatietyUpdate")
 	ChangeAIState(AI_STATES.GOHOME, true)
 
 func AddHappiness(amount):
@@ -123,8 +133,20 @@ func AddHappiness(amount):
 		Happiness = 100
 	emit_signal("OnHappinessUpdate")
 
+func AddSatiety(amount):
+	Satiety += amount
+	if Satiety < 0:
+		Satiety = 0
+	elif Satiety > 100:
+		Satiety = 100
+	emit_signal("OnSatietyUpdate")
+
 func HappinessUpdate():
 	pass
+
+func HungerUpdate():
+	pass
+
 
 func OnLoadComplete():
 	$Sprite2D.modulate = colors[savedColorIndex]
@@ -474,3 +496,8 @@ func _on_timer_timeout():
 			SpeedBonus = - 10
 	else:
 		SpeedBonus = 0
+
+
+func _on_hunger_timer_timeout():
+	AddSatiety(-SatietyDecay)
+	emit_signal("OnSatietyUpdate")

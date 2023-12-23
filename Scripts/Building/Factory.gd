@@ -14,7 +14,7 @@ func ProduceWork():
 		var bonus = 0
 		for peeple in PeepleInBuilding:
 			var awardAmount = 1
-			var grade = GameResources.GetHappinessGrading(peeple.Happiness)
+			var grade = GameResources.GetProductivityGrading(peeple)
 			if grade == GameResources.GRADE.A:
 				awardAmount *= 3
 			if grade == GameResources.GRADE.B:
