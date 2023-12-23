@@ -31,3 +31,10 @@ func CanAffordFood():
 
 func CanSubscribe():
 	return super.CanSubscribe() and CanAffordFood()
+
+func GetBuildingDescription():
+	var resourceType = GameResources.GetResName(ResourceToConsume)
+	var amount = str(ResourceToConsumeAmount)
+	var satietyToGain = str(SatietyGained)
+	var fullString = amount + "x " + resourceType + " to replenish " + satietyToGain + " food points"
+	return fullString
