@@ -351,6 +351,7 @@ offset_bottom = 49.0
 scale = Vector2(0.5, 0.5)
 theme = SubResource("9")
 value = 20.0
+show_percentage = false
 
 [node name="ProgressBar2" type="ProgressBar" parent="RightSide"]
 custom_minimum_size = Vector2(80, 8)
@@ -362,6 +363,7 @@ offset_bottom = 65.0
 scale = Vector2(0.5, 0.5)
 theme = SubResource("9")
 value = 20.0
+show_percentage = false
 
 [node name="LeftSide" type="Panel" parent="."]
 layout_mode = 0

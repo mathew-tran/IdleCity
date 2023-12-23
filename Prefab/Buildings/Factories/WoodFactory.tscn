@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://2u30alj88m42"]
+[gd_scene load_steps=6 format=3 uid="uid://2u30alj88m42"]
 
 [ext_resource type="Texture2D" uid="uid://cn42br6fd4633" path="res://Art/Buildings/Factories/Factory_Wood.png" id="2"]
 [ext_resource type="Script" path="res://Scripts/Building/Factory.gd" id="2_tlb1x"]
 [ext_resource type="PackedScene" uid="uid://fdiatj5sep31" path="res://Prefab/Particles/ActiveParticle.tscn" id="3_nwq8e"]
+[ext_resource type="PackedScene" uid="uid://b6dmun6ale2vd" path="res://Prefab/Buildings/UseGear.tscn" id="4_hukpo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aqe4d"]
 size = Vector2(64, 64)
@@ -19,12 +20,15 @@ BuildingPrefix = "WoodFactory"
 
 [node name="ActiveParticle" parent="." instance=ExtResource("3_nwq8e")]
 show_behind_parent = true
-position = Vector2(31, 16)
+position = Vector2(32, 15)
 emission_sphere_radius = 1.0
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(-1, 0)
+position = Vector2(0, -1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(32.25, 32.8125)
 shape = SubResource("RectangleShape2D_aqe4d")
+
+[node name="UseGear" parent="." instance=ExtResource("4_hukpo")]
+position = Vector2(32, 37)

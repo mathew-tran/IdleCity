@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dreybwy6svxjc"]
+[gd_scene load_steps=6 format=3 uid="uid://dreybwy6svxjc"]
 
 [ext_resource type="Texture2D" uid="uid://d0dqsf37fbagw" path="res://Art/Buildings/Housing/House.png" id="1_28bhi"]
 [ext_resource type="Script" path="res://Scripts/Building/Housing.gd" id="2"]
 [ext_resource type="PackedScene" path="res://Prefab/Particles/ActiveHouseParticle.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://b6dmun6ale2vd" path="res://Prefab/Buildings/UseGear.tscn" id="4_3khdi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ue84j"]
 size = Vector2(32, 32)
@@ -34,3 +35,6 @@ initial_velocity_min = 30.0
 initial_velocity_max = 50.0
 scale_amount_min = 0.2
 scale_amount_max = 0.2
+
+[node name="UseGear" parent="." instance=ExtResource("4_3khdi")]
+position = Vector2(16, 19)

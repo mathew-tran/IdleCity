@@ -43,6 +43,7 @@ func _ready():
 	name = BuildingPrefix
 	LastPosition = global_position
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	ShowUseGear(false)
 
 
 func SetTravelCost(bSet = true):
@@ -182,7 +183,12 @@ func Enter(peeple):
 	PeepleInBuilding.append(peeple)
 	if PeepleInBuilding.size() >= 1:
 		OnActivated()
+		ShowUseGear(true)
 	emit_signal("OnBuildingUpdate")
+
+func ShowUseGear(bShow):
+	if get_node("UseGear"):
+		$UseGear.visible = bShow
 
 func Exit(peeple):
 	if PeepleInBuilding.has(peeple):
@@ -190,6 +196,7 @@ func Exit(peeple):
 		PeepleInBuilding.remove_at(index)
 	if PeepleInBuilding.size() <= 0:
 		OnDeactivated()
+		ShowUseGear(false)
 	emit_signal("OnBuildingUpdate")
 
 func IsAPeepleInBuilding(peeple):

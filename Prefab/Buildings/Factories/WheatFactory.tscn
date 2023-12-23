@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cn2o8fmctkjv"]
+[gd_scene load_steps=6 format=3 uid="uid://cn2o8fmctkjv"]
 
 [ext_resource type="Texture2D" uid="uid://t7830ei82ak" path="res://Art/Buildings/Factories/Factory_Wheat.png" id="1_ft32p"]
 [ext_resource type="Script" path="res://Scripts/Building/Factory.gd" id="2_d03i4"]
 [ext_resource type="PackedScene" uid="uid://fdiatj5sep31" path="res://Prefab/Particles/ActiveParticle.tscn" id="3_w0wgd"]
+[ext_resource type="PackedScene" uid="uid://b6dmun6ale2vd" path="res://Prefab/Buildings/UseGear.tscn" id="4_6jtp2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g0v0s"]
 size = Vector2(64, 63.875)
@@ -31,3 +32,6 @@ position = Vector2(-1, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(33, 32.0625)
 shape = SubResource("RectangleShape2D_g0v0s")
+
+[node name="UseGear" parent="." instance=ExtResource("4_6jtp2")]
+position = Vector2(32, 32)

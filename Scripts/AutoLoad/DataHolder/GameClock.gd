@@ -12,8 +12,8 @@ var DayAmount = 0
 var YearAmount = 0
 
 var NormalTime = 1
-var FastTime = 2
-var UltraFastTime = 3
+var FastTime = 2.5
+var UltraFastTime = 4.2
 
 enum TIME_SPEED {
 	STOPPED,
@@ -171,3 +171,5 @@ func SetGameTime(eTimeSpeed):
 
 	emit_signal("OnTimeSpeedChange", eTimeSpeed)
 
+func IsPaused():
+	return get_tree().paused

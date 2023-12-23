@@ -7,13 +7,6 @@ func _ready():
 	$ActiveParticle.emitting = false
 	var _OnHalfHourUpdate = GameClock.connect("OnHalfHourUpdate", Callable(self, "ProduceWork"))
 
-
-func OnActivated():
-	$ActiveParticle.emitting = true
-
-func OnDeactivated():
-	$ActiveParticle.emitting = false
-
 func ProduceWork():
 	if IsActive():
 		await get_tree().create_timer(randf_range(0.1, 0.5)).timeout

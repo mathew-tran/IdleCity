@@ -12,8 +12,12 @@ func UpdateButtons(buttonToModulate):
 	buttonToModulate.release_focus()
 
 func _on_pause_button_up():
-	GameClock.SetGameTime(GameClock.TIME_SPEED.STOPPED)
-	UpdateButtons($Pause)
+
+	if GameClock.IsPaused() == false:
+		GameClock.SetGameTime(GameClock.TIME_SPEED.STOPPED)
+		UpdateButtons($Pause)
+	else:
+		_on_play_button_up()
 
 func _on_play_button_up():
 	GameClock.SetGameTime(GameClock.TIME_SPEED.NORMAL)

@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://b6dmun6ale2vd"]
+
+[ext_resource type="Texture2D" uid="uid://c4nt7rmi75esq" path="res://Art/UI/LoadingGear.png" id="1_hu05j"]
+[ext_resource type="Script" path="res://Scripts/UI/UseGear.gd" id="2_egaxg"]
+
+[sub_resource type="Animation" id="Animation_frabh"]
+resource_name = "use"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="Animation" id="Animation_wefqa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jnhnc"]
+_data = {
+"RESET": SubResource("Animation_wefqa"),
+"use": SubResource("Animation_frabh")
+}
+
+[node name="UseGear" type="Sprite2D"]
+process_mode = 1
+texture = ExtResource("1_hu05j")
+script = ExtResource("2_egaxg")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_jnhnc")
+}
