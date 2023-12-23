@@ -24,6 +24,7 @@ var CurrentPathIndex = 0
 var SpeedBonus = 0
 
 var Happiness = 50
+var FaceIndex = 0
 
 signal OnHappinessUpdate
 signal OnJobUpdate
@@ -91,7 +92,7 @@ func _exit_tree():
 
 func _ready():
 	SaveManager.AddToPersistGroup(self)
-	$Face.texture = load(Faces[randi() % len(Faces)])
+
 	var _OnLoadComplete = SaveManager.connect("OnLoadComplete", Callable(self, "OnLoadComplete"))
 	var _OnDayTime = GameClock.connect("OnDayTime", Callable(self, "OnDayTimeExecute"))
 	var _OnNightTime = GameClock.connect("OnNightTime", Callable(self, "OnNightTimeExecute"))
@@ -105,6 +106,8 @@ func _ready():
 		$Sprite2D.modulate = colors[savedColorIndex]
 		PeepleManager.AssignRandomName(self)
 		Speed = Speed + randf_range(-50, 75)
+		FaceIndex = randi() % len(Faces)
+		$Face.texture = load(Faces[FaceIndex])
 	# TODO: Issue reshuffling parents... so that's why I have this timeout.
 	await get_tree().create_timer(0.2).timeout
 	PeepleManager.AddPeeple(self)
@@ -136,7 +139,8 @@ func Save():
 	"color" : savedColorIndex,
 	"speed" : Speed,
 	"name" : GetPeepleName(),
-	"hobby" : GetPeepleHobby()
+	"hobby" : GetPeepleHobby(),
+	"face" : FaceIndex
 	}
 	return dictionary
 
@@ -148,10 +152,14 @@ func Load(dictData):
 	Speed = dictData["speed"]
 	savedColorIndex = dictData["color"]
 	$Sprite2D.modulate = colors[savedColorIndex]
+
 	SetPeepleName(dictData["name"])
 
 	if dictData.has("hobby"):
 		SetPeepleHobby(dictData["hobby"])
+
+	if dictData.has("face"):
+		$Face.texture = load(Faces[dictData["face"]])
 
 	Finder.GetPeepleGroup().add_child(self)
 	RunAI()
