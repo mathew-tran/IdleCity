@@ -18,6 +18,9 @@ func GetFactories():
 func GetRecHouses():
 	return get_tree().get_nodes_in_group("Rec")
 
+func GetFoodHouses():
+	return get_tree().get_nodes_in_group("Food")
+
 func GetHousing():
 	return get_tree().get_nodes_in_group("House")
 

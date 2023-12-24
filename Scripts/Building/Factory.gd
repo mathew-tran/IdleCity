@@ -7,13 +7,6 @@ func _ready():
 	$ActiveParticle.emitting = false
 	var _OnHalfHourUpdate = GameClock.connect("OnHalfHourUpdate", Callable(self, "ProduceWork"))
 
-
-func OnActivated():
-	$ActiveParticle.emitting = true
-
-func OnDeactivated():
-	$ActiveParticle.emitting = false
-
 func ProduceWork():
 	if IsActive():
 		await get_tree().create_timer(randf_range(0.1, 0.5)).timeout
@@ -21,7 +14,7 @@ func ProduceWork():
 		var bonus = 0
 		for peeple in PeepleInBuilding:
 			var awardAmount = 1
-			var grade = GameResources.GetHappinessGrading(peeple.Happiness)
+			var grade = GameResources.GetProductivityGrading(peeple)
 			if grade == GameResources.GRADE.A:
 				awardAmount *= 3
 			if grade == GameResources.GRADE.B:

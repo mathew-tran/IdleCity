@@ -4,8 +4,10 @@ var trackedPeeple = null
 var bIsFollowing : bool = false
 var bIsActive : bool = false
 
-@onready var HappinessBar : ProgressBar = $RightSide/ProgressBar
+@onready var HappinessBar = $RightSide/VBoxContainer/HappinessBar
+@onready var HungerBar = $RightSide/VBoxContainer/Hunger
 @onready var PeepleNameLabel : Label = $LeftSide/PeepleName
+@onready var PeepleHobbyLabel : Label = $LeftSide/PeepleHobby
 @onready var PeepleFace : Sprite2D = $LeftSide/PeepleFace
 @onready var PeepleBody : Sprite2D = $LeftSide/PeepleBody
 
@@ -17,6 +19,8 @@ var bIsActive : bool = false
 func _ready():
 	Finder.GetPlayer().connect("OnPlayerModeChange", Callable(self, "PlayerModeChange"))
 	visible = false
+	HouseControl.connect("HouseFollowClicked", Callable(self, "HouseFollowClicked"))
+	WorkControl.connect("JobFollowClicked", Callable(self, "JobFollowClicked"))
 
 
 func PlayerModeChange(bIsBuildMode):
@@ -30,42 +34,56 @@ func Show(peeple):
 	StopFollowing()
 	if trackedPeeple:
 		trackedPeeple.disconnect("OnHappinessUpdate", Callable(self, "UpdateUI"))
+		trackedPeeple.disconnect("OnSatietyUpdate", Callable(self, "UpdateHungerUI"))
 		trackedPeeple.disconnect("OnJobUpdate", Callable(self, "JobUpdate"))
 		trackedPeeple.disconnect("OnHouseUpdate", Callable(self, "HouseUpdate"))
 	trackedPeeple = peeple
 	trackedPeeple.connect("OnHappinessUpdate", Callable(self, "UpdateUI"))
 	trackedPeeple.connect("OnJobUpdate", Callable(self, "JobUpdate"))
 	trackedPeeple.connect("OnHouseUpdate", Callable(self, "HouseUpdate"))
-
-	HouseControl.connect("HouseFollowClicked", Callable(self, "HouseFollowClicked"))
-	WorkControl.connect("JobFollowClicked", Callable(self, "JobFollowClicked"))
-
+	trackedPeeple.connect("OnSatietyUpdate", Callable(self, "UpdateHungerUI"))
 
 	PeepleNameLabel.text = peeple.GetPeepleName()
 	PeepleFace.texture = peeple.GetFaceTexture()
 	PeepleBody.modulate = peeple.GetShirtColor()
+	PeepleHobbyLabel.text = peeple.GetPeepleHobby()
 
 	UpdateUI()
+	UpdateHungerUI()
 	JobUpdate()
 	HouseUpdate()
 	visible = true
 
 func UpdateUI():
-	HappinessBar.value = trackedPeeple.GetHappiness()
+	var happinessProgressBar = HappinessBar.get_node("ProgressBar")
+	happinessProgressBar.value = trackedPeeple.GetHappiness()
 	var gradeValue = GameResources.GetHappinessGrading(trackedPeeple.GetHappiness())
 	if GameResources.GRADE.A == gradeValue:
-		HappinessBar.modulate = Color.GREEN
+		happinessProgressBar.modulate = Color.GREEN
 	if GameResources.GRADE.B == gradeValue:
-		HappinessBar.modulate = Color.GREEN_YELLOW
+		happinessProgressBar.modulate = Color.GREEN_YELLOW
 	if GameResources.GRADE.C == gradeValue:
-		HappinessBar.modulate = Color.YELLOW
+		happinessProgressBar.modulate = Color.YELLOW
 	if GameResources.GRADE.D == gradeValue:
-		HappinessBar.modulate = Color.RED
+		happinessProgressBar.modulate = Color.RED
 
 	if bIsFollowing:
 		FollowButton.text = "Unfollow"
 	else:
 		FollowButton.text = "Follow"
+
+func UpdateHungerUI():
+	var hungerProgressBar = HungerBar.get_node("ProgressBar")
+	hungerProgressBar.value = trackedPeeple.GetSatiety()
+	var gradeValue = GameResources.GetHappinessGrading(trackedPeeple.GetSatiety())
+	if GameResources.GRADE.A == gradeValue:
+		hungerProgressBar.modulate = Color.GREEN
+	if GameResources.GRADE.B == gradeValue:
+		hungerProgressBar.modulate = Color.GREEN_YELLOW
+	if GameResources.GRADE.C == gradeValue:
+		hungerProgressBar.modulate = Color.YELLOW
+	if GameResources.GRADE.D == gradeValue:
+		hungerProgressBar.modulate = Color.RED
 
 func JobUpdate():
 	if trackedPeeple:

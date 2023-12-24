@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://by34xcp4f86hi"]
+[gd_scene load_steps=5 format=3 uid="uid://by34xcp4f86hi"]
 
 [ext_resource type="Script" path="res://Scripts/UI/BuildingUI/BuildingTenantUI.gd" id="1_o7ep4"]
+[ext_resource type="Texture2D" uid="uid://bk5pf7khpqq6l" path="res://Art/UI/PeepleUI/MagnifyingGlass.png" id="2_n2bdy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rc6xk"]
 bg_color = Color(0.376471, 0.690196, 0.309804, 1)
@@ -12,6 +13,8 @@ Button/styles/normal = SubResource("StyleBoxFlat_rc6xk")
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 3
 anchors_preset = 0
+offset_right = 46.0
+offset_bottom = 13.0
 script = ExtResource("1_o7ep4")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -21,10 +24,11 @@ offset_bottom = 14.0
 scale = Vector2(0.4, 0.4)
 
 [node name="Button" type="Button" parent="HBoxContainer"]
-custom_minimum_size = Vector2(100, 30)
+custom_minimum_size = Vector2(25, 25)
 layout_mode = 2
 theme = SubResource("Theme_sbrlb")
-text = "Follow"
+icon = ExtResource("2_n2bdy")
+icon_alignment = 1
 
 [node name="Label" type="Label" parent="HBoxContainer"]
 layout_mode = 2

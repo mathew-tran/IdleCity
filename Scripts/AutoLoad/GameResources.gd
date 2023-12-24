@@ -16,12 +16,14 @@ enum BUILDING_TYPE {
 	FACTORY,
 	SPECIAL,
 	DECOR,
-	RECREATION
+	RECREATION,
+	FOOD
 }
 enum RESOURCE_TYPE {
 	WOOD,
 	STONE,
-	COAL
+	COAL,
+	WHEAT
 }
 
 enum CATEGORY_TYPE {
@@ -44,6 +46,19 @@ func GetHappinessGrading(amount):
 	if amount >= 35:
 		return GRADE.C
 	return GRADE.D
+
+func GetProductivityGrading(peeple):
+	var satiety = peeple.GetSatiety()
+	var satietyWeighting = 40
+
+	var satietyAmount = (satiety / 100.0) * satietyWeighting
+
+	var happiness = peeple.GetHappiness()
+	var happinessWeighting = 60
+
+	var happinessAmount = (happiness / 100.0) * happinessWeighting
+
+	return GetHappinessGrading(satietyAmount + happinessAmount)
 
 enum UI_MODE {BUILD, PLAY}
 

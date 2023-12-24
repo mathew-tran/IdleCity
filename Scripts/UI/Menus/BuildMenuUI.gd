@@ -5,6 +5,7 @@ extends Panel
 @onready var Special = $SubBuildMenu/Special
 @onready var Decor = $SubBuildMenu/Decor
 @onready var Rec = $SubBuildMenu/Rec
+@onready var Food = $SubBuildMenu/Food
 
 var BuildingClass = preload("res://Prefab/Buttons/BuildingButton.tscn")
 
@@ -27,6 +28,8 @@ func AddButton(buildingClass):
 		AddButtonToCategory(buildingClass, Decor)
 	if buildingType == GameResources.BUILDING_TYPE.RECREATION:
 		AddButtonToCategory(buildingClass, Rec)
+	if buildingType == GameResources.BUILDING_TYPE.FOOD:
+		AddButtonToCategory(buildingClass, Food)
 
 func AddButtonToCategory(housingClass, category):
 	var bShouldCreate = true

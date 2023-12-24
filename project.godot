@@ -31,6 +31,7 @@ Finder="*res://Scripts/AutoLoad/Finder.gd"
 InventoryManager="*res://Scripts/AutoLoad/DataHolder/InventoryManager.gd"
 RecManager="*res://Scripts/AutoLoad/RecManager.gd"
 BuildVersion="*res://Scripts/AutoLoad/BuildVersion.gd"
+FoodManager="*res://Scripts/AutoLoad/FoodManager.gd"
 
 [display]
 

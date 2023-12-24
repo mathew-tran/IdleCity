@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://bsh0fty5jfdy6"]
+
+[ext_resource type="Texture2D" uid="uid://dweyjaec4ijyd" path="res://Art/UI/PeepleUI/Happiness.png" id="1_hoy08"]
+[ext_resource type="Theme" uid="uid://eltm5cwctc1e" path="res://Styles/PeepleProgressBar.tres" id="2_cnokf"]
+
+[node name="Happiness" type="TextureRect"]
+offset_right = 32.0
+offset_bottom = 32.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_hoy08")
+stretch_mode = 5
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(80, 8)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 16.0
+offset_top = -7.5
+offset_right = 116.0
+offset_bottom = 19.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+theme = ExtResource("2_cnokf")
+value = 20.0
+show_percentage = false

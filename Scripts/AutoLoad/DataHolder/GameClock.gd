@@ -3,7 +3,7 @@ extends "res://Scripts/AutoLoad/DataHolder/PersistentData.gd"
 
 var MinuteTimer = null
 var MinuteIncreaseRate = 1
-var MinuteDelayTime = .09
+var MinuteDelayTime = .2
 
 var TimeInMinutes = 55
 var TimeInHours = 5
@@ -12,8 +12,8 @@ var DayAmount = 0
 var YearAmount = 0
 
 var NormalTime = 1
-var FastTime = 2
-var UltraFastTime = 3
+var FastTime = 2.5
+var UltraFastTime = 4.2
 
 enum TIME_SPEED {
 	STOPPED,
@@ -28,6 +28,7 @@ signal OnMidnightTime
 signal OnMorningTime
 
 signal OnTimeUpdate
+signal OnFifteenUpdate
 signal OnHourUpdate
 signal OnHalfHourUpdate
 signal OnDayUpdate
@@ -94,14 +95,14 @@ func OnTimerUpdate():
 		emit_signal("OnMorningTime")
 	elif IsStartingWorkDay() and TimeInMinutes == 0:
 		emit_signal("OnDayTime")
-		Helper.SendLogMessageToPlayer("Work time!")
 	elif IsFinishingWorkDay() and TimeInMinutes == 0:
 		emit_signal("OnNightTime")
-		Helper.SendLogMessageToPlayer("After work time!")
 	elif IsMidnight() and TimeInMinutes == 0:
 		emit_signal("OnMidnightTime")
 	if TimeInMinutes == 0 or TimeInMinutes == 30:
 		emit_signal("OnHalfHourUpdate")
+	if TimeInMinutes == 0 or TimeInMinutes == 15 or TimeInMinutes == 30 or TimeInMinutes == 45:
+		emit_signal("OnFifteenUpdate")
 	emit_signal("OnTimeUpdate")
 
 # TODO: MT: in the future. I think the work place should define the time to work, and the time for a break, as well as time for sleeping!
@@ -127,7 +128,10 @@ func IsLunchFinishedTime():
 	return TimeInHours == 14
 
 func IsFinishingWorkDay():
-	return TimeInHours == 20
+	return TimeInHours == 19
+
+func IsGoHomeAfterWorkTime():
+	return TimeInHours == 23
 
 func GetTimeString():
 
@@ -171,3 +175,5 @@ func SetGameTime(eTimeSpeed):
 
 	emit_signal("OnTimeSpeedChange", eTimeSpeed)
 
+func IsPaused():
+	return get_tree().paused

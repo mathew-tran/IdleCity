@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bhib4ars7emei"]
+[gd_scene load_steps=6 format=3 uid="uid://bhib4ars7emei"]
 
 [ext_resource type="Texture2D" uid="uid://c3ifyjuii5wx6" path="res://Art/Buildings/Factories/Factory_Small.png" id="1_c1lyd"]
 [ext_resource type="Script" path="res://Scripts/Building/Factory.gd" id="2_7w271"]
 [ext_resource type="PackedScene" uid="uid://fdiatj5sep31" path="res://Prefab/Particles/ActiveParticle.tscn" id="3_8sj83"]
+[ext_resource type="PackedScene" uid="uid://b6dmun6ale2vd" path="res://Prefab/Buildings/UseGear.tscn" id="4_7rerb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g0v0s"]
 size = Vector2(32, 32)
@@ -26,8 +27,10 @@ position = Vector2(16, 16)
 emission_sphere_radius = 1.0
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(-1, 0)
+position = Vector2(16, 16)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(17, 16.125)
 shape = SubResource("RectangleShape2D_g0v0s")
+
+[node name="UseGear" parent="." instance=ExtResource("4_7rerb")]
+position = Vector2(16, 16)

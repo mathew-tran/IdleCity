@@ -2,7 +2,7 @@ extends Sprite2D
 
 @export var BuildingLimit = 1
 @export var bIsBlockingNavigation = false
-@export var TravelCost = 0
+@export var TravelCost = 100
 var SubscribedPeeple = []
 var SpawnArea = [Vector2.ZERO]
 
@@ -16,7 +16,7 @@ var PeepleInBuilding = []
 @export var RequirementAmount : Array[int]
 @export var Description: String = "No description"
 
-@export var HappinessAmount: int = 3
+@export var HappinessAmount: float = 3.0
 
 var bCanBeClicked = false
 
@@ -43,6 +43,7 @@ func _ready():
 	name = BuildingPrefix
 	LastPosition = global_position
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	ShowUseGear(false)
 
 
 func SetTravelCost(bSet = true):
@@ -182,7 +183,12 @@ func Enter(peeple):
 	PeepleInBuilding.append(peeple)
 	if PeepleInBuilding.size() >= 1:
 		OnActivated()
+		ShowUseGear(true)
 	emit_signal("OnBuildingUpdate")
+
+func ShowUseGear(bShow):
+	if get_node("UseGear"):
+		$UseGear.visible = bShow
 
 func Exit(peeple):
 	if PeepleInBuilding.has(peeple):
@@ -190,6 +196,7 @@ func Exit(peeple):
 		PeepleInBuilding.remove_at(index)
 	if PeepleInBuilding.size() <= 0:
 		OnDeactivated()
+		ShowUseGear(false)
 	emit_signal("OnBuildingUpdate")
 
 func IsAPeepleInBuilding(peeple):
@@ -206,6 +213,9 @@ func CanSubscribe():
 
 func GetMaxBuildingLimit():
 	return BuildingLimit
+
+func GetEnterPosition():
+	return Vector2i(global_position) + GameResources.TileOffset
 
 func Subscribe(peeple):
 	if CanSubscribe():

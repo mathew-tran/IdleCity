@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bv6ehlvitib7f"]
+[gd_scene load_steps=6 format=3 uid="uid://bv6ehlvitib7f"]
 
 [ext_resource type="Texture2D" uid="uid://ktrunya3s8bm" path="res://Art/Buildings/Recreation/Arcade.png" id="1_f8ljo"]
 [ext_resource type="Script" path="res://Scripts/Building/RecHouse.gd" id="2_kp62v"]
 [ext_resource type="PackedScene" uid="uid://fdiatj5sep31" path="res://Prefab/Particles/ActiveParticle.tscn" id="3_3si5p"]
+[ext_resource type="PackedScene" uid="uid://b6dmun6ale2vd" path="res://Prefab/Buildings/UseGear.tscn" id="4_di57b"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mo24u"]
 size = Vector2(64, 64)
@@ -17,7 +18,7 @@ BuildingType = 4
 RequirementType = Array[int]([1, 0])
 RequirementAmount = Array[int]([50, 100])
 Description = "Play game. Regain happiness."
-HappinessAmount = 4
+HappinessAmount = 8.0
 BuildingPrefix = "Arcade"
 
 [node name="ActiveParticle" parent="." instance=ExtResource("3_3si5p")]
@@ -30,3 +31,6 @@ emission_sphere_radius = 1.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(32, 32)
 shape = SubResource("RectangleShape2D_mo24u")
+
+[node name="UseGear" parent="." instance=ExtResource("4_di57b")]
+position = Vector2(32, 42)
