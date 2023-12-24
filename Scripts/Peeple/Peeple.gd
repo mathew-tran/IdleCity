@@ -575,15 +575,13 @@ func FindSomethingToDo():
 
 func FindSomethingToDoDuringLunchTime():
 	if Happiness <= 40:
-		FindRec()
 		if CheckRec():
 			ChangeAIState(AI_STATES.GOREC, true)
 			return
 		else:
-			ChangeAIState(AI_STATES.GOHOME, true)
-			return
-	elif Satiety <= 60:
-		FindFood()
+			if CheckHouse():
+				ChangeAIState(AI_STATES.GOHOME, true)
+	if Satiety <= 60:
 		if CheckFood():
 			ChangeAIState(AI_STATES.GOFOOD, true)
 			return

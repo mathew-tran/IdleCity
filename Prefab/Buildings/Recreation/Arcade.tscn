@@ -18,6 +18,7 @@ BuildingType = 4
 RequirementType = Array[int]([1, 0])
 RequirementAmount = Array[int]([50, 100])
 Description = "Play game. Regain happiness."
+HappinessAmount = 8.0
 BuildingPrefix = "Arcade"
 
 [node name="ActiveParticle" parent="." instance=ExtResource("3_3si5p")]
