@@ -49,15 +49,16 @@ func _process(delta):
 	else:
 		ProcessMenuMode(delta)
 
-	if Input.is_action_just_released("ScrollForward"):
-		zoom += Vector2(delta * ZoomSpeed, delta * ZoomSpeed)
-		if zoom.x > MaxZoom:
-			zoom = Vector2(MaxZoom, MaxZoom)
+	if Helper.IsMouseOnControl() == false:
+		if Input.is_action_just_released("ScrollForward"):
+			zoom += Vector2(delta * ZoomSpeed, delta * ZoomSpeed)
+			if zoom.x > MaxZoom:
+				zoom = Vector2(MaxZoom, MaxZoom)
 
-	if Input.is_action_just_released("ScrollBackward"):
-		zoom -= Vector2(delta * ZoomSpeed, delta * ZoomSpeed)
-		if zoom.x < MinZoom:
-			zoom = Vector2(MinZoom, MinZoom)
+		if Input.is_action_just_released("ScrollBackward"):
+			zoom -= Vector2(delta * ZoomSpeed, delta * ZoomSpeed)
+			if zoom.x < MinZoom:
+				zoom = Vector2(MinZoom, MinZoom)
 	if FollowTarget:
 		global_position = FollowTarget.position
 		return
@@ -107,6 +108,7 @@ func ProcessBuildMode(delta):
 		potentialSpawnArea[i] += tileOffset
 
 	if Helper.IsMouseOnControl():
+		$Sprite2D.visible = false
 		return
 	if Input.is_action_just_pressed("left_click") and BuildingClass != DefaultBuildingClass:
 		if CanPurchase():
@@ -123,7 +125,7 @@ func ProcessBuildMode(delta):
 	if Input.is_action_just_pressed("right_click"):
 		SetBuildingClass(DefaultBuildingClass, null)
 
-	if Helper.IsPlaceable(potentialSpawnArea):
+	if Helper.IsPlaceable(potentialSpawnArea) and CanPurchase():
 		$Sprite2D/GhostImage.modulate = GameResources.COLOR_ACCEPT
 	else:
 		$Sprite2D/GhostImage.modulate = GameResources.COLOR_DECLINE

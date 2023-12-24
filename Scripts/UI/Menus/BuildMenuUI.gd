@@ -7,11 +7,26 @@ extends Panel
 @onready var Rec = $SubBuildMenu/Rec
 @onready var Food = $SubBuildMenu/Food
 
+var Categories = []
 var BuildingClass = preload("res://Prefab/Buttons/BuildingButton.tscn")
 
 func _ready():
+	Categories = [
+		Housing,
+		Factories,
+		Special,
+		Decor,
+		Rec,
+		Food
+	]
+
+	for category in Categories:
+		for button in category.get_node("VBoxContainer").get_children():
+			button.queue_free()
+
 	AddButton(preload("res://Prefab/Buildings/SpecialBuildings/ResearchLab.tscn"))
 	AddButton(preload("res://Prefab/Buildings/Factories/WoodFactory.tscn"))
+
 
 
 func AddButton(buildingClass):
