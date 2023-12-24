@@ -19,6 +19,8 @@ var bIsActive : bool = false
 func _ready():
 	Finder.GetPlayer().connect("OnPlayerModeChange", Callable(self, "PlayerModeChange"))
 	visible = false
+	HouseControl.connect("HouseFollowClicked", Callable(self, "HouseFollowClicked"))
+	WorkControl.connect("JobFollowClicked", Callable(self, "JobFollowClicked"))
 
 
 func PlayerModeChange(bIsBuildMode):
@@ -40,10 +42,6 @@ func Show(peeple):
 	trackedPeeple.connect("OnJobUpdate", Callable(self, "JobUpdate"))
 	trackedPeeple.connect("OnHouseUpdate", Callable(self, "HouseUpdate"))
 	trackedPeeple.connect("OnSatietyUpdate", Callable(self, "UpdateHungerUI"))
-
-	HouseControl.connect("HouseFollowClicked", Callable(self, "HouseFollowClicked"))
-	WorkControl.connect("JobFollowClicked", Callable(self, "JobFollowClicked"))
-
 
 	PeepleNameLabel.text = peeple.GetPeepleName()
 	PeepleFace.texture = peeple.GetFaceTexture()

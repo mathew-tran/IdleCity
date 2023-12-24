@@ -12,9 +12,7 @@ func EatFood():
 	if IsActive():
 		if CanAffordFood():
 			await get_tree().create_timer(randf_range(0.1, 0.5)).timeout
-
 			var satietyPerPerson = float(float(SatietyGained) / float(len(PeepleInBuilding)))
-			print(satietyPerPerson)
 			for peeple in PeepleInBuilding:
 				peeple.AddSatiety(satietyPerPerson)
 				if peeple.IsFull():

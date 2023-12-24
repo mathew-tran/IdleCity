@@ -28,6 +28,7 @@ var Happiness = 50
 var Satiety = 100
 
 var SatietyDecay = .5
+var WanderHappinessGain = .5
 var FaceIndex = 0
 
 signal OnHappinessUpdate
@@ -597,3 +598,8 @@ func FindSomethingToDoDuringLunchTime():
 
 func FindSomethingToDoAfterWork():
 	FindSomethingToDoDuringLunchTime()
+
+
+func _on_wander_timer_timeout():
+	if currentAIState == AI_STATES.WANDER:
+		AddHappiness(WanderHappinessGain)

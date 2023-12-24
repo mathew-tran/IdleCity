@@ -64,6 +64,10 @@ autostart = true
 wait_time = 3.0
 autostart = true
 
+[node name="WanderTimer" type="Timer" parent="."]
+autostart = true
+
 [connection signal="button_down" from="Button" to="." method="_on_Button_button_down"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="HungerTimer" to="." method="_on_hunger_timer_timeout"]
+[connection signal="timeout" from="WanderTimer" to="." method="_on_wander_timer_timeout"]
