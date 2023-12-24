@@ -19,7 +19,6 @@ BuildingType = 1
 RequirementType = Array[int]([0])
 RequirementAmount = Array[int]([20])
 Description = "Generates Coal"
-HappinessAmount = -2
 BuildingPrefix = "CoalFactory"
 
 [node name="ActiveParticle" parent="." instance=ExtResource("3_x5pu6")]

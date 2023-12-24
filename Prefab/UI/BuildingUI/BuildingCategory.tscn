@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://bp8f4akrotkux"]
+
+[ext_resource type="PackedScene" uid="uid://c4s4aup13f2jl" path="res://Prefab/Buttons/BuildingButton.tscn" id="1_mwivf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_toioy"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="BuildingCategory" type="ScrollContainer"]
+custom_minimum_size = Vector2(900, 120)
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 921.0
+offset_bottom = 125.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_toioy")
+follow_focus = true
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="GridContainer" parent="."]
+light_mask = 0
+layout_mode = 2
+columns = 3
+
+[node name="BuildingButton" parent="VBoxContainer" instance=ExtResource("1_mwivf")]
+layout_mode = 2
+
+[node name="BuildingButton2" parent="VBoxContainer" instance=ExtResource("1_mwivf")]
+layout_mode = 2
+
+[node name="BuildingButton3" parent="VBoxContainer" instance=ExtResource("1_mwivf")]
+layout_mode = 2
+
+[node name="BuildingButton4" parent="VBoxContainer" instance=ExtResource("1_mwivf")]
+layout_mode = 2
