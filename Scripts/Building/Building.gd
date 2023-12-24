@@ -16,7 +16,7 @@ var PeepleInBuilding = []
 @export var RequirementAmount : Array[int]
 @export var Description: String = "No description"
 
-@export var HappinessAmount: int = 3
+@export var HappinessAmount: float = 3.0
 
 var bCanBeClicked = false
 

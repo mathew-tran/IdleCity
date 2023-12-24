@@ -17,6 +17,7 @@ BuildingName = "Duplex"
 RequirementType = Array[int]([0])
 RequirementAmount = Array[int]([100])
 Description = "Houses 4 Tenants"
+HappinessAmount = 5.0
 BuildingPrefix = "TownDuplex"
 
 [node name="Area2D" type="Area2D" parent="."]

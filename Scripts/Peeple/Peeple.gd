@@ -524,7 +524,7 @@ func OnHourUpdate():
 	elif GameClock.IsLunchFinishedTime():
 		ChangeAIState(AI_STATES.GOWORK)
 	elif GameClock.IsFinishingWorkDay():
-		ChangeAIState(AI_STATES.GOFOOD)
+		FindSomethingToDoAfterWork()
 	elif GameClock.IsGoHomeAfterWorkTime():
 		ChangeAIState(AI_STATES.GOHOME)
 	RunAI()
@@ -574,10 +574,28 @@ func FindSomethingToDo():
 
 
 func FindSomethingToDoDuringLunchTime():
+	if Happiness <= 40:
+		FindRec()
+		if CheckRec():
+			ChangeAIState(AI_STATES.GOREC, true)
+			return
+		else:
+			ChangeAIState(AI_STATES.GOHOME, true)
+			return
+	elif Satiety <= 60:
+		FindFood()
+		if CheckFood():
+			ChangeAIState(AI_STATES.GOFOOD, true)
+			return
+
+
 	var result = randi() % 3
 	if result == 1:
-		ChangeAIState(AI_STATES.GOFOOD, true)
-	elif result == 2:
 		ChangeAIState(AI_STATES.GOHOME, true)
+	elif result == 2:
+		ChangeAIState(AI_STATES.GOREC,true)
 	else:
-		ChangeAIState(AI_STATES.GOREC, true)
+		ChangeAIState(AI_STATES.WANDER, true)
+
+func FindSomethingToDoAfterWork():
+	FindSomethingToDoDuringLunchTime()

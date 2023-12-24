@@ -13,7 +13,7 @@ texture = ExtResource("1_ji8ch")
 centered = false
 script = ExtResource("2_40kbs")
 ResourceToConsume = 3
-ResourceToConsumeAmount = 10
+ResourceToConsumeAmount = 5
 SatietyGained = 50
 BuildingLimit = 4
 BuildingName = "Bakery"
@@ -21,7 +21,7 @@ BuildingType = 5
 RequirementType = Array[int]([2, 0])
 RequirementAmount = Array[int]([50, 200])
 Description = "Feed Peeple"
-HappinessAmount = 0
+HappinessAmount = 0.0
 BuildingPrefix = "Bakery"
 
 [node name="ActiveParticle" parent="." instance=ExtResource("3_8jocn")]

@@ -19,6 +19,7 @@ func EatFood():
 				peeple.AddSatiety(satietyPerPerson)
 				if peeple.IsFull():
 					peeple.FindSomethingToDo()
+					PeepleManager.DeclaredHasNoFood(peeple)
 
 			InventoryManager.RemoveItem(GameResources.GetResName(ResourceToConsume), ResourceToConsumeAmount)
 		else:

@@ -61,6 +61,7 @@ wait_time = 0.2
 autostart = true
 
 [node name="HungerTimer" type="Timer" parent="."]
+wait_time = 3.0
 autostart = true
 
 [connection signal="button_down" from="Button" to="." method="_on_Button_button_down"]

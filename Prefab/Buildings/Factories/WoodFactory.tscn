@@ -15,7 +15,7 @@ script = ExtResource("2_tlb1x")
 BuildingName = "Wood Factory"
 BuildingType = 1
 Description = "Generates Wood"
-HappinessAmount = -3
+HappinessAmount = -2.5
 BuildingPrefix = "WoodFactory"
 
 [node name="ActiveParticle" parent="." instance=ExtResource("3_nwq8e")]

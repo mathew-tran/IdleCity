@@ -18,7 +18,7 @@ BuildingType = 1
 RequirementType = Array[int]([0])
 RequirementAmount = Array[int]([50])
 Description = "Generates Wheat"
-HappinessAmount = -4
+HappinessAmount = -3.0
 BuildingPrefix = "WheatFactory"
 
 [node name="ActiveParticle" parent="." instance=ExtResource("3_w0wgd")]

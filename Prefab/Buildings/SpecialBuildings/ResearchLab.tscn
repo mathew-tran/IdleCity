@@ -17,7 +17,6 @@ BuildingType = 2
 RequirementType = Array[int]([0])
 RequirementAmount = Array[int]([10])
 Description = "Learn things!"
-HappinessAmount = 0
 BuildingPrefix = "ResearchLab"
 
 [node name="ActiveParticle" parent="." instance=ExtResource("2")]
