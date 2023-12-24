@@ -11,7 +11,7 @@ var TimeInHours = 5
 var DayAmount = 0
 var YearAmount = 0
 
-var NormalTime = 1
+var NormalTime = .5
 var FastTime = 2.5
 var UltraFastTime = 4.2
 
@@ -160,15 +160,15 @@ func SetGameTime(eTimeSpeed):
 	if eTimeSpeed == TIME_SPEED.STOPPED:
 		amount = 0
 	elif eTimeSpeed == TIME_SPEED.NORMAL:
-		amount = 1
+		amount = NormalTime
 	elif eTimeSpeed == TIME_SPEED.FAST:
-		amount = 2
+		amount = FastTime
 	elif eTimeSpeed == TIME_SPEED.ULTRA_FAST:
-		amount = 3
+		amount = UltraFastTime
 
 	if amount == 0:
 		Pause()
-		Engine.time_scale = 1
+		Engine.time_scale = NormalTime
 	else:
 		Engine.time_scale = amount
 		Resume()
