@@ -5,4 +5,6 @@ func _ready():
 	UpdateUI()
 
 func UpdateUI():
-	$Label.text = "Year " + str(GameClock.YearAmount) + ", Day " + str(GameClock.DayAmount) + "\n" + GameClock.GetTimeString()
+	$Label.text = GameClock.GetWeekday() + ", " + GameClock.GetMonth() + " " + str(GameClock.DayAmount) + ", " +  str(GameClock.YearAmount)
+	#"Year " + str(GameClock.YearAmount) + ", Day " + str(GameClock.DayAmount) + "\n" + GameClock.GetTimeString()
+	$Label.text += "\n" + GameClock.GetTimeString()

@@ -8,8 +8,10 @@ var MinuteDelayTime = .2
 var TimeInMinutes = 55
 var TimeInHours = 5
 
-var DayAmount = 0
+var DayAmount = 1
+var DayOfTheWeek = DAYS.MON
 var YearAmount = 0
+var MonthAmount = 0
 
 var NormalTime = .5
 var FastTime = 2.5
@@ -22,6 +24,30 @@ enum TIME_SPEED {
 	ULTRA_FAST
 }
 
+enum DAYS {
+	MON,
+	TUES,
+	WED,
+	THURS,
+	FRI,
+	SAT,
+	SUN
+}
+
+enum MONTHS {
+	JAN,
+	FEB,
+	MAR,
+	APR,
+	MAY,
+	JUN,
+	JUL,
+	AUG,
+	SEPT,
+	OCT,
+	NOV,
+	DEC
+}
 signal OnDayTime
 signal OnNightTime
 signal OnMidnightTime
@@ -33,6 +59,7 @@ signal OnHourUpdate
 signal OnHalfHourUpdate
 signal OnDayUpdate
 signal OnYearUpdate
+signal OnMonthUpdate
 signal OnTimeSpeedChange(eTimeSpeed)
 
 func _ready():
@@ -51,6 +78,7 @@ func OnDelete():
 	TimeInMinutes = 55
 	DayAmount = 0
 	YearAmount = 0
+	MonthAmount = 0
 
 func Save():
 	var dict = {
@@ -59,7 +87,9 @@ func Save():
 		"minutes" : TimeInMinutes,
 		"hours" : TimeInHours,
 		"day" : DayAmount,
-		"year" : YearAmount
+		"year" : YearAmount,
+		"month" : MonthAmount,
+		"dayoftheweek" : DayOfTheWeek
 	}
 	return dict
 
@@ -69,6 +99,11 @@ func Load(data):
 		TimeInHours = data["hours"]
 		DayAmount = data["day"]
 		YearAmount = data["year"]
+		if data.has("month"):
+			MonthAmount = data["month"]
+		if data.has("dayoftheweek"):
+			DayOfTheWeek = data["dayoftheweek"]
+	emit_signal("OnTimeUpdate")
 
 func StartTime():
 	MinuteTimer.start()
@@ -85,11 +120,20 @@ func OnTimerUpdate():
 	if TimeInHours >= 24:
 		TimeInHours = 0
 		DayAmount += 1
+		DayOfTheWeek += 1
+		if DayOfTheWeek >= len(DAYS.keys()):
+			DayOfTheWeek = 0
+		if DayAmount > 30:
+			DayAmount = 1
+			MonthAmount += 1
+			if MonthAmount >= len(MONTHS.keys()):
+				MonthAmount = 0
+				YearAmount += 1
+				emit_signal("OnYearUpdate")
+			emit_signal("OnMonthUpdate")
 		emit_signal("OnDayUpdate")
-		if DayAmount >= 365:
-			emit_signal("OnYearUpdate")
-			YearAmount += 1
-			DayAmount = 0
+
+
 
 	if IsMorning() and TimeInMinutes == 0:
 		emit_signal("OnMorningTime")
@@ -177,3 +221,9 @@ func SetGameTime(eTimeSpeed):
 
 func IsPaused():
 	return get_tree().paused
+
+func GetWeekday():
+	return DAYS.keys()[DayOfTheWeek]
+
+func GetMonth():
+	return MONTHS.keys()[MonthAmount]
