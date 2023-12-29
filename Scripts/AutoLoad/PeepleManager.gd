@@ -78,7 +78,7 @@ func DeclareUnhoused(newPeeple):
 			"message" : peepleString,
 			"type" : "peeple-house",
 			"peeple" : newPeeple,
-			"unique" : false
+			"unique" : true
 		}
 		Helper.Notify(data)
 		newPeeple.emit_signal("OnHouseUpdate", newPeeple)
@@ -105,7 +105,7 @@ func DeclaredUnEmployed(newPeeple):
 			"message" : peepleString,
 			"type" : "peeple-job",
 			"peeple" : newPeeple,
-			"unique" : false
+			"unique" : true
 		}
 		Helper.Notify(data)
 	newPeeple.emit_signal("OnJobUpdate", newPeeple)
