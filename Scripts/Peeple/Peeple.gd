@@ -400,18 +400,23 @@ func OnFactoryDeath():
 	WorkPlace = null
 	PeepleManager.DeclaredUnEmployed(self)
 	ProcessBuildingDeath()
+	await get_tree().create_timer(0.2).timeout
 	FindJob()
+	OnHourUpdate()
 
 func OnHouseDeath():
 	House = null
 	PeepleManager.DeclareUnhoused(self)
 	ProcessBuildingDeath()
+	await get_tree().create_timer(0.2).timeout
 	FindHouse()
+	OnHourUpdate()
 
 func OnRecDeath():
 	RecPlace =null
 	PeepleManager.DeclaredUnRecd(self)
 	ProcessBuildingDeath()
+	OnHourUpdate()
 
 func IsAtPosition(positionToCheck):
 	return Vector2i(global_position) == positionToCheck
