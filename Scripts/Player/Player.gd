@@ -98,6 +98,9 @@ func MoveToPosition(pos):
 func Follow(object):
 	FollowTarget = object
 
+func GetFollowTarget():
+	return FollowTarget
+
 func ProcessBuildMode(delta):
 	Helper.ShowBuildTileOutline(true)
 	MoveGhost(delta)
@@ -112,6 +115,7 @@ func ProcessBuildMode(delta):
 
 	if Helper.IsMouseOnControl():
 		$Sprite2D.visible = false
+		Follow(null)
 		return
 	if Input.is_action_just_pressed("left_click") and BuildingClass != DefaultBuildingClass:
 		if CanPurchase():

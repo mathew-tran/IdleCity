@@ -13,7 +13,8 @@ func Show():
 	var data = {
 	"message" : "Recruitment available!",
 	"unique" : true,
-	"position" : global_position
+	"position" : global_position,
+	"type" : "tavern"
 	}
 	Helper.Notify(data)
 

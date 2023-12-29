@@ -73,6 +73,14 @@ func DeclareUnhoused(newPeeple):
 	if UnHousedPeeple.has(newPeeple) == false:
 		UnHousedPeeple.append(newPeeple)
 		emit_signal("OnPeepleHouseUpdate")
+		var peepleString = newPeeple.GetPeepleName() + " has no house!"
+		var data = {
+			"message" : peepleString,
+			"type" : "peeple-house",
+			"peeple" : newPeeple,
+			"unique" : false
+		}
+		Helper.Notify(data)
 
 func DeclareHoused(currentPeeple):
 	if UnHousedPeeple.has(currentPeeple):
@@ -87,6 +95,15 @@ func DeclaredUnEmployed(newPeeple):
 	if UnemployedPeeple.has(newPeeple) == false:
 		UnemployedPeeple.append(newPeeple)
 		emit_signal("OnPeepleEmploymentUpdate")
+		var peepleString = newPeeple.GetPeepleName() + " has no work!"
+		var data = {
+			"message" : peepleString,
+			"type" : "peeple-job",
+			"peeple" : newPeeple,
+			"unique" : false
+		}
+		Helper.Notify(data)
+
 
 func DeclareEmployed(currentPeeple):
 	if UnemployedPeeple.has(currentPeeple):

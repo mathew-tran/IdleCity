@@ -36,6 +36,7 @@ func Load(data):
 	bHasPurchased = false
 
 
+
 func GetRequirementAmount():
 	return RequirementAmount
 
@@ -59,7 +60,6 @@ func GetFlag():
 
 func Increment():
 	RequirementAmount[0] += 10
-	Helper.SendLogMessageToPlayer("Tavern is available to take new recruits!")
 
 func CanGetMorePeeple():
 	return CurrentAmount < MaxAmount

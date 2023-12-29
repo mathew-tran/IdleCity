@@ -38,7 +38,6 @@ func Save():
 		"timer" : 5
 	}
 	Helper.Notify(data)
-	Helper.SendLogMessageToPlayer("Game Saved.")
 
 func Load():
 	emit_signal("OnLoad")

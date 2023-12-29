@@ -16,10 +16,11 @@ func _ready():
 func Notify(notifyData):
 	for child in $VBoxContainer.get_children():
 		if child.IsDuplicate(notifyData):
-			return
+			return null
 
 	if is_instance_valid(NotificationClass) == false:
-		return
+		return null
 	var instance = NotificationClass.instantiate()
 	$VBoxContainer.add_child(instance)
 	instance.SetData(notifyData)
+	return instance

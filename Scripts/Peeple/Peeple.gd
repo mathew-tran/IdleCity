@@ -34,9 +34,9 @@ var FaceIndex = 0
 signal OnHappinessUpdate
 signal OnSatietyUpdate
 
-signal OnJobUpdate
-signal OnHouseUpdate
-signal OnRecUpdate
+signal OnJobUpdate(peeple)
+signal OnHouseUpdate(peeple)
+signal OnRecUpdate(peeple)
 
 
 var colors = [Color(1.0, 1.0, 1.0, 1.0),
@@ -252,10 +252,10 @@ func AIFINDWORK():
 	FindJob()
 	if CheckWorkPlace():
 		ChangeAIState(AI_STATES.GOWORK, true)
-		emit_signal("OnJobUpdate")
+		emit_signal("OnJobUpdate", self)
 	else:
 		ChangeAIState(AI_STATES.WANDER)
-		emit_signal("OnJobUpdate")
+		emit_signal("OnJobUpdate", self)
 
 func AIGOREC():
 	if CheckRec():
@@ -271,10 +271,10 @@ func AIFINDREC():
 	FindRec()
 	if CheckRec():
 		ChangeAIState(AI_STATES.GOREC, true)
-		emit_signal("OnRecUpdate")
+		emit_signal("OnRecUpdate", self)
 	else:
 		ChangeAIState(AI_STATES.WANDER)
-		emit_signal("OnRecUpdate")
+		emit_signal("OnRecUpdate", self)
 
 func AIGOFOOD():
 	if CheckFood():
@@ -290,10 +290,10 @@ func AIFINDFOOD():
 	FindFood()
 	if CheckFood():
 		ChangeAIState(AI_STATES.GOFOOD, true)
-		emit_signal("OnFoodUpdate")
+		emit_signal("OnFoodUpdate", self)
 	else:
 		ChangeAIState(AI_STATES.WANDER)
-		emit_signal("OnFoodUpdate")
+		emit_signal("OnFoodUpdate", self)
 
 func AIGOHOME():
 	if CheckHouse():
@@ -309,10 +309,10 @@ func AIFINDHOME():
 	FindHouse()
 	if CheckHouse():
 		ChangeAIState(AI_STATES.GOHOME, true)
-		emit_signal("OnHouseUpdate")
+		emit_signal("OnHouseUpdate", self)
 	else:
 		ChangeAIState(AI_STATES.WANDER)
-		emit_signal("OnHouseUpdate")
+		emit_signal("OnHouseUpdate", self)
 
 
 func AISTAY():

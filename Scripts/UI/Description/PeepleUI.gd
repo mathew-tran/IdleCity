@@ -67,7 +67,7 @@ func UpdateUI():
 	if GameResources.GRADE.D == gradeValue:
 		happinessProgressBar.modulate = Color.RED
 
-	if bIsFollowing:
+	if Finder.GetPlayer().GetFollowTarget() == trackedPeeple:
 		FollowButton.text = "Unfollow"
 	else:
 		FollowButton.text = "Follow"
@@ -105,6 +105,7 @@ func _on_ToolButton_button_up():
 	StopFollowing()
 
 func _on_Button_button_up():
+	bIsFollowing = Finder.GetPlayer().GetFollowTarget() == trackedPeeple
 	bIsFollowing = !bIsFollowing
 	if trackedPeeple:
 		if bIsFollowing:
