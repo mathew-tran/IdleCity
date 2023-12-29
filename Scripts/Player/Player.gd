@@ -24,7 +24,7 @@ signal OnPlayerModeChange(bIsBuildMode)
 
 func _ready():
 	SetBuildingClass(BuildingClass, null)
-	Helper.ShowBuildTileOutline(true)
+	Helper.ShowBuildTileOutline(false)
 	Finder.GetMenuUI().connect("tab_changed", Callable(self, "_on_TabContainer_tab_changed"))
 
 
@@ -92,8 +92,14 @@ func PopMode():
 func Focus(object):
 	position = object.position
 
+func MoveToPosition(pos):
+	global_position = pos
+
 func Follow(object):
 	FollowTarget = object
+
+func GetFollowTarget():
+	return FollowTarget
 
 func ProcessBuildMode(delta):
 	Helper.ShowBuildTileOutline(true)
@@ -109,6 +115,7 @@ func ProcessBuildMode(delta):
 
 	if Helper.IsMouseOnControl():
 		$Sprite2D.visible = false
+		Follow(null)
 		return
 	if Input.is_action_just_pressed("left_click") and BuildingClass != DefaultBuildingClass:
 		if CanPurchase():

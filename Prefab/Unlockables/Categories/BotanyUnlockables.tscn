@@ -31,6 +31,7 @@ layout_mode = 2
 [node name="UnlockBushes" parent="ScrollContainer/VBoxContainer" instance=ExtResource("1")]
 layout_mode = 2
 UnlockID = "BUSH"
+UnlockMessage = "Bush Unlocked!"
 
 [node name="UnlockWheatFactory" parent="ScrollContainer/VBoxContainer" instance=ExtResource("3_unf6t")]
 layout_mode = 2
@@ -42,6 +43,7 @@ RequirementType = Array[int]([0, 2])
 RequirementAmount = Array[int]([30, 30])
 DescriptionTitle = "Research Wheat"
 DescriptionText = "Produce Wheat for food!"
+UnlockMessage = "Wheat Factory Unlocked!"
 
 [node name="UnlockBakery" parent="ScrollContainer/VBoxContainer" instance=ExtResource("3_unf6t")]
 layout_mode = 2
@@ -53,3 +55,4 @@ RequirementType = Array[int]([0, 2])
 RequirementAmount = Array[int]([30, 30])
 DescriptionTitle = "Research Bakery"
 DescriptionText = "Feed Peeple!"
+UnlockMessage = "Bakery Unlocked!"

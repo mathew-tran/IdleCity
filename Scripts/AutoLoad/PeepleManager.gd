@@ -73,12 +73,25 @@ func DeclareUnhoused(newPeeple):
 	if UnHousedPeeple.has(newPeeple) == false:
 		UnHousedPeeple.append(newPeeple)
 		emit_signal("OnPeepleHouseUpdate")
+		var peepleString = newPeeple.GetPeepleName() + " has no house!"
+		var data = {
+			"message" : peepleString,
+			"type" : "peeple-house",
+			"peeple" : newPeeple,
+			"unique" : true
+		}
+		Helper.Notify(data)
+		newPeeple.emit_signal("OnHouseUpdate", newPeeple)
+
+func GetUnHousedPeeple():
+	return UnHousedPeeple
 
 func DeclareHoused(currentPeeple):
 	if UnHousedPeeple.has(currentPeeple):
 		var index = UnHousedPeeple.find(currentPeeple)
 		UnHousedPeeple.remove_at(index)
 		emit_signal("OnPeepleHouseUpdate")
+	currentPeeple.emit_signal("OnHouseUpdate", currentPeeple)
 
 func GetUnHousedPeepleAmount():
 	return UnHousedPeeple.size()
@@ -87,12 +100,23 @@ func DeclaredUnEmployed(newPeeple):
 	if UnemployedPeeple.has(newPeeple) == false:
 		UnemployedPeeple.append(newPeeple)
 		emit_signal("OnPeepleEmploymentUpdate")
+		var peepleString = newPeeple.GetPeepleName() + " has no work!"
+		var data = {
+			"message" : peepleString,
+			"type" : "peeple-job",
+			"peeple" : newPeeple,
+			"unique" : true
+		}
+		Helper.Notify(data)
+	newPeeple.emit_signal("OnJobUpdate", newPeeple)
+
 
 func DeclareEmployed(currentPeeple):
 	if UnemployedPeeple.has(currentPeeple):
 		var index = UnemployedPeeple.find(currentPeeple)
 		UnemployedPeeple.remove_at(index)
 		emit_signal("OnPeepleEmploymentUpdate")
+	currentPeeple.emit_signal("OnJobUpdate", currentPeeple)
 
 func DeclaredUnRecd(newPeeple):
 	if RecPeeple.has(newPeeple) == false:
@@ -118,6 +142,9 @@ func DeclaredHasNoFood(currentPeeple):
 
 func GetUnEmployedPeepleAmount():
 	return UnemployedPeeple.size()
+
+func GetUnemployedPeeple():
+	return UnemployedPeeple
 
 func IncrementSpeedBuff():
 	SpeedBuff += 20

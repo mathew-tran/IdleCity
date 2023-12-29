@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bbfud0yccmq8m"]
+[gd_scene load_steps=23 format=3 uid="uid://bbfud0yccmq8m"]
 
 [ext_resource type="Texture2D" uid="uid://clblx6k8l11ea" path="res://Art/UI/GridOutline.png" id="1"]
 [ext_resource type="PackedScene" uid="uid://h7k00cd651nj" path="res://Prefab/UI/UIMaster.tscn" id="1_qg2o7"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://foxlaxf1cs8k" path="res://Prefab/Player.tscn" id="3"]
 [ext_resource type="Script" path="res://Scripts/UI/BuildTileOutline.gd" id="4"]
 [ext_resource type="Script" path="res://Scripts/Environment/BuildTiles.gd" id="4_4djms"]
+[ext_resource type="Texture2D" uid="uid://c3etaswvgg07k" path="res://Art/GridOutline.png" id="6_h05b1"]
 [ext_resource type="Texture2D" uid="uid://muf4k5ch7p4v" path="res://Art/Tiles/Water.png" id="7"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_pli5n"]
@@ -160,10 +161,20 @@ sources/1 = SubResource("TileSetAtlasSource_0ienj")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7uw13"]
 texture = ExtResource("1")
+0:0/0 = 0
+1:1/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_74lxe"]
+texture = ExtResource("6_h05b1")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
 
 [sub_resource type="TileSet" id="2"]
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_7uw13")
+sources/1 = SubResource("TileSetAtlasSource_74lxe")
 
 [node name="Node2D" type="Node2D"]
 
@@ -178,9 +189,12 @@ layer_0/tile_data = PackedInt32Array(-1835039, 1, 0, -1835038, 1, 0, -1835037, 1
 script = ExtResource("4_4djms")
 
 [node name="BuildTileOutline" type="TileMap" parent="." groups=["TileOutline"]]
-modulate = Color(0, 0.552941, 0.94902, 0.596078)
+modulate = Color(0.168627, 1, 1, 0.352941)
+position = Vector2(16, 16)
 tile_set = SubResource("2")
 format = 2
+layer_0/navigation_enabled = false
+layer_0/tile_data = PackedInt32Array(65533, 1, 0, 65532, 1, 0, 131068, 1, 0, 131067, 1, 0, 196603, 1, 0, 196602, 1, 0, 262138, 1, 0, 262139, 1, 0, 262140, 1, 0, 262141, 1, 0, 196605, 1, 0, 131069, 1, 0)
 script = ExtResource("4")
 
 [node name="Buildings" type="Node2D" parent="." groups=["Buildings"]]

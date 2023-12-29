@@ -5,6 +5,7 @@ extends Button
 
 @export var DescriptionTitle: String = "Title"
 @export var DescriptionText: String = "No description"
+@export var UnlockMessage : String = ""
 
 var Description = null
 var Price = null
@@ -39,6 +40,11 @@ func UpdateUI():
 func Purchase():
 	InventoryManager.Purchase(RequirementType, RequirementAmount)
 	ResearchManager.BroadcastOnResearchGained()
+	if UnlockMessage != "":
+		var data = {
+			"message" : UnlockMessage
+		}
+		Helper.Notify(data)
 
 
 func CanAfford():

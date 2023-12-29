@@ -50,3 +50,6 @@ func GetLevelNavigator():
 
 func GetDescriptionUI():
 	return get_tree().get_nodes_in_group("DescriptionUI")[0]
+
+func GetNotifications():
+	return get_tree().get_nodes_in_group("NotificationsManager")[0]

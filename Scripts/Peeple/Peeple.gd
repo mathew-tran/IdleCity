@@ -34,9 +34,9 @@ var FaceIndex = 0
 signal OnHappinessUpdate
 signal OnSatietyUpdate
 
-signal OnJobUpdate
-signal OnHouseUpdate
-signal OnRecUpdate
+signal OnJobUpdate(peeple)
+signal OnHouseUpdate(peeple)
+signal OnRecUpdate(peeple)
 
 
 var colors = [Color(1.0, 1.0, 1.0, 1.0),
@@ -123,6 +123,11 @@ func _ready():
 		Speed = Speed + randf_range(-50, 75)
 		FaceIndex = randi() % len(Faces)
 		$Face.texture = load(Faces[FaceIndex])
+		var data = {
+			"message" : "Say hello to " + GetPeepleName() + "!",
+			"peeple" : self
+		}
+		Helper.Notify(data)
 	# TODO: Issue reshuffling parents... so that's why I have this timeout.
 	await get_tree().create_timer(0.2).timeout
 	PeepleManager.AddPeeple(self)
@@ -130,6 +135,9 @@ func _ready():
 	emit_signal("OnHappinessUpdate")
 	var _OnHungerUpdate = connect("OnSatietyUpdate", Callable(self, "SatietyUpdate"))
 	emit_signal("OnSatietyUpdate")
+
+	FindHouse()
+	FindJob()
 	ChangeAIState(AI_STATES.GOHOME, true)
 
 func AddHappiness(amount):
@@ -190,6 +198,7 @@ func Load(dictData):
 
 	if dictData.has("face"):
 		$Face.texture = load(Faces[dictData["face"]])
+		FaceIndex = dictData["face"]
 
 	if dictData.has("satiety"):
 		Satiety = dictData["satiety"]
@@ -252,10 +261,8 @@ func AIFINDWORK():
 	FindJob()
 	if CheckWorkPlace():
 		ChangeAIState(AI_STATES.GOWORK, true)
-		emit_signal("OnJobUpdate")
 	else:
 		ChangeAIState(AI_STATES.WANDER)
-		emit_signal("OnJobUpdate")
 
 func AIGOREC():
 	if CheckRec():
@@ -271,10 +278,10 @@ func AIFINDREC():
 	FindRec()
 	if CheckRec():
 		ChangeAIState(AI_STATES.GOREC, true)
-		emit_signal("OnRecUpdate")
+		emit_signal("OnRecUpdate", self)
 	else:
 		ChangeAIState(AI_STATES.WANDER)
-		emit_signal("OnRecUpdate")
+		emit_signal("OnRecUpdate", self)
 
 func AIGOFOOD():
 	if CheckFood():
@@ -290,10 +297,8 @@ func AIFINDFOOD():
 	FindFood()
 	if CheckFood():
 		ChangeAIState(AI_STATES.GOFOOD, true)
-		emit_signal("OnFoodUpdate")
 	else:
 		ChangeAIState(AI_STATES.WANDER)
-		emit_signal("OnFoodUpdate")
 
 func AIGOHOME():
 	if CheckHouse():
@@ -309,10 +314,8 @@ func AIFINDHOME():
 	FindHouse()
 	if CheckHouse():
 		ChangeAIState(AI_STATES.GOHOME, true)
-		emit_signal("OnHouseUpdate")
 	else:
 		ChangeAIState(AI_STATES.WANDER)
-		emit_signal("OnHouseUpdate")
 
 
 func AISTAY():
@@ -379,7 +382,7 @@ func FindHouse():
 func FindRec():
 	RecPlace = RecManager.FindRec(self)
 	if RecPlace:
-		RecPlace.connect("OnDestroyed", Callable(self, "OnHouseDeath"))
+		RecPlace.connect("OnDestroyed", Callable(self, "OnRecDeath"))
 		RecPlace.Subscribe(self)
 		PeepleManager.DeclaredRecd(self)
 	else:
@@ -395,15 +398,28 @@ func FindFood():
 		PeepleManager.DeclaredHasNoFood(self)
 
 func OnFactoryDeath():
-	WorkPlace.disconnect("OnDestroyed", Callable(self, "OnFactoryDeath"))
 	WorkPlace = null
 	PeepleManager.DeclaredUnEmployed(self)
 	ProcessBuildingDeath()
+	if is_inside_tree():
+		await get_tree().create_timer(0.2).timeout
+	FindJob()
+	OnHourUpdate()
 
 func OnHouseDeath():
 	House = null
 	PeepleManager.DeclareUnhoused(self)
 	ProcessBuildingDeath()
+	if is_inside_tree():
+		await get_tree().create_timer(0.2).timeout
+	FindHouse()
+	OnHourUpdate()
+
+func OnRecDeath():
+	RecPlace =null
+	PeepleManager.DeclaredUnRecd(self)
+	ProcessBuildingDeath()
+	OnHourUpdate()
 
 func IsAtPosition(positionToCheck):
 	return Vector2i(global_position) == positionToCheck
