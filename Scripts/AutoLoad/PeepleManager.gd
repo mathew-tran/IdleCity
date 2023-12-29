@@ -81,12 +81,17 @@ func DeclareUnhoused(newPeeple):
 			"unique" : false
 		}
 		Helper.Notify(data)
+		newPeeple.emit_signal("OnHouseUpdate", newPeeple)
+
+func GetUnHousedPeeple():
+	return UnHousedPeeple
 
 func DeclareHoused(currentPeeple):
 	if UnHousedPeeple.has(currentPeeple):
 		var index = UnHousedPeeple.find(currentPeeple)
 		UnHousedPeeple.remove_at(index)
 		emit_signal("OnPeepleHouseUpdate")
+	currentPeeple.emit_signal("OnHouseUpdate", currentPeeple)
 
 func GetUnHousedPeepleAmount():
 	return UnHousedPeeple.size()
@@ -103,6 +108,7 @@ func DeclaredUnEmployed(newPeeple):
 			"unique" : false
 		}
 		Helper.Notify(data)
+	newPeeple.emit_signal("OnJobUpdate", newPeeple)
 
 
 func DeclareEmployed(currentPeeple):
@@ -110,6 +116,7 @@ func DeclareEmployed(currentPeeple):
 		var index = UnemployedPeeple.find(currentPeeple)
 		UnemployedPeeple.remove_at(index)
 		emit_signal("OnPeepleEmploymentUpdate")
+	currentPeeple.emit_signal("OnJobUpdate", currentPeeple)
 
 func DeclaredUnRecd(newPeeple):
 	if RecPeeple.has(newPeeple) == false:

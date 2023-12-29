@@ -123,6 +123,11 @@ func _ready():
 		Speed = Speed + randf_range(-50, 75)
 		FaceIndex = randi() % len(Faces)
 		$Face.texture = load(Faces[FaceIndex])
+		var data = {
+			"message" : "Say hello to " + GetPeepleName() + "!",
+			"peeple" : self
+		}
+		Helper.Notify(data)
 	# TODO: Issue reshuffling parents... so that's why I have this timeout.
 	await get_tree().create_timer(0.2).timeout
 	PeepleManager.AddPeeple(self)
@@ -130,6 +135,9 @@ func _ready():
 	emit_signal("OnHappinessUpdate")
 	var _OnHungerUpdate = connect("OnSatietyUpdate", Callable(self, "SatietyUpdate"))
 	emit_signal("OnSatietyUpdate")
+
+	FindHouse()
+	FindJob()
 	ChangeAIState(AI_STATES.GOHOME, true)
 
 func AddHappiness(amount):
@@ -252,10 +260,8 @@ func AIFINDWORK():
 	FindJob()
 	if CheckWorkPlace():
 		ChangeAIState(AI_STATES.GOWORK, true)
-		emit_signal("OnJobUpdate", self)
 	else:
 		ChangeAIState(AI_STATES.WANDER)
-		emit_signal("OnJobUpdate", self)
 
 func AIGOREC():
 	if CheckRec():
@@ -290,10 +296,8 @@ func AIFINDFOOD():
 	FindFood()
 	if CheckFood():
 		ChangeAIState(AI_STATES.GOFOOD, true)
-		emit_signal("OnFoodUpdate", self)
 	else:
 		ChangeAIState(AI_STATES.WANDER)
-		emit_signal("OnFoodUpdate", self)
 
 func AIGOHOME():
 	if CheckHouse():
@@ -309,10 +313,8 @@ func AIFINDHOME():
 	FindHouse()
 	if CheckHouse():
 		ChangeAIState(AI_STATES.GOHOME, true)
-		emit_signal("OnHouseUpdate", self)
 	else:
 		ChangeAIState(AI_STATES.WANDER)
-		emit_signal("OnHouseUpdate", self)
 
 
 func AISTAY():
@@ -379,7 +381,7 @@ func FindHouse():
 func FindRec():
 	RecPlace = RecManager.FindRec(self)
 	if RecPlace:
-		RecPlace.connect("OnDestroyed", Callable(self, "OnHouseDeath"))
+		RecPlace.connect("OnDestroyed", Callable(self, "OnRecDeath"))
 		RecPlace.Subscribe(self)
 		PeepleManager.DeclaredRecd(self)
 	else:
@@ -395,14 +397,20 @@ func FindFood():
 		PeepleManager.DeclaredHasNoFood(self)
 
 func OnFactoryDeath():
-	WorkPlace.disconnect("OnDestroyed", Callable(self, "OnFactoryDeath"))
 	WorkPlace = null
 	PeepleManager.DeclaredUnEmployed(self)
 	ProcessBuildingDeath()
+	FindJob()
 
 func OnHouseDeath():
 	House = null
 	PeepleManager.DeclareUnhoused(self)
+	ProcessBuildingDeath()
+	FindHouse()
+
+func OnRecDeath():
+	RecPlace =null
+	PeepleManager.DeclaredUnRecd(self)
 	ProcessBuildingDeath()
 
 func IsAtPosition(positionToCheck):

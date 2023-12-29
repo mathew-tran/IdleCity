@@ -7,6 +7,13 @@ func _ready():
 	$ActiveParticle.emitting = false
 	var _OnHalfHourUpdate = GameClock.connect("OnHalfHourUpdate", Callable(self, "ProduceWork"))
 
+	var unEmployedPeeple = PeepleManager.GetUnemployedPeeple()
+	var tries = len(unEmployedPeeple)
+	while tries > 0 and len(unEmployedPeeple) > 0:
+		unEmployedPeeple[0].FindJob()
+		tries -= 1
+
+
 func ProduceWork():
 	if IsActive():
 		await get_tree().create_timer(randf_range(0.1, 0.5)).timeout

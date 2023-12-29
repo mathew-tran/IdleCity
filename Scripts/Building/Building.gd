@@ -187,7 +187,7 @@ func Enter(peeple):
 	emit_signal("OnBuildingUpdate")
 
 func ShowUseGear(bShow):
-	if get_node("UseGear"):
+	if get_node_or_null("UseGear"):
 		$UseGear.visible = bShow
 
 func Exit(peeple):

@@ -17,3 +17,14 @@ offset_bottom = 40.0
 
 [node name="Button" parent="VBoxContainer" instance=ExtResource("1_oqayh")]
 layout_mode = 2
+
+[node name="ClearButton" type="Button" parent="."]
+layout_mode = 0
+offset_top = -34.0
+offset_right = 89.0
+offset_bottom = -3.0
+text = "CLEAR ALL"
+
+[connection signal="child_entered_tree" from="VBoxContainer" to="." method="_on_v_box_container_child_entered_tree"]
+[connection signal="child_exiting_tree" from="VBoxContainer" to="." method="_on_v_box_container_child_exiting_tree"]
+[connection signal="button_up" from="ClearButton" to="." method="_on_clear_button_button_up"]

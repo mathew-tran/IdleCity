@@ -9,7 +9,7 @@ func _on_button_up():
 	if localData.has("position"):
 		Finder.GetPlayer().MoveToPosition(localData["position"])
 	if localData.has("peeple"):
-		Finder.GetPlayer().Follow(localData["peeple"])
+		Finder.GetPlayer().Focus(localData["peeple"])
 		Helper.AddDescriptionPopup(localData["peeple"])
 
 

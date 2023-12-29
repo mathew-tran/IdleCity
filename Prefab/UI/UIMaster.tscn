@@ -156,6 +156,12 @@ offset_right = 176.0
 offset_bottom = 55.0
 grow_horizontal = 1
 
+[node name="Notifications" parent="." instance=ExtResource("7_st1yx")]
+offset_left = 5.0
+offset_top = 147.0
+offset_right = 215.0
+offset_bottom = 288.0
+
 [node name="MenuUI" parent="." instance=ExtResource("4_fxgjd")]
 offset_left = 9.0
 offset_top = 471.0
@@ -197,12 +203,6 @@ offset_bottom = 94.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-
-[node name="Notifications" parent="." instance=ExtResource("7_st1yx")]
-offset_left = 5.0
-offset_top = 147.0
-offset_right = 215.0
-offset_bottom = 288.0
 
 [node name="ContentPopup" parent="." instance=ExtResource("6_6rn30")]
 anchors_preset = 15

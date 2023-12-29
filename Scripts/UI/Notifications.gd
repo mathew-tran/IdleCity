@@ -24,3 +24,18 @@ func Notify(notifyData):
 	$VBoxContainer.add_child(instance)
 	instance.SetData(notifyData)
 	return instance
+
+
+func _on_v_box_container_child_entered_tree(node):
+	await get_tree().create_timer(.1).timeout
+	$ClearButton.visible = len($VBoxContainer.get_children()) > 0
+
+
+func _on_v_box_container_child_exiting_tree(node):
+	await get_tree().create_timer(.1).timeout
+	$ClearButton.visible = len($VBoxContainer.get_children()) > 0
+
+
+func _on_clear_button_button_up():
+	for child in $VBoxContainer.get_children():
+		child.queue_free()
