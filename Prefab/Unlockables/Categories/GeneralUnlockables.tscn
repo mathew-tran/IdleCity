@@ -39,6 +39,7 @@ BuildingToUnlock = ExtResource("3_k0jtd")
 UnlockID = "HOUSE"
 DescriptionTitle = "Research Housing"
 DescriptionText = "Allows a place for your Peeple to rest. Making them more efficient at work!"
+UnlockMessage = "Town House Unlocked!"
 
 [node name="UnlockTavern" parent="ScrollContainer/VBoxContainer" instance=ExtResource("1")]
 layout_mode = 2
@@ -48,10 +49,12 @@ UnlockID = "TAVERN"
 RequirementAmount = Array[int]([30])
 DescriptionTitle = "Research Tavern"
 DescriptionText = "Allows you to recruit Peeple Daily"
+UnlockMessage = "Tavern Unlocked"
 
 [node name="UnlockBotany" parent="ScrollContainer/VBoxContainer" instance=ExtResource("1")]
 layout_mode = 2
 UnlockID = "BOTANY_CATEGORY"
+UnlockMessage = "Botany Category Unlocked"
 
 [node name="UnlockStone" parent="ScrollContainer/VBoxContainer" instance=ExtResource("1")]
 layout_mode = 2
@@ -61,6 +64,7 @@ UnlockID = "STONE_FACTORY"
 RequirementAmount = Array[int]([100])
 DescriptionTitle = "Research Stone"
 DescriptionText = "Allows you to create Stone Factories!"
+UnlockMessage = "Stone Factory Unlocked!"
 
 [node name="UnlockDuplex" parent="ScrollContainer/VBoxContainer" instance=ExtResource("1")]
 layout_mode = 2
@@ -71,6 +75,7 @@ RequirementType = Array[int]([0, 1])
 RequirementAmount = Array[int]([30, 30])
 DescriptionTitle = "Research Housing II"
 DescriptionText = "Allows you to create Duplex, which can hold more Peeple!"
+UnlockMessage = "Duplex Unlocked!"
 
 [node name="UnlockCoal" parent="ScrollContainer/VBoxContainer" instance=ExtResource("1")]
 layout_mode = 2
@@ -81,6 +86,7 @@ RequirementType = Array[int]([0, 1])
 RequirementAmount = Array[int]([80, 80])
 DescriptionTitle = "Research Coal"
 DescriptionText = "Allows you to make factories to produce Coal."
+UnlockMessage = "Coal Factory Unlocked!"
 
 [node name="UnlockRoads" parent="ScrollContainer/VBoxContainer" instance=ExtResource("1")]
 layout_mode = 2
@@ -90,6 +96,7 @@ UnlockID = "ROAD"
 RequirementType = Array[int]([2])
 DescriptionTitle = "Research Roads"
 DescriptionText = "Make your city more efficient by placing down roads!"
+UnlockMessage = "Roads Unlocked!"
 
 [node name="UnlockArcade" parent="ScrollContainer/VBoxContainer" instance=ExtResource("1")]
 layout_mode = 2
@@ -99,6 +106,7 @@ UnlockID = "ARCADE"
 RequirementType = Array[int]([2])
 DescriptionTitle = "Research Arcade"
 DescriptionText = "Let Peeple regain happiness during their lunch hours! Making them more efficient"
+UnlockMessage = "Arcade Unlocked!"
 
 [node name="Hustle I" parent="ScrollContainer/VBoxContainer" instance=ExtResource("2")]
 layout_mode = 2

@@ -198,6 +198,7 @@ func Load(dictData):
 
 	if dictData.has("face"):
 		$Face.texture = load(Faces[dictData["face"]])
+		FaceIndex = dictData["face"]
 
 	if dictData.has("satiety"):
 		Satiety = dictData["satiety"]
@@ -400,7 +401,8 @@ func OnFactoryDeath():
 	WorkPlace = null
 	PeepleManager.DeclaredUnEmployed(self)
 	ProcessBuildingDeath()
-	await get_tree().create_timer(0.2).timeout
+	if is_inside_tree():
+		await get_tree().create_timer(0.2).timeout
 	FindJob()
 	OnHourUpdate()
 
@@ -408,7 +410,8 @@ func OnHouseDeath():
 	House = null
 	PeepleManager.DeclareUnhoused(self)
 	ProcessBuildingDeath()
-	await get_tree().create_timer(0.2).timeout
+	if is_inside_tree():
+		await get_tree().create_timer(0.2).timeout
 	FindHouse()
 	OnHourUpdate()
 

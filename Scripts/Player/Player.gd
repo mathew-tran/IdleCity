@@ -24,7 +24,7 @@ signal OnPlayerModeChange(bIsBuildMode)
 
 func _ready():
 	SetBuildingClass(BuildingClass, null)
-	Helper.ShowBuildTileOutline(true)
+	Helper.ShowBuildTileOutline(false)
 	Finder.GetMenuUI().connect("tab_changed", Callable(self, "_on_TabContainer_tab_changed"))
 
 

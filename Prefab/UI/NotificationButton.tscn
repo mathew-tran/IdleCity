@@ -10,7 +10,7 @@ Label/fonts/font = ExtResource("2_6nfcj")
 
 [node name="Button" type="Button" groups=["controls"]]
 process_mode = 3
-custom_minimum_size = Vector2(300, 20)
+custom_minimum_size = Vector2(330, 20)
 script = ExtResource("1_xhyhk")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]

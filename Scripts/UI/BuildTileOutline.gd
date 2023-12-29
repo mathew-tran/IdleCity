@@ -7,7 +7,8 @@ func Hide():
 	visible = false
 
 func _ready():
-	Hide()
+	#Hide()
 	var tiles = Finder.GetBuildTiles()
 	for tile in tiles.get_used_cells(0):
-		set_cell(0, tile, 0)
+		set_cell(0, tile, 1, Vector2i(0,0))
+
