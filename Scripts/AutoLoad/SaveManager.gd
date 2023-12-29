@@ -33,6 +33,11 @@ func Save():
 		saveGame.store_line(JSON.stringify(nodeData))
 	saveGame.close()
 	emit_signal("OnSave")
+	var data = {
+		"message" : "Game Saved",
+		"timer" : 5
+	}
+	Helper.Notify(data)
 	Helper.SendLogMessageToPlayer("Game Saved.")
 
 func Load():

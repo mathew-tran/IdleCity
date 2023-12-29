@@ -3,12 +3,13 @@
 [ext_resource type="Script" path="res://Scripts/UI/Info/ClockUI.gd" id="1"]
 
 [node name="Clock" type="Panel"]
+custom_minimum_size = Vector2(200, 0)
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = 343.0
 offset_top = -300.0
-offset_right = 509.0
+offset_right = 543.0
 offset_bottom = -246.0
 grow_horizontal = 0
 script = ExtResource("1")

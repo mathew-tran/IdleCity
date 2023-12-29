@@ -133,3 +133,7 @@ func FocusCamera(object):
 
 func FollowCamera(object):
 	Finder.GetPlayer().Follow(object)
+
+func Notify(notifyData):
+	Finder.GetNotifications().Notify(notifyData)
+	pass

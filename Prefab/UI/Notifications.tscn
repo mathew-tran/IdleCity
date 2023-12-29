@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dtvnpocaxd3jm"]
+
+[ext_resource type="PackedScene" uid="uid://cd13boo0v8rbv" path="res://Prefab/UI/NotificationButton.tscn" id="1_oqayh"]
+[ext_resource type="Script" path="res://Scripts/UI/Notifications.gd" id="1_ycv4w"]
+
+[node name="Notifications" type="Control" groups=["NotificationsManager"]]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 210.0
+offset_bottom = 141.0
+script = ExtResource("1_ycv4w")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" parent="VBoxContainer" instance=ExtResource("1_oqayh")]
+layout_mode = 2
