@@ -79,8 +79,9 @@ func _process(delta):
 
 	if Input.is_action_pressed("middle_click"):
 		$MiddleMouseImage.visible = true
-		var dir = (get_global_mouse_position() - $MiddleMouseImage.global_position).normalized()
-		position += dir * adjustedDelta * MoveSpeed
+		if get_global_mouse_position().distance_to($MiddleMouseImage.global_position) > 10:
+			var dir = (get_global_mouse_position() - $MiddleMouseImage.global_position).normalized()
+			position += dir * adjustedDelta * MoveSpeed
 	else:
 		$MiddleMouseImage.visible = false
 
