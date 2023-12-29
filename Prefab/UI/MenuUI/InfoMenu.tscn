@@ -1,9 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://yxh3qfy1d6xu"]
+[gd_scene load_steps=4 format=3 uid="uid://yxh3qfy1d6xu"]
 
 [ext_resource type="Script" path="res://Scripts/UI/Info/InfoUI.gd" id="1_3vjgb"]
 [ext_resource type="Script" path="res://Scripts/UI/Info/PeepleAmountUI.gd" id="2_l0th7"]
-[ext_resource type="Script" path="res://Scripts/UI/Info/PeepleNoHomeUI.gd" id="3_retpw"]
-[ext_resource type="Script" path="res://Scripts/UI/Info/PeepleMissingJobUI.gd" id="4_of75d"]
 [ext_resource type="PackedScene" uid="uid://bj3neuhv1bs2d" path="res://Prefab/UI/MenuUI/InventoryMenu.tscn" id="5_0ico1"]
 
 [node name="Info" type="Panel" groups=["controls"]]
@@ -27,11 +25,3 @@ layout_mode = 2
 [node name="PeepleAmount" type="Label" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 script = ExtResource("2_l0th7")
-
-[node name="PeepleMissingHome" type="Label" parent="HBoxContainer/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("3_retpw")
-
-[node name="PeepleMissingJob" type="Label" parent="HBoxContainer/VBoxContainer"]
-layout_mode = 2
-script = ExtResource("4_of75d")
