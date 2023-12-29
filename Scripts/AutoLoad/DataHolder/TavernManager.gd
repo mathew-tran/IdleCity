@@ -43,11 +43,11 @@ func GetRequirementType():
 	return RequirementType
 
 func OnDayUpdate():
-	if bHasPurchased:
-		if CurrentAmount < MaxAmount:
-			Increment()
-			bHasPurchased = false
-			emit_signal("OnTavernAvailable")
+	if CurrentAmount < MaxAmount:
+		Increment()
+		bHasPurchased = false
+		emit_signal("OnTavernAvailable")
+
 
 func SetFlag():
 	bHasPurchased = true

@@ -119,6 +119,9 @@ func DeclaredHasNoFood(currentPeeple):
 func GetUnEmployedPeepleAmount():
 	return UnemployedPeeple.size()
 
+func GetUnemployedPeeple():
+	return UnemployedPeeple
+
 func IncrementSpeedBuff():
 	SpeedBuff += 20
 

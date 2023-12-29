@@ -10,6 +10,13 @@ func _ready():
 
 func Show():
 	$ActiveParticle.emitting = true
+	var data = {
+	"message" : "Recruitment available!",
+	"unique" : true,
+	"position" : global_position
+	}
+	Helper.Notify(data)
+
 
 func Hide():
 	$ActiveParticle.emitting = false

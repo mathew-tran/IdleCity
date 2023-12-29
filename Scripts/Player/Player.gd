@@ -92,6 +92,9 @@ func PopMode():
 func Focus(object):
 	position = object.position
 
+func MoveToPosition(pos):
+	global_position = pos
+
 func Follow(object):
 	FollowTarget = object
 

@@ -9,3 +9,11 @@ func Show():
 	text = str(PeepleManager.GetUnEmployedPeepleAmount()) + " Peeple have no job!"
 	bHasProblem = PeepleManager.GetUnEmployedPeepleAmount() > 0
 	emit_signal("OnInfoUpdate")
+	if bHasProblem:
+		var data = {
+			"message" : "Unemployed Peeple",
+			"type" : "peeple",
+			"peepleGroup" : PeepleManager.GetUnemployedPeeple(),
+			"unique" : false
+		}
+		Helper.Notify(data)
