@@ -48,6 +48,7 @@ func _on_Button_button_down():
 		instance.position = InputManager.GetLastClickedObject().global_position
 		Finder.GetPeepleGroup().add_child(instance)
 		PurchaseButton.disabled = true
+		Helper.PlaySound(load("res://SFX/You_Did_It.mp3"), 1)
 		TavernManager.SetFlag()
 		if TavernManager.CanGetMorePeeple():
 			MessageText.text = "Thank you for recruiting! Come back later!"

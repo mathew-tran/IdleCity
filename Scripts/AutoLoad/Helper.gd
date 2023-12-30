@@ -137,3 +137,5 @@ func FollowCamera(object):
 func Notify(notifyData):
 	return Finder.GetNotifications().Notify(notifyData)
 
+func PlaySound(sound, channelIndex):
+	Finder.GetSoundManager().PlaySound(sound, channelIndex)

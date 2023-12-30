@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bbfud0yccmq8m"]
+[gd_scene load_steps=24 format=3 uid="uid://bbfud0yccmq8m"]
 
 [ext_resource type="Texture2D" uid="uid://clblx6k8l11ea" path="res://Art/UI/GridOutline.png" id="1"]
 [ext_resource type="PackedScene" uid="uid://h7k00cd651nj" path="res://Prefab/UI/UIMaster.tscn" id="1_qg2o7"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://Scripts/Environment/BuildTiles.gd" id="4_4djms"]
 [ext_resource type="Texture2D" uid="uid://c3etaswvgg07k" path="res://Art/GridOutline.png" id="6_h05b1"]
 [ext_resource type="Texture2D" uid="uid://muf4k5ch7p4v" path="res://Art/Tiles/Water.png" id="7"]
+[ext_resource type="Script" path="res://Scripts/Sound/SoundManager.gd" id="9_2ncwn"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_pli5n"]
 vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
@@ -203,3 +204,6 @@ script = ExtResource("4")
 z_as_relative = false
 
 [node name="Player" parent="." instance=ExtResource("3")]
+
+[node name="SoundManager" type="Node2D" parent="." groups=["SoundManager"]]
+script = ExtResource("9_2ncwn")
