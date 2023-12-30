@@ -53,3 +53,6 @@ func GetDescriptionUI():
 
 func GetNotifications():
 	return get_tree().get_nodes_in_group("NotificationsManager")[0]
+
+func GetSoundManager():
+	return get_tree().get_nodes_in_group("SoundManager")[0]
