@@ -82,8 +82,14 @@ func _process(delta):
 		if get_global_mouse_position().distance_to($MiddleMouseImage.global_position) > 10:
 			var dir = (get_global_mouse_position() - $MiddleMouseImage.global_position).normalized()
 			position += dir * adjustedDelta * MoveSpeed
+			$MiddleMouseImage.look_at(get_global_mouse_position())
+			$MiddleMouseImage.texture = preload("res://Art/UI/PointerIcon.png")
+		else:
+			$MiddleMouseImage.texture = preload("res://Art/UI/MoveIcon.png")
+			$MiddleMouseImage.rotation_degrees = 0
 	else:
 		$MiddleMouseImage.visible = false
+
 
 
 func ChangePlayerMode(newMode):
