@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://c40r25wjfdv82"]
+
+[ext_resource type="Texture2D" uid="uid://bjtusj608p5m" path="res://Art/UI/SoundIcon.png" id="1_btq0m"]
+[ext_resource type="Texture2D" uid="uid://cueuxooalu88o" path="res://Art/UI/CrossoutIcon.png" id="2_aiav0"]
+[ext_resource type="Script" path="res://Scripts/UI/SoundController.gd" id="2_s8o0b"]
+
+[node name="SoundIcon" type="Button"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -44.0
+offset_top = 24.0
+offset_right = -4.0
+offset_bottom = 64.0
+grow_horizontal = 0
+icon = ExtResource("1_btq0m")
+script = ExtResource("2_s8o0b")
+metadata/_edit_group_ = true
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_aiav0")
+
+[connection signal="button_up" from="." to="." method="_on_button_up"]
