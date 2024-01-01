@@ -207,3 +207,9 @@ z_as_relative = false
 
 [node name="SoundManager" type="Node2D" parent="." groups=["SoundManager"]]
 script = ExtResource("9_2ncwn")
+
+[node name="MusicTimer" type="Timer" parent="SoundManager"]
+wait_time = 180.0
+one_shot = true
+
+[connection signal="timeout" from="SoundManager/MusicTimer" to="SoundManager" method="_on_music_timer_timeout"]

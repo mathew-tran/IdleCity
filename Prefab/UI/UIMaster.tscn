@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://h7k00cd651nj"]
+[gd_scene load_steps=18 format=3 uid="uid://h7k00cd651nj"]
 
 [ext_resource type="Texture2D" uid="uid://dnpgwmt22ocj3" path="res://Art/WhitePixel.png" id="1_kk1i6"]
 [ext_resource type="Script" path="res://Scripts/Environment/Lighting.gd" id="2_6jn4j"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://Scripts/UI/BuildVersionString.gd" id="10_qmfwy"]
 [ext_resource type="PackedScene" uid="uid://cicikslktxqg7" path="res://Prefab/UI/TimeControl.tscn" id="11_r16hf"]
 [ext_resource type="Script" path="res://Scripts/UI/BGTimeControl.gd" id="12_jwx6a"]
+[ext_resource type="PackedScene" uid="uid://c40r25wjfdv82" path="res://Prefab/UI/SoundController.tscn" id="15_v7jhu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y0sc8"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -164,5 +165,10 @@ grow_vertical = 2
 mouse_filter = 2
 theme = SubResource("Theme_coeh0")
 script = ExtResource("12_jwx6a")
+
+[node name="SoundIcon" parent="." groups=["controls"] instance=ExtResource("15_v7jhu")]
+offset_left = -25.0
+offset_right = 15.0
+scale = Vector2(0.5, 0.5)
 
 [connection signal="button_down" from="Button" to="Button" method="_on_Button_button_down"]
