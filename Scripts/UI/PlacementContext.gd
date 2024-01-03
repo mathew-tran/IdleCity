@@ -12,7 +12,7 @@ func _ready():
 
 func OnBuildContextClicked(obj):
 	visible = true
-	global_position = get_viewport().get_mouse_position()
+	global_position = get_viewport().get_mouse_position() - Vector2(0, 64)
 	ObjectToInteractWith = obj
 	ContextLabel.text = "Object: " + ObjectToInteractWith.name
 	ObjectToInteractWith.modulate = Color(400, 400, 400, ObjectToInteractWith.modulate.a)

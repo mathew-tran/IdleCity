@@ -1,6 +1,6 @@
 extends Node
 
-var SaveFilePath = "user://savegame.save"
+var SaveFilePath = "user://game.save"
 
 var PersistTag = "Persist"
 
@@ -29,7 +29,11 @@ func Save():
 		saveGame.store_line(JSON.stringify(nodeData))
 	saveGame.close()
 	emit_signal("OnSave")
-	Helper.SendLogMessageToPlayer("Game Saved.")
+	var data = {
+		"message" : "Game Saved",
+		"timer" : 5
+	}
+	Helper.Notify(data)
 
 func Load():
 	emit_signal("OnLoad")

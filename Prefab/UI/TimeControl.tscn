@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://cicikslktxqg7"]
+
+[ext_resource type="Texture2D" uid="uid://cnejdx36ubgob" path="res://Art/UI/TimeControl/Pause.png" id="1_7my67"]
+[ext_resource type="Script" path="res://Scripts/UI/TimeControl.gd" id="1_lahe5"]
+[ext_resource type="Texture2D" uid="uid://d3yuvu218koce" path="res://Art/UI/TimeControl/Play.png" id="2_ex1gm"]
+[ext_resource type="Texture2D" uid="uid://dcm7fl6hp1rg7" path="res://Art/UI/TimeControl/Fastforward.png" id="3_ekjv0"]
+[ext_resource type="Texture2D" uid="uid://do7rmh7vtuffm" path="res://Art/UI/TimeControl/SuperFastForward.png" id="5_p11yw"]
+
+[node name="TimeControl" type="HBoxContainer"]
+process_mode = 3
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_lahe5")
+
+[node name="Pause" type="Button" parent="."]
+layout_mode = 2
+icon = ExtResource("1_7my67")
+
+[node name="Play" type="Button" parent="."]
+layout_mode = 2
+icon = ExtResource("2_ex1gm")
+
+[node name="FastForward" type="Button" parent="."]
+layout_mode = 2
+icon = ExtResource("3_ekjv0")
+
+[node name="SuperFastForward" type="Button" parent="."]
+layout_mode = 2
+icon = ExtResource("5_p11yw")
+
+[connection signal="button_up" from="Pause" to="." method="_on_pause_button_up"]
+[connection signal="button_up" from="Play" to="." method="_on_play_button_up"]
+[connection signal="button_up" from="FastForward" to="." method="_on_fast_forward_button_up"]
+[connection signal="button_up" from="SuperFastForward" to="." method="_on_super_fast_forward_button_up"]

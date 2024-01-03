@@ -18,6 +18,9 @@ func GetFactories():
 func GetRecHouses():
 	return get_tree().get_nodes_in_group("Rec")
 
+func GetFoodHouses():
+	return get_tree().get_nodes_in_group("Food")
+
 func GetHousing():
 	return get_tree().get_nodes_in_group("House")
 
@@ -47,3 +50,9 @@ func GetLevelNavigator():
 
 func GetDescriptionUI():
 	return get_tree().get_nodes_in_group("DescriptionUI")[0]
+
+func GetNotifications():
+	return get_tree().get_nodes_in_group("NotificationsManager")[0]
+
+func GetSoundManager():
+	return get_tree().get_nodes_in_group("SoundManager")[0]

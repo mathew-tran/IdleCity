@@ -5,24 +5,29 @@ extends Panel
 @onready var Special = $SubBuildMenu/Special
 @onready var Decor = $SubBuildMenu/Decor
 @onready var Rec = $SubBuildMenu/Rec
+@onready var Food = $SubBuildMenu/Food
 
+var Categories = []
 var BuildingClass = preload("res://Prefab/Buttons/BuildingButton.tscn")
 
 func _ready():
+	Categories = [
+		Housing,
+		Factories,
+		Special,
+		Decor,
+		Rec,
+		Food
+	]
 
-	# Add housing
-	AddButton(preload("res://Prefab/Buildings/Housing/House.tscn"))
-	AddButton(preload("res://Prefab/Buildings/Housing/BigHouse.tscn"))
+	for category in Categories:
+		for button in category.get_node("VBoxContainer").get_children():
+			button.queue_free()
 
-	# Add factories
-	AddButton(preload("res://Prefab/Buildings/Factories/StoneFactory.tscn"))
+	AddButton(preload("res://Prefab/Buildings/SpecialBuildings/ResearchLab.tscn"))
 	AddButton(preload("res://Prefab/Buildings/Factories/WoodFactory.tscn"))
 
-	# Add special
-	AddButton(preload("res://Prefab/Buildings/SpecialBuildings/Tavern.tscn"))
-	AddButton(preload("res://Prefab/Buildings/SpecialBuildings/ResearchLab.tscn"))
 
-	AddButton(preload("res://Prefab/Buildings/Recreation/Arcade.tscn"))
 
 func AddButton(buildingClass):
 	var instance = buildingClass.instantiate()
@@ -38,6 +43,8 @@ func AddButton(buildingClass):
 		AddButtonToCategory(buildingClass, Decor)
 	if buildingType == GameResources.BUILDING_TYPE.RECREATION:
 		AddButtonToCategory(buildingClass, Rec)
+	if buildingType == GameResources.BUILDING_TYPE.FOOD:
+		AddButtonToCategory(buildingClass, Food)
 
 func AddButtonToCategory(housingClass, category):
 	var bShouldCreate = true

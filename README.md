@@ -1,7 +1,11 @@
 # IdleCity
-![Alt text](image-1.png)
+![Alt text](image.png)
 
 # How to play
+
+Playable on itch.io!
+
+https://ichit.itch.io/idle-city
 
 ## Controls
 - (F1) - to enter play mode

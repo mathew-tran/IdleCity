@@ -5,7 +5,6 @@ func _ready():
 	visible = false
 
 func ShowPopup(contentTitle, contentDescription, content):
-	GameClock.Pause()
 	CleanPopup()
 	$Panel/Title.text = contentTitle
 	$Panel/Description.text = contentDescription
@@ -37,10 +36,16 @@ func ClosePopup():
 	CleanPopup()
 	Finder.GetPlayer().PopMode()
 	visible = false
-	GameClock.Resume()
 
 func _on_ToolButton_button_up():
 	ClosePopup()
 
 func _on_Button_button_up():
-	ClosePopup()
+	if $ButtonDelay.time_left == 0.0:
+		ClosePopup()
+
+
+func _on_visibility_changed():
+	if visible:
+		$ButtonDelay.start()
+

@@ -7,12 +7,12 @@ func _ready():
 	$ActiveParticle.emitting = false
 	var _OnHalfHourUpdate = GameClock.connect("OnHalfHourUpdate", Callable(self, "ProduceWork"))
 
+	var unEmployedPeeple = PeepleManager.GetUnemployedPeeple()
+	var tries = len(unEmployedPeeple)
+	while tries > 0 and len(unEmployedPeeple) > 0:
+		unEmployedPeeple[0].FindJob()
+		tries -= 1
 
-func OnActivated():
-	$ActiveParticle.emitting = true
-
-func OnDeactivated():
-	$ActiveParticle.emitting = false
 
 func ProduceWork():
 	if IsActive():
@@ -21,7 +21,7 @@ func ProduceWork():
 		var bonus = 0
 		for peeple in PeepleInBuilding:
 			var awardAmount = 1
-			var grade = GameResources.GetHappinessGrading(peeple.Happiness)
+			var grade = GameResources.GetProductivityGrading(peeple)
 			if grade == GameResources.GRADE.A:
 				awardAmount *= 3
 			if grade == GameResources.GRADE.B:

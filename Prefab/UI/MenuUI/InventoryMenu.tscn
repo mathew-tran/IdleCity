@@ -1,9 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://bj3neuhv1bs2d"]
+[gd_scene load_steps=4 format=3 uid="uid://bj3neuhv1bs2d"]
 
 [ext_resource type="Script" path="res://Scripts/UI/UI.gd" id="1_e3ku6"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_36t4l"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="Theme" id="Theme_s76q4"]
+Panel/styles/panel = SubResource("StyleBoxFlat_36t4l")
+
 [node name="Inventory" type="Panel" groups=["controls"]]
 visible = false
+theme = SubResource("Theme_s76q4")
 script = ExtResource("1_e3ku6")
 
 [node name="Label" type="Label" parent="."]

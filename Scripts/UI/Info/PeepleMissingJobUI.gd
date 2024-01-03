@@ -9,3 +9,4 @@ func Show():
 	text = str(PeepleManager.GetUnEmployedPeepleAmount()) + " Peeple have no job!"
 	bHasProblem = PeepleManager.GetUnEmployedPeepleAmount() > 0
 	emit_signal("OnInfoUpdate")
+

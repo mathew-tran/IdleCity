@@ -27,7 +27,7 @@ func _ready():
 	game_menu.GameRunning = true
 	game_menu.hide()
 	SetBuildingClass(BuildingClass, null)
-	Helper.ShowBuildTileOutline(true)
+	Helper.ShowBuildTileOutline(false)
 	Finder.GetMenuUI().connect("tab_changed", Callable(self, "_on_TabContainer_tab_changed"))
 
 func SetBuildingClass(newclass, purchaseButton):
@@ -49,26 +49,30 @@ func _process(delta):
 	else:
 		ProcessMenuMode(delta)
 
-	if Input.is_action_just_released("ScrollForward"):
-		zoom += Vector2(delta * ZoomSpeed, delta * ZoomSpeed)
-		if zoom.x > MaxZoom:
-			zoom = Vector2(MaxZoom, MaxZoom)
+	if Helper.IsMouseOnControl() == false:
+		if Input.is_action_just_released("ScrollForward"):
+			zoom += Vector2(delta * ZoomSpeed, delta * ZoomSpeed)
+			if zoom.x > MaxZoom:
+				zoom = Vector2(MaxZoom, MaxZoom)
 
-	if Input.is_action_just_released("ScrollBackward"):
-		zoom -= Vector2(delta * ZoomSpeed, delta * ZoomSpeed)
-		if zoom.x < MinZoom:
-			zoom = Vector2(MinZoom, MinZoom)
+		if Input.is_action_just_released("ScrollBackward"):
+			zoom -= Vector2(delta * ZoomSpeed, delta * ZoomSpeed)
+			if zoom.x < MinZoom:
+				zoom = Vector2(MinZoom, MinZoom)
 	if FollowTarget:
 		global_position = FollowTarget.position
 		return
 
+	var adjustedDelta = 1.0 / 60.0
+
 	if Input.is_action_pressed("ui_left"):
-		position.x -= delta * MoveSpeed
+		position.x -= adjustedDelta * MoveSpeed
 	if Input.is_action_pressed("ui_right"):
-		position.x += delta * MoveSpeed
+		position.x += adjustedDelta * MoveSpeed
 	if Input.is_action_pressed("ui_up"):
-		position.y -= delta * MoveSpeed
+		position.y -= adjustedDelta * MoveSpeed
 	if Input.is_action_pressed("ui_down"):
+
 		position.y += delta * MoveSpeed
 	
 	if Input.is_action_just_pressed("escape"):
@@ -80,6 +84,24 @@ func _process(delta):
 			GameClock.StartTime()
 			GameClock.paused = false
 			game_menu.hide()
+
+		position.y += adjustedDelta * MoveSpeed
+
+	if Input.is_action_just_pressed("middle_click"):
+		$MiddleMouseImage.global_position = get_global_mouse_position()
+
+	if Input.is_action_pressed("middle_click"):
+		$MiddleMouseImage.visible = true
+		if get_global_mouse_position().distance_to($MiddleMouseImage.global_position) > 10:
+			var dir = (get_global_mouse_position() - $MiddleMouseImage.global_position).normalized()
+			position += dir * adjustedDelta * MoveSpeed
+			$MiddleMouseImage.look_at(get_global_mouse_position())
+			$MiddleMouseImage.texture = preload("res://Art/UI/PointerIcon.png")
+		else:
+			$MiddleMouseImage.texture = preload("res://Art/UI/MoveIcon.png")
+			$MiddleMouseImage.rotation_degrees = 0
+	else:
+		$MiddleMouseImage.visible = false
 
 func ChangePlayerMode(newMode):
 	CurrentPlayerMode = newMode
@@ -99,11 +121,16 @@ func PopMode():
 func Focus(object):
 	position = object.position
 
+func MoveToPosition(pos):
+	global_position = pos
+
 func Follow(object):
 	FollowTarget = object
 
+func GetFollowTarget():
+	return FollowTarget
+
 func ProcessBuildMode(delta):
-	GameClock.Pause()
 	Helper.ShowBuildTileOutline(true)
 	MoveGhost(delta)
 	$Sprite2D.visible = true
@@ -116,29 +143,31 @@ func ProcessBuildMode(delta):
 		potentialSpawnArea[i] += tileOffset
 
 	if Helper.IsMouseOnControl():
+		$Sprite2D.visible = false
+		Follow(null)
 		return
 	if Input.is_action_just_pressed("left_click") and BuildingClass != DefaultBuildingClass:
-		if Helper.IsPlaceable(potentialSpawnArea):
-			var newInstance = BuildingClass.instantiate()
-			Finder.GetBuildings().add_child(newInstance)
-			newInstance.position = Finder.GetBuildTiles().map_to_local(tile)
-			newInstance.UpdateLevelNavigation()
-			PurchaseButton.Purchase()
+		if CanPurchase():
+			if Helper.IsPlaceable(potentialSpawnArea):
+				var newInstance = BuildingClass.instantiate()
+				Finder.GetBuildings().add_child(newInstance)
+				newInstance.position = Finder.GetBuildTiles().map_to_local(tile)
+				newInstance.UpdateLevelNavigation()
+				PurchaseButton.Purchase()
+			else:
+				Helper.AddPopupText(get_global_mouse_position(), "Cannot\nplace object!")
 		else:
-			Helper.AddPopupText(get_global_mouse_position(), "Cannot\nplace object!")
+			Helper.AddPopupText(get_global_mouse_position(), "Missing Resources!")
 	if Input.is_action_just_pressed("right_click"):
 		SetBuildingClass(DefaultBuildingClass, null)
 
-	if Helper.IsPlaceable(potentialSpawnArea):
+	if Helper.IsPlaceable(potentialSpawnArea) and CanPurchase():
 		$Sprite2D/GhostImage.modulate = GameResources.COLOR_ACCEPT
 	else:
 		$Sprite2D/GhostImage.modulate = GameResources.COLOR_DECLINE
 
 
 func ProcessMenuMode(_delta):
-	if Helper.IsPopupVisible() == false:
-		GameClock.Resume()
-
 	$Sprite2D.visible = false
 	Helper.ShowBuildTileOutline(false)
 

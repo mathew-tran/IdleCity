@@ -1,76 +1,65 @@
 extends "res://Scripts/AutoLoad/DataHolder/PersistentData.gd"
 
 var UnlockLevels = {}
-var UnlockedButtons = {}
+var Unlocks = {}
 
 signal OnResearchGained
 
 var LastTab = 0
 
 var ResearchMenus = {
+	"GENERAL" : "res://Prefab/Unlockables/Categories/GeneralUnlockables.tscn",
 	"BOTANY" : "res://Prefab/Unlockables/Categories/BotanyUnlockables.tscn"
 }
 
-func _ready():
-	pass
-	
 func OnLoadComplete():
 	emit_signal("OnResearchGained")
-	for button in UnlockedButtons:
-		var unlocked = load(UnlockedButtons[button]["filename"]).instantiate()
-		unlocked.Load((UnlockedButtons[button]["data"]))
-		unlocked.RunUnlockFunction()
-	
+	for menu in ResearchMenus.keys():
+		var instance = load(ResearchMenus[menu]).instantiate()
+		for button in instance.GetButtons():
+			if button.GetUnlockID() in Unlocks:
+				button.RunUnlockFunction()
+		instance.queue_free()
+
+
 func OnDelete():
 	UnlockLevels = {}
-	UnlockedButtons = {}
-	
+	Unlocks = {}
+
 func Save():
 	var dict = {
 	"type" : "auto",
 	"script" : Helper.GetScriptName(self),
 	"unlocklevels" : UnlockLevels,
-	"unlockbuttons" : UnlockedButtons
+	"unlocks" : Unlocks
 	}
 	return dict
 
 func Load(data):
 	UnlockLevels = data["unlocklevels"]
-	UnlockedButtons = data["unlockbuttons"]
-	
+	Unlocks = data["unlocks"]
+
 func GetUnlockLevel(category):
 	if UnlockLevels.has(str(category)):
 		return UnlockLevels[str(category)]
 	return 0
-	
+
 func IncrementUnlockLevel(category):
 	if UnlockLevels.has(str(category)):
 		UnlockLevels[str(category)] += 1
 	else:
 		UnlockLevels[str(category)] = 1
-	
+
 
 func CacheUnlockedButton(button):
-	if UnlockedButtons.has(button.name):
+	if IsButtonUnlocked(button):
 		return
-		
-	var time = Time.get_datetime_dict_from_system()
-	var display_string : String = "%02d/%02d/%02d %02d:%02d:%02d" % [time.year, time.month, time.day, time.hour, time.minute, time.second];
-	UnlockedButtons[button.name] = {
-		"type" : "upgrade",
-		"time" : display_string,
-		"filename" : button.get_scene_file_path(),
-		"data" : button.Save()
-		}
+
+	Unlocks[button.GetUnlockID()] = true
 
 func IsButtonUnlocked(button):
-	return UnlockedButtons.has(button.name)
+	return Unlocks.has(button.GetUnlockID())
 
-func GetButtonUnlockedTime(button):
-	if IsButtonUnlocked(button):
-		return UnlockedButtons[button.name]["time"]
-	return "null"
-	
 func IsCategoryUnlocked(category):
 	if UnlockLevels.has(str(category)):
 		return UnlockLevels[str(category)] > 0

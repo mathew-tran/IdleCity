@@ -1,66 +1,73 @@
-[gd_scene load_steps=2 format=3 uid="uid://bpsyblv43xw8q"]
+[gd_scene load_steps=8 format=3 uid="uid://bpsyblv43xw8q"]
 
 [ext_resource type="Script" path="res://Scripts/UI/Menus/BuildMenuUI.gd" id="1_gqby8"]
+[ext_resource type="PackedScene" uid="uid://bp8f4akrotkux" path="res://Prefab/UI/BuildingUI/BuildingCategory.tscn" id="2_uck7c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vahxu"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="Theme" id="Theme_2ayu3"]
+Panel/styles/panel = SubResource("StyleBoxFlat_vahxu")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w2tjg"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="Theme" id="Theme_bm7ds"]
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_w2tjg")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jh4k5"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="Build" type="Panel" groups=["BuildMenuUI", "controls"]]
 light_mask = 0
+anchors_preset = -1
+anchor_top = -0.014
+anchor_right = 0.798
+anchor_bottom = 0.216
+offset_top = 9.072
+offset_right = -0.296021
+offset_bottom = 0.0319977
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_2ayu3")
 script = ExtResource("1_gqby8")
 
 [node name="SubBuildMenu" type="TabContainer" parent="."]
-layout_mode = 0
+custom_minimum_size = Vector2(900, 91)
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -8.0
+offset_left = 5.0
+offset_top = 5.0
 offset_right = 2.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_bm7ds")
+theme_override_styles/panel = SubResource("StyleBoxFlat_jh4k5")
 tab_focus_mode = 0
 
-[node name="Housing" type="Panel" parent="SubBuildMenu"]
+[node name="Factories" parent="SubBuildMenu" instance=ExtResource("2_uck7c")]
+custom_minimum_size = Vector2(800, 60)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SubBuildMenu/Housing"]
-layout_mode = 0
-offset_left = 5.0
-offset_right = 210.0
-offset_bottom = 538.0
-
-[node name="Factories" type="Panel" parent="SubBuildMenu"]
+[node name="Special" parent="SubBuildMenu" instance=ExtResource("2_uck7c")]
 visible = false
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SubBuildMenu/Factories"]
-light_mask = 0
-layout_mode = 0
-offset_left = 5.0
-offset_right = 217.0
-offset_bottom = 563.0
-
-[node name="Special" type="Panel" parent="SubBuildMenu"]
+[node name="Housing" parent="SubBuildMenu" instance=ExtResource("2_uck7c")]
 visible = false
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SubBuildMenu/Special"]
-light_mask = 0
-layout_mode = 0
-offset_left = 5.0
-offset_right = 217.0
-offset_bottom = 563.0
-
-[node name="Decor" type="Panel" parent="SubBuildMenu"]
+[node name="Food" parent="SubBuildMenu" instance=ExtResource("2_uck7c")]
 visible = false
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SubBuildMenu/Decor"]
-layout_mode = 0
-offset_left = 5.0
-offset_right = 210.0
-offset_bottom = 538.0
-
-[node name="Rec" type="Panel" parent="SubBuildMenu"]
+[node name="Rec" parent="SubBuildMenu" instance=ExtResource("2_uck7c")]
 visible = false
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SubBuildMenu/Rec"]
-layout_mode = 0
-offset_left = 5.0
-offset_right = 210.0
-offset_bottom = 538.0
+[node name="Decor" parent="SubBuildMenu" instance=ExtResource("2_uck7c")]
+visible = false
+layout_mode = 2

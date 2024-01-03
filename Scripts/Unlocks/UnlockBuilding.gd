@@ -5,10 +5,3 @@ extends "res://Scripts/UI/Buttons/UnlockableButton.gd"
 func RunUnlockFunction():
 	Finder.GetBuildMenuUI().AddButton(BuildingToUnlock)
 
-func Save():
-	return {
-		"BuildingToUnlock" : BuildingToUnlock.get_path()
-	}
-
-func Load(data):
-	BuildingToUnlock = load(data["BuildingToUnlock"])

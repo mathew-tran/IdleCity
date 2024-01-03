@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://h7k00cd651nj"]
+[gd_scene load_steps=18 format=3 uid="uid://h7k00cd651nj"]
 
 [ext_resource type="Texture2D" uid="uid://dnpgwmt22ocj3" path="res://Art/WhitePixel.png" id="1_kk1i6"]
 [ext_resource type="Script" path="res://Scripts/Environment/Lighting.gd" id="2_6jn4j"]
@@ -7,8 +7,25 @@
 [ext_resource type="PackedScene" uid="uid://c4a8wugy53o8b" path="res://Prefab/UI/PeepleUI.tscn" id="5_pb7i5"]
 [ext_resource type="PackedScene" uid="uid://bjtgjvs7p60mj" path="res://Prefab/UI/ContentPopup.tscn" id="6_6rn30"]
 [ext_resource type="PackedScene" uid="uid://c7jm3mnr17o6r" path="res://Prefab/UI/BuildingUI.tscn" id="6_ja2vr"]
+[ext_resource type="PackedScene" uid="uid://dtvnpocaxd3jm" path="res://Prefab/UI/Notifications.tscn" id="7_st1yx"]
 [ext_resource type="Script" path="res://Scripts/UI/Buttons/ResetButton.gd" id="7_v73u1"]
 [ext_resource type="PackedScene" uid="uid://l1yhjgh8cnxg" path="res://Prefab/UI/PlacementContext.tscn" id="8_2xnc0"]
+[ext_resource type="FontFile" uid="uid://b3oc3cmab4uoi" path="res://Font/PressStart2P-Regular.ttf" id="10_3kd85"]
+[ext_resource type="Script" path="res://Scripts/UI/BuildVersionString.gd" id="10_qmfwy"]
+[ext_resource type="PackedScene" uid="uid://cicikslktxqg7" path="res://Prefab/UI/TimeControl.tscn" id="11_r16hf"]
+[ext_resource type="Script" path="res://Scripts/UI/BGTimeControl.gd" id="12_jwx6a"]
+[ext_resource type="PackedScene" uid="uid://c40r25wjfdv82" path="res://Prefab/UI/SoundController.tscn" id="15_v7jhu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y0sc8"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 0.760784)
+
+[sub_resource type="Theme" id="Theme_coeh0"]
+Panel/styles/panel = SubResource("StyleBoxFlat_y0sc8")
 
 [node name="CanvasLayer" type="CanvasLayer"]
 process_mode = 3
@@ -22,24 +39,30 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 1152, 648)
 script = ExtResource("2_6jn4j")
+DayColor = Color(0.952941, 0.588235, 0, 0.152941)
 
 [node name="Clock" parent="." instance=ExtResource("3_u8r83")]
 light_mask = 0
 anchors_preset = 0
 anchor_left = 0.0
 anchor_right = 0.0
-offset_left = 977.0
-offset_top = 9.0
-offset_right = 1143.0
-offset_bottom = 57.0
+offset_left = 10.0
+offset_top = 7.0
+offset_right = 176.0
+offset_bottom = 55.0
+grow_horizontal = 1
 
-[node name="MenuUI" parent="." groups=["MenuUI"] instance=ExtResource("4_fxgjd")]
-anchors_preset = 0
-anchor_right = 0.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 294.0
-offset_bottom = 600.0
+[node name="Notifications" parent="." instance=ExtResource("7_st1yx")]
+offset_left = 5.0
+offset_top = 147.0
+offset_right = 215.0
+offset_bottom = 288.0
+
+[node name="MenuUI" parent="." instance=ExtResource("4_fxgjd")]
+offset_left = 9.0
+offset_top = 471.0
+offset_right = 653.672
+offset_bottom = 665.0
 
 [node name="PeepleUI" parent="." groups=["DescriptionUI"] instance=ExtResource("5_pb7i5")]
 anchors_preset = 6
@@ -47,10 +70,10 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -838.0
-offset_top = 108.0
-offset_right = -634.0
-offset_bottom = 193.0
+offset_left = -426.0
+offset_top = -69.0
+offset_right = -222.0
+offset_bottom = 16.0
 grow_horizontal = 0
 grow_vertical = 2
 scale = Vector2(2, 2)
@@ -78,7 +101,6 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="ContentPopup" parent="." instance=ExtResource("6_6rn30")]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -105,5 +127,48 @@ text = "Reset"
 script = ExtResource("7_v73u1")
 
 [node name="PlacementContext" parent="." instance=ExtResource("8_2xnc0")]
+
+[node name="BuildVersionString" type="Label" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 898.0
+offset_top = -641.0
+offset_right = 1144.0
+offset_bottom = -618.0
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("10_3kd85")
+theme_override_font_sizes/font_size = 8
+text = "build version string"
+horizontal_alignment = 2
+script = ExtResource("10_qmfwy")
+
+[node name="TimeControl" parent="." groups=["controls"] instance=ExtResource("11_r16hf")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -570.0
+offset_top = -587.0
+offset_right = -398.0
+offset_bottom = -547.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="BGTimeControl" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_coeh0")
+script = ExtResource("12_jwx6a")
+
+[node name="SoundIcon" parent="." groups=["controls"] instance=ExtResource("15_v7jhu")]
+offset_left = -25.0
+offset_right = 15.0
+scale = Vector2(0.5, 0.5)
 
 [connection signal="button_down" from="Button" to="Button" method="_on_Button_button_down"]

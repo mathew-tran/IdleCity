@@ -1,109 +1,109 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=11 format=3 uid="uid://b0jt3rssldous"]
 
-[ext_resource path="res://Scripts/Unlocks/UnlockCategory.gd" type="Script" id=1]
-[ext_resource path="res://Font/PressStart2P-Regular.ttf" type="FontFile" id=2]
+[ext_resource type="Script" path="res://Scripts/Unlocks/UnlockCategory.gd" id="1"]
+[ext_resource type="FontFile" uid="uid://b3oc3cmab4uoi" path="res://Font/PressStart2P-Regular.ttf" id="2"]
 
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.372549, 0.372549, 0.372549, 1 )
+[sub_resource type="StyleBoxFlat" id="1"]
+bg_color = Color(0.372549, 0.372549, 0.372549, 1)
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
 border_width_bottom = 4
-border_color = Color( 0.0745098, 0.0745098, 0.0745098, 1 )
+border_color = Color(0.0745098, 0.0745098, 0.0745098, 1)
 
-[sub_resource type="Theme" id=2]
-Panel/styles/panel = SubResource( 1 )
+[sub_resource type="Theme" id="2"]
+Panel/styles/panel = SubResource("1")
 
-[sub_resource type="FontFile" id=3]
-size = 28
-font_data = ExtResource( 2 )
+[sub_resource type="FontFile" id="3"]
+fallbacks = Array[Font]([ExtResource("2")])
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
 
-[sub_resource type="Theme" id=4]
-default_font = SubResource( 3 )
+[sub_resource type="Theme" id="4"]
+default_font = SubResource("3")
 
-[sub_resource type="FontFile" id=5]
-size = 14
-font_data = ExtResource( 2 )
+[sub_resource type="FontFile" id="5"]
+fallbacks = Array[Font]([ExtResource("2")])
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
 
-[sub_resource type="Theme" id=6]
-default_font = SubResource( 5 )
+[sub_resource type="Theme" id="6"]
+default_font = SubResource("5")
 
-[sub_resource type="FontFile" id=7]
-size = 12
-spacing_bottom = 5
-font_data = ExtResource( 2 )
+[sub_resource type="FontFile" id="7"]
+fallbacks = Array[Font]([ExtResource("2")])
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
 
-[sub_resource type="Theme" id=8]
-default_font = SubResource( 7 )
+[sub_resource type="Theme" id="8"]
+default_font = SubResource("7")
 
 [node name="UnlockBotany" type="Button"]
+custom_minimum_size = Vector2(600, 200)
 offset_top = 204.0
 offset_right = 600.0
 offset_bottom = 404.0
-custom_minimum_size = Vector2( 600, 200 )
-script = ExtResource( 1 )
-RequirementType = [ 0 ]
-RequirementAmount = [ 15 ]
+script = ExtResource("1")
+CategoryToUnlock = 1
+RequirementType = Array[int]([0])
+RequirementAmount = Array[int]([15])
 DescriptionTitle = "Research Botany"
 DescriptionText = "Make your city more green!"
-CategoryToUnlock = 1
 
 [node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(770, 200)
+layout_mode = 0
 offset_right = 800.0
 offset_bottom = 110.0
-custom_minimum_size = Vector2( 770, 200 )
-theme = SubResource( 2 )
+theme = SubResource("2")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+custom_minimum_size = Vector2(0, 180)
+layout_mode = 0
 offset_left = 14.0
 offset_top = 14.0
 offset_right = 584.0
 offset_bottom = 194.0
-custom_minimum_size = Vector2( 0, 180 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/HBoxContainer"]
-offset_right = 500.0
-offset_bottom = 180.0
-custom_minimum_size = Vector2( 500, 160 )
+custom_minimum_size = Vector2(500, 160)
+layout_mode = 2
 
 [node name="Title" type="Label" parent="Panel/HBoxContainer/VBoxContainer"]
-offset_right = 500.0
-offset_bottom = 40.0
-custom_minimum_size = Vector2( 400, 40 )
-theme = SubResource( 4 )
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+theme = SubResource("4")
 text = "Title"
 
 [node name="Description" type="Label" parent="Panel/HBoxContainer/VBoxContainer"]
-offset_top = 44.0
-offset_right = 500.0
-offset_bottom = 84.0
-custom_minimum_size = Vector2( 400, 40 )
-theme = SubResource( 6 )
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+theme = SubResource("6")
 text = "This is a lengthy description about the thing. It does things you know."
-autowrap = true
+autowrap_mode = 2
 
 [node name="Requirements" type="Label" parent="Panel/HBoxContainer/VBoxContainer"]
-offset_top = 88.0
-offset_right = 500.0
-offset_bottom = 128.0
-custom_minimum_size = Vector2( 400, 40 )
-theme = SubResource( 8 )
+custom_minimum_size = Vector2(400, 40)
+layout_mode = 2
+theme = SubResource("8")
 text = "Requirements:
 200 / 200 WOOD | 500/600 STONE"
 
-[node name="TimePurchased" type="Label" parent="Panel/HBoxContainer/VBoxContainer"]
-offset_top = 132.0
-offset_right = 500.0
-offset_bottom = 172.0
-custom_minimum_size = Vector2( 400, 40 )
-theme = SubResource( 8 )
-text = "PURCHASED: 202020"
-
 [node name="Button" type="Button" parent="Panel/HBoxContainer"]
-offset_left = 504.0
-offset_right = 704.0
-offset_bottom = 80.0
-custom_minimum_size = Vector2( 200, 80 )
+custom_minimum_size = Vector2(200, 80)
+layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 text = "UNLOCK"

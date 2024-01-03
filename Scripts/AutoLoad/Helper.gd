@@ -92,10 +92,16 @@ func IsPlaceable(globalSpawnArea):
 func GetCustomMousePosition():
 	return Vector2i(get_global_mouse_position()) - GameResources.TileOffset
 
-func GetTileInTilemap(globalPosition):
+func GetTileInTilemap(globalPosition, offset = Vector2.ZERO):
 	var Tilemap = Finder.GetBuildTiles()
-	var tile = Tilemap.local_to_map(globalPosition)
+	var tile = Tilemap.local_to_map(Vector2(globalPosition) + offset)
 	return tile
+
+func GetTileGlobalCoord(tile):
+	if tile:
+		var Tilemap = Finder.GetBuildTiles()
+		return Tilemap.map_to_local(tile)
+	return Vector2.ZERO
 
 func SendLogMessageToPlayer(message):
 	var instance = load("res://Prefab/UI/MessageLog.tscn").instantiate()
@@ -104,8 +110,32 @@ func SendLogMessageToPlayer(message):
 	MessageContainer.add_child(instance)
 	instance.UpdateText(message)
 
+func GetAStarGrid():
+	return Finder.GetBuildTiles().GetAStarGrid()
+
+func GetPathOnGrid(startPos, endPos):
+	var grid = GetAStarGrid()
+	var p1 = GetTileInTilemap(startPos)
+	var p2 = GetTileInTilemap(endPos)
+	return grid.get_point_path(p1, p2)
+
+func SetTileOnGridSolid(tileID, bSolid = true):
+	GetAStarGrid().set_point_solid(tileID, bSolid)
+
+func SetTileOnGridWeight(tileID, weight = 1.0):
+	GetAStarGrid().set_point_weight_scale(tileID, weight)
+
+func GetTileOnGridWeight(tileID):
+	return GetAStarGrid().get_point_weight_scale(tileID)
+
 func FocusCamera(object):
 	Finder.GetPlayer().Focus(object)
 
 func FollowCamera(object):
 	Finder.GetPlayer().Follow(object)
+
+func Notify(notifyData):
+	return Finder.GetNotifications().Notify(notifyData)
+
+func PlaySound(sound, channelIndex):
+	Finder.GetSoundManager().PlaySound(sound, channelIndex)

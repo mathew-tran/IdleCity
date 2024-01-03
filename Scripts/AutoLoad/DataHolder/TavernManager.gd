@@ -36,6 +36,7 @@ func Load(data):
 	bHasPurchased = false
 
 
+
 func GetRequirementAmount():
 	return RequirementAmount
 
@@ -43,11 +44,11 @@ func GetRequirementType():
 	return RequirementType
 
 func OnDayUpdate():
-	if bHasPurchased:
-		if CurrentAmount < MaxAmount:
-			Increment()
-			bHasPurchased = false
-			emit_signal("OnTavernAvailable")
+	if CurrentAmount < MaxAmount:
+		Increment()
+		bHasPurchased = false
+		emit_signal("OnTavernAvailable")
+
 
 func SetFlag():
 	bHasPurchased = true
@@ -59,7 +60,6 @@ func GetFlag():
 
 func Increment():
 	RequirementAmount[0] += 10
-	Helper.SendLogMessageToPlayer("Tavern is available to take new recruits!")
 
 func CanGetMorePeeple():
 	return CurrentAmount < MaxAmount

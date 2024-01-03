@@ -2,6 +2,7 @@ extends Sprite2D
 
 @export var BuildingLimit = 1
 @export var bIsBlockingNavigation = false
+@export var TravelCost = 100
 var SubscribedPeeple = []
 var SpawnArea = [Vector2.ZERO]
 
@@ -15,7 +16,7 @@ var PeepleInBuilding = []
 @export var RequirementAmount : Array[int]
 @export var Description: String = "No description"
 
-@export var HappinessAmount: int = 3
+@export var HappinessAmount: float = 3.0
 
 var bCanBeClicked = false
 
@@ -32,6 +33,7 @@ signal OnBuildingUpdate
 
 var OldZIndex = 0
 
+
 func _ready():
 	OldZIndex = z_index
 	SaveManager.AddToPersistGroup(self)
@@ -41,6 +43,17 @@ func _ready():
 	name = BuildingPrefix
 	LastPosition = global_position
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	ShowUseGear(false)
+
+
+func SetTravelCost(bSet = true):
+
+	var newCost = GameResources.DefaultTravelWeight
+	if bSet:
+		newCost = TravelCost
+	for area in CachedSpawnArea:
+		var tile = Helper.GetTileInTilemap(area, Vector2(16, 16))
+		Helper.SetTileOnGridWeight(tile, newCost)
 
 func GetTileOffsets():
 	var area = []
@@ -130,20 +143,21 @@ func OnExit():
 	modulate = "ffffff"
 
 func UpdateLevelNavigation():
+	CachedSpawnArea = GetGlobalSpawnArea()
 	if bIsBlockingNavigation:
 		RemoveNavBlockers()
-		CachedSpawnArea = GetGlobalSpawnArea()
 		AddNavBlockers()
+	SetTravelCost(true)
 
 func AddNavBlockers():
 	for area in CachedSpawnArea:
-		var tile = Helper.GetTileInTilemap(area)
-		Helper.SetTile(tile, GameResources.Tiles["Water"])
+		var tile = Helper.GetTileInTilemap(area, Vector2(16, 16))
+		Helper.SetTileOnGridSolid(tile, true)
 		BlockedTiles.append(tile)
 
 func RemoveNavBlockers():
 	for tile in BlockedTiles:
-		Helper.SetTile(tile, GameResources.Tiles["Grass"])
+		Helper.SetTileOnGridSolid(tile, false)
 	BlockedTiles.clear()
 
 func Save():
@@ -169,7 +183,12 @@ func Enter(peeple):
 	PeepleInBuilding.append(peeple)
 	if PeepleInBuilding.size() >= 1:
 		OnActivated()
+		ShowUseGear(true)
 	emit_signal("OnBuildingUpdate")
+
+func ShowUseGear(bShow):
+	if get_node_or_null("UseGear"):
+		$UseGear.visible = bShow
 
 func Exit(peeple):
 	if PeepleInBuilding.has(peeple):
@@ -177,6 +196,7 @@ func Exit(peeple):
 		PeepleInBuilding.remove_at(index)
 	if PeepleInBuilding.size() <= 0:
 		OnDeactivated()
+		ShowUseGear(false)
 	emit_signal("OnBuildingUpdate")
 
 func IsAPeepleInBuilding(peeple):
@@ -194,6 +214,9 @@ func CanSubscribe():
 func GetMaxBuildingLimit():
 	return BuildingLimit
 
+func GetEnterPosition():
+	return Vector2i(global_position) + GameResources.TileOffset
+
 func Subscribe(peeple):
 	if CanSubscribe():
 		SubscribedPeeple.append(peeple)
@@ -209,6 +232,7 @@ func OnDeactivated():
 
 func _exit_tree():
 	emit_signal("OnDestroyed")
+	SetTravelCost(false)
 	if bIsBlockingNavigation:
 		RemoveNavBlockers()
 

@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://cd13boo0v8rbv"]
+
+[ext_resource type="Texture2D" uid="uid://doqh76i832peh" path="res://Art/UI/XButtonIcon.png" id="1_j8rrg"]
+[ext_resource type="Script" path="res://Scripts/UI/NotificationButton.gd" id="1_xhyhk"]
+[ext_resource type="FontFile" uid="uid://b3oc3cmab4uoi" path="res://Font/PressStart2P-Regular.ttf" id="2_6nfcj"]
+
+[sub_resource type="Theme" id="Theme_1ddfi"]
+Label/font_sizes/font_size = 12
+Label/fonts/font = ExtResource("2_6nfcj")
+
+[node name="Button" type="Button" groups=["controls"]]
+process_mode = 3
+custom_minimum_size = Vector2(330, 20)
+script = ExtResource("1_xhyhk")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 213.0
+offset_bottom = 17.0
+
+[node name="ExitButton" type="Button" parent="HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+icon = ExtResource("1_j8rrg")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_1ddfi")
+text = "Notification Test (20)"
+
+[node name="Timer" type="Timer" parent="."]
+process_mode = 3
+one_shot = true
+
+[connection signal="button_up" from="." to="." method="_on_button_up"]
+[connection signal="button_up" from="HBoxContainer/ExitButton" to="." method="_on_exit_button_button_up"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

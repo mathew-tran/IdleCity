@@ -1,18 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://our2ymq12s7u"]
+[gd_scene load_steps=4 format=3 uid="uid://our2ymq12s7u"]
 
 [ext_resource type="PackedScene" uid="uid://yxh3qfy1d6xu" path="res://Prefab/UI/MenuUI/InfoMenu.tscn" id="2_cn5ow"]
 [ext_resource type="PackedScene" uid="uid://bpsyblv43xw8q" path="res://Prefab/UI/MenuUI/BuildMenu.tscn" id="3_48k66"]
-[ext_resource type="PackedScene" uid="uid://bj3neuhv1bs2d" path="res://Prefab/UI/MenuUI/InventoryMenu.tscn" id="4_lkesw"]
 [ext_resource type="Script" path="res://Scripts/UI/Menus/MenuUI.gd" id="6"]
 
-[node name="MenuUI" type="TabContainer" groups=["controls"]]
+[node name="MenuUI" type="TabContainer" groups=["MenuUI", "controls"]]
 light_mask = 0
 anchors_preset = -1
 anchor_right = 0.239
-offset_left = -515.0
-offset_top = -299.0
-offset_right = -221.0
-offset_bottom = 301.0
+offset_right = 656.672
+offset_bottom = 148.0
 tab_focus_mode = 0
 script = ExtResource("6")
 
@@ -21,7 +18,4 @@ layout_mode = 2
 
 [node name="Build" parent="." instance=ExtResource("3_48k66")]
 visible = false
-layout_mode = 2
-
-[node name="Inventory" parent="." instance=ExtResource("4_lkesw")]
 layout_mode = 2

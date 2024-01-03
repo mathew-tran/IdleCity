@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://c71lhxvxiepls"]
+[gd_scene load_steps=6 format=3 uid="uid://c71lhxvxiepls"]
 
 [ext_resource type="Texture2D" uid="uid://bngmc82rkvl1i" path="res://Art/Buildings/Factories/Factory_Coal.png" id="2"]
 [ext_resource type="Script" path="res://Scripts/Building/Factory.gd" id="2_u14cd"]
 [ext_resource type="PackedScene" uid="uid://fdiatj5sep31" path="res://Prefab/Particles/ActiveParticle.tscn" id="3_x5pu6"]
+[ext_resource type="PackedScene" uid="uid://b6dmun6ale2vd" path="res://Prefab/Buildings/UseGear.tscn" id="4_skked"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gsuse"]
 size = Vector2(64, 64)
@@ -18,17 +19,18 @@ BuildingType = 1
 RequirementType = Array[int]([0])
 RequirementAmount = Array[int]([20])
 Description = "Generates Coal"
-HappinessAmount = -2
 BuildingPrefix = "CoalFactory"
 
 [node name="ActiveParticle" parent="." instance=ExtResource("3_x5pu6")]
 show_behind_parent = true
-position = Vector2(30, 0)
+position = Vector2(32, 32)
 emission_sphere_radius = 1.0
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(-1, 0)
+position = Vector2(32, 32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(34, 32.5)
 shape = SubResource("RectangleShape2D_gsuse")
+
+[node name="UseGear" parent="." instance=ExtResource("4_skked")]
+position = Vector2(32, 32)
