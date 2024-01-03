@@ -515,8 +515,9 @@ func _physics_process(delta):
 		if CurrentPathIndex < len(CurrentPath):
 			global_position = lerp(StartPosition, Vector2(CurrentPath[CurrentPathIndex]), progress)
 
-func _process(delta):
-	MoveToTargetPosition()
+func _process(_delta):
+	if !GameClock.paused:
+		MoveToTargetPosition()
 
 func OnDayTimeExecute():
 	if CheckHouse():

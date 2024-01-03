@@ -139,3 +139,7 @@ func Notify(notifyData):
 
 func PlaySound(sound, channelIndex):
 	Finder.GetSoundManager().PlaySound(sound, channelIndex)
+
+func IsInGame():
+	print(get_tree().current_scene.name)
+	return get_tree().current_scene.name == "Main"

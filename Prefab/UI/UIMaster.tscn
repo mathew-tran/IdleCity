@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://h7k00cd651nj"]
+[gd_scene load_steps=17 format=3 uid="uid://h7k00cd651nj"]
 
 [ext_resource type="Texture2D" uid="uid://dnpgwmt22ocj3" path="res://Art/WhitePixel.png" id="1_kk1i6"]
 [ext_resource type="Script" path="res://Scripts/Environment/Lighting.gd" id="2_6jn4j"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://bjtgjvs7p60mj" path="res://Prefab/UI/ContentPopup.tscn" id="6_6rn30"]
 [ext_resource type="PackedScene" uid="uid://c7jm3mnr17o6r" path="res://Prefab/UI/BuildingUI.tscn" id="6_ja2vr"]
 [ext_resource type="PackedScene" uid="uid://dtvnpocaxd3jm" path="res://Prefab/UI/Notifications.tscn" id="7_st1yx"]
-[ext_resource type="Script" path="res://Scripts/UI/Buttons/ResetButton.gd" id="7_v73u1"]
 [ext_resource type="PackedScene" uid="uid://l1yhjgh8cnxg" path="res://Prefab/UI/PlacementContext.tscn" id="8_2xnc0"]
 [ext_resource type="FontFile" uid="uid://b3oc3cmab4uoi" path="res://Font/PressStart2P-Regular.ttf" id="10_3kd85"]
 [ext_resource type="Script" path="res://Scripts/UI/BuildVersionString.gd" id="10_qmfwy"]
@@ -111,21 +110,6 @@ offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="."]
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -53.0
-offset_top = -35.0
-offset_right = -2.0
-offset_bottom = -4.0
-grow_horizontal = 0
-grow_vertical = 0
-text = "Reset"
-script = ExtResource("7_v73u1")
-
 [node name="PlacementContext" parent="." instance=ExtResource("8_2xnc0")]
 
 [node name="BuildVersionString" type="Label" parent="."]
@@ -170,5 +154,3 @@ script = ExtResource("12_jwx6a")
 offset_left = -25.0
 offset_right = 15.0
 scale = Vector2(0.5, 0.5)
-
-[connection signal="button_down" from="Button" to="Button" method="_on_Button_button_down"]
