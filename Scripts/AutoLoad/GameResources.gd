@@ -11,6 +11,9 @@ var DefaultTravelWeight = 100.0
 var COLOR_ACCEPT = "00bc68c9"
 var COLOR_DECLINE = "ee3327ad"
 
+var MenuScene = "res://Scenes/GameMenu.tscn"
+var GameScene = "res://Scenes/Main.tscn"
+
 enum BUILDING_TYPE {
 	HOUSE,
 	FACTORY,

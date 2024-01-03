@@ -10,7 +10,8 @@ func _ready():
 	var unEmployedPeeple = PeepleManager.GetUnemployedPeeple()
 	var tries = len(unEmployedPeeple)
 	while tries > 0 and len(unEmployedPeeple) > 0:
-		unEmployedPeeple[0].FindJob()
+		if is_instance_valid(unEmployedPeeple[0]):
+			unEmployedPeeple[0].FindJob()
 		tries -= 1
 
 

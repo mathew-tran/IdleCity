@@ -7,6 +7,7 @@ func _ready():
 	var unHousedPeeple = PeepleManager.GetUnHousedPeeple()
 	var tries = len(unHousedPeeple)
 	while tries > 0 and len(unHousedPeeple) > 0:
-		unHousedPeeple[0].FindHouse()
+		if is_instance_valid(unHousedPeeple[0]):
+			unHousedPeeple[0].FindHouse()
 		tries -= 1
 

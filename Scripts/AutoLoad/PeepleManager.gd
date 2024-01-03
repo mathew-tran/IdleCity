@@ -43,10 +43,12 @@ func _ready():
 
 func CheckMinPeepleSize():
 	await get_tree().create_timer(0.2).timeout
-	if AllPeeple.size() == 0:
-		var instance = PeepleClass.instantiate()
-		add_child(instance)
-		AddPeeple(instance)
+
+	if Helper.IsInGame():
+		if AllPeeple.size() == 0:
+			var instance = PeepleClass.instantiate()
+			add_child(instance)
+			AddPeeple(instance)
 
 func OnReload():
 	var peepleGroup = Finder.GetPeepleGroup()

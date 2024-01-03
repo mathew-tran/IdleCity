@@ -6,12 +6,13 @@
 font_size = 45
 
 [node name="GameMenu" type="CanvasLayer"]
+process_mode = 3
 script = ExtResource("1_s07cs")
 
 [node name="MainMenu" type="ColorRect" parent="."]
 offset_right = 1152.0
 offset_bottom = 648.0
-color = Color(0.239216, 0.239216, 0.239216, 0.305882)
+color = Color(0.0313726, 0.0666667, 0, 0.764706)
 
 [node name="RichTextLabel" type="Label" parent="MainMenu"]
 layout_mode = 1
@@ -45,7 +46,6 @@ layout_mode = 2
 text = "New Game"
 
 [node name="SaveGame" type="Button" parent="MainMenu/VBoxContainer"]
-visible = false
 layout_mode = 2
 text = "Save"
 
@@ -62,6 +62,10 @@ text = "Settings
 [node name="Exit" type="Button" parent="MainMenu/VBoxContainer"]
 layout_mode = 2
 text = "Exit"
+
+[node name="BackToMainMenu" type="Button" parent="MainMenu/VBoxContainer"]
+layout_mode = 2
+text = "Back To Main Menu"
 
 [node name="Settings" type="ColorRect" parent="."]
 visible = false
@@ -98,7 +102,6 @@ grow_vertical = 2
 
 [node name="ResetData" type="Button" parent="Settings/VBoxContainer"]
 layout_mode = 2
-disabled = true
 text = "Reset Data"
 
 [node name="Back" type="Button" parent="Settings/VBoxContainer"]
@@ -110,5 +113,6 @@ text = "Back"
 [connection signal="pressed" from="MainMenu/VBoxContainer/LoadGame" to="." method="_on_load_game_pressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="MainMenu/VBoxContainer/BackToMainMenu" to="." method="_on_back_to_main_menu_pressed"]
 [connection signal="pressed" from="Settings/VBoxContainer/ResetData" to="." method="_on_reset_data_pressed"]
 [connection signal="pressed" from="Settings/VBoxContainer/Back" to="." method="_on_back_pressed"]

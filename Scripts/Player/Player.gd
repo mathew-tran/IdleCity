@@ -5,8 +5,7 @@ var ZoomSpeed = 7
 var MaxZoom = 1.6
 var MinZoom = .5
 @onready var Highlight = $Sprite2D
-@onready var game_menu = $"../GameMenu"
-@onready var canvas_layer = $"../CanvasLayer"
+@onready var GameMenu = $"../GameMenu"
 
 var BuildingClass = preload("res://Prefab/Buildings/Factories/Factory.tscn")
 var DefaultBuildingClass = preload("res://Prefab/Buildings/Factories/Factory.tscn")
@@ -24,8 +23,7 @@ var FollowTarget = null
 signal OnPlayerModeChange(bIsBuildMode)
 
 func _ready():
-	game_menu.GameRunning = true
-	game_menu.hide()
+	GameMenu.hide()
 	SetBuildingClass(BuildingClass, null)
 	Helper.ShowBuildTileOutline(false)
 	Finder.GetMenuUI().connect("tab_changed", Callable(self, "_on_TabContainer_tab_changed"))
@@ -48,6 +46,18 @@ func _process(delta):
 		ProcessBuildMode(delta)
 	else:
 		ProcessMenuMode(delta)
+
+	if Input.is_action_just_pressed("escape"):
+		if GameMenu.visible:
+			GameClock.Resume()
+			GameMenu.hide()
+		else:
+			GameClock.Pause()
+			GameMenu.show()
+		return
+
+	if GameMenu.visible:
+		return
 
 	if Helper.IsMouseOnControl() == false:
 		if Input.is_action_just_released("ScrollForward"):
@@ -72,20 +82,8 @@ func _process(delta):
 	if Input.is_action_pressed("ui_up"):
 		position.y -= adjustedDelta * MoveSpeed
 	if Input.is_action_pressed("ui_down"):
-
-		position.y += delta * MoveSpeed
-	
-	if Input.is_action_just_pressed("escape"):
-		if !game_menu.visible:
-			GameClock.StopTime()
-			GameClock.paused = true
-			game_menu.show()
-		else:
-			GameClock.StartTime()
-			GameClock.paused = false
-			game_menu.hide()
-
 		position.y += adjustedDelta * MoveSpeed
+
 
 	if Input.is_action_just_pressed("middle_click"):
 		$MiddleMouseImage.global_position = get_global_mouse_position()

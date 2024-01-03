@@ -1,5 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bbfud0yccmq8m"]
-[gd_scene load_steps=24 format=3 uid="uid://bbfud0yccmq8m"]
+[gd_scene load_steps=25 format=3 uid="uid://bbfud0yccmq8m"]
 
 [ext_resource type="Texture2D" uid="uid://clblx6k8l11ea" path="res://Art/UI/GridOutline.png" id="1"]
 [ext_resource type="PackedScene" uid="uid://h7k00cd651nj" path="res://Prefab/UI/UIMaster.tscn" id="1_qg2o7"]
@@ -9,8 +8,8 @@
 [ext_resource type="Script" path="res://Scripts/Environment/BuildTiles.gd" id="4_4djms"]
 [ext_resource type="Texture2D" uid="uid://c3etaswvgg07k" path="res://Art/GridOutline.png" id="6_h05b1"]
 [ext_resource type="Texture2D" uid="uid://muf4k5ch7p4v" path="res://Art/Tiles/Water.png" id="7"]
-[ext_resource type="PackedScene" uid="uid://tgcyw26sirqj" path="res://Scenes/GameMenu.tscn" id="7_1o2ue"]
 [ext_resource type="Script" path="res://Scripts/Sound/SoundManager.gd" id="9_2ncwn"]
+[ext_resource type="PackedScene" uid="uid://tgcyw26sirqj" path="res://Scenes/GameMenu.tscn" id="10_3nufe"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_pli5n"]
 vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)
@@ -181,6 +180,8 @@ sources/1 = SubResource("TileSetAtlasSource_74lxe")
 
 [node name="Main" type="Node2D"]
 
+[node name="CanvasLayer" parent="." instance=ExtResource("1_qg2o7")]
+
 [node name="BuildTiles" type="TileMap" parent="." groups=["BuildTiles", "Navigation"]]
 position = Vector2(16, 16)
 tile_set = SubResource("5")
@@ -205,11 +206,6 @@ z_as_relative = false
 
 [node name="Player" parent="." instance=ExtResource("3")]
 
-[node name="CanvasLayer" parent="." instance=ExtResource("1_qg2o7")]
-
-[node name="GameMenu" parent="." instance=ExtResource("7_1o2ue")]
-visible = false
-
 [node name="SoundManager" type="Node2D" parent="." groups=["SoundManager"]]
 script = ExtResource("9_2ncwn")
 
@@ -217,5 +213,6 @@ script = ExtResource("9_2ncwn")
 wait_time = 180.0
 one_shot = true
 
-[connection signal="timeout" from="SoundManager/MusicTimer" to="SoundManager" method="_on_music_timer_timeout"]
+[node name="GameMenu" parent="." instance=ExtResource("10_3nufe")]
 
+[connection signal="timeout" from="SoundManager/MusicTimer" to="SoundManager" method="_on_music_timer_timeout"]
