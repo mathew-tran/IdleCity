@@ -13,7 +13,7 @@ var ResearchMenus = {
 }
 
 func OnLoadComplete():
-	emit_signal("OnResearchGained")
+	BroadcastOnResearchGained()
 	for menu in ResearchMenus.keys():
 		var instance = load(ResearchMenus[menu]).instantiate()
 		for button in instance.GetButtons():
@@ -66,7 +66,7 @@ func IsCategoryUnlocked(category):
 	return false
 
 func BroadcastOnResearchGained():
-	emit_signal("OnResearchGained")
+	OnResearchGained.emit()
 
 func CacheLastTab(tabIndex):
 	LastTab = tabIndex

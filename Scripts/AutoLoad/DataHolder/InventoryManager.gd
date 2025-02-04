@@ -8,11 +8,11 @@ func _ready():
 	pass
 
 func OnLoadComplete():
-	emit_signal("OnInventoryUpdate")
+	OnInventoryUpdate.emit()
 
 func OnDelete():
 	Items = {}
-	emit_signal("OnInventoryUpdate")
+	OnInventoryUpdate.emit()
 
 func Save():
 	var dict = {
@@ -32,7 +32,7 @@ func AddItem(Reward):
 		Items[resourceType] += amount
 	else:
 		Items[resourceType] = amount
-	emit_signal("OnInventoryUpdate")
+	OnInventoryUpdate.emit()
 
 func CheckIfItemExists(Item, Amount):
 	if Items.has(Item):
@@ -47,7 +47,7 @@ func GetItemAmount(Item):
 func RemoveItem(Item, Amount):
 	if CheckIfItemExists(Item, Amount):
 		Items[Item] -= Amount
-		emit_signal("OnInventoryUpdate")
+		OnInventoryUpdate.emit()
 	else:
 		print("Could not remove item: " + str(Item) + "(" + str(Amount) + ")" + " from inventory, did not have enough items!")
 
@@ -76,4 +76,3 @@ func Purchase(RequirementTypeList, RequirementAmountList):
 	if CanAfford(RequirementTypeList, RequirementAmountList):
 		for resource in range(0, len(RequirementTypeList)):
 			RemoveItem(GameResources.GetResName(RequirementTypeList[resource]), RequirementAmountList[resource])
-
