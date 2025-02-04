@@ -72,7 +72,7 @@ func Start():
 	StartTime()
 
 func OnLoadComplete():
-	emit_signal("OnHourUpdate")
+	OnHourUpdate.emit()
 
 func OnDelete():
 	TimeInHours = 5
@@ -104,7 +104,7 @@ func Load(data):
 			MonthAmount = data["month"]
 		if data.has("dayoftheweek"):
 			DayOfTheWeek = data["dayoftheweek"]
-	emit_signal("OnTimeUpdate")
+	OnTimeUpdate.emit()
 
 func StartTime():
 	MinuteTimer.start()
@@ -117,7 +117,7 @@ func OnTimerUpdate():
 	if TimeInMinutes >= 60:
 		TimeInMinutes = 0
 		TimeInHours += 1
-		emit_signal("OnHourUpdate")
+		OnHourUpdate.emit()
 	if TimeInHours >= 24:
 		TimeInHours = 0
 		DayAmount += 1
@@ -130,25 +130,25 @@ func OnTimerUpdate():
 			if MonthAmount >= len(MONTHS.keys()):
 				MonthAmount = 0
 				YearAmount += 1
-				emit_signal("OnYearUpdate")
-			emit_signal("OnMonthUpdate")
-		emit_signal("OnDayUpdate")
+				OnYearUpdate.emit()
+			OnMonthUpdate.emit()
+		OnDayUpdate.emit()
 
 
 
 	if IsMorning() and TimeInMinutes == 0:
-		emit_signal("OnMorningTime")
+		OnMorningTime.emit()
 	elif IsStartingWorkDay() and TimeInMinutes == 0:
-		emit_signal("OnDayTime")
+		OnDayTime.emit()
 	elif IsFinishingWorkDay() and TimeInMinutes == 0:
-		emit_signal("OnNightTime")
+		OnNightTime.emit()
 	elif IsMidnight() and TimeInMinutes == 0:
-		emit_signal("OnMidnightTime")
+		OnMidnightTime.emit()
 	if TimeInMinutes == 0 or TimeInMinutes == 30:
-		emit_signal("OnHalfHourUpdate")
+		OnHalfHourUpdate.emit()
 	if TimeInMinutes == 0 or TimeInMinutes == 15 or TimeInMinutes == 30 or TimeInMinutes == 45:
-		emit_signal("OnFifteenUpdate")
-	emit_signal("OnTimeUpdate")
+		OnFifteenUpdate.emit()
+	OnTimeUpdate.emit()
 
 # TODO: MT: in the future. I think the work place should define the time to work, and the time for a break, as well as time for sleeping!
 func IsDayTime():
@@ -218,7 +218,7 @@ func SetGameTime(eTimeSpeed):
 		Engine.time_scale = amount
 		Resume()
 
-	emit_signal("OnTimeSpeedChange", eTimeSpeed)
+	OnTimeSpeedChange.emit(eTimeSpeed)
 
 func IsPaused():
 	return get_tree().paused

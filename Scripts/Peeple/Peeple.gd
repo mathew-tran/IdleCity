@@ -105,6 +105,12 @@ func GetShirtColor():
 func _exit_tree():
 	HappinessUpdate()
 
+func BroadcastJobUpdate():
+	OnJobUpdate.emit(self)
+	
+func BroadcaseHouseUpdate():
+	OnHouseUpdate.emit(self)
+	
 func _ready():
 	SaveManager.AddToPersistGroup(self)
 
@@ -132,9 +138,9 @@ func _ready():
 	await get_tree().create_timer(0.2).timeout
 	PeepleManager.AddPeeple(self)
 	var _OnHappinessUpdate = connect("OnHappinessUpdate", Callable(self, "HappinessUpdate"))
-	emit_signal("OnHappinessUpdate")
+	OnHappinessUpdate.emit()
 	var _OnHungerUpdate = connect("OnSatietyUpdate", Callable(self, "SatietyUpdate"))
-	emit_signal("OnSatietyUpdate")
+	OnSatietyUpdate.emit()
 
 	FindHouse()
 	FindJob()
@@ -146,7 +152,7 @@ func AddHappiness(amount):
 		Happiness = 0
 	elif Happiness > 100:
 		Happiness = 100
-	emit_signal("OnHappinessUpdate")
+	OnHappinessUpdate.emit()
 
 func AddSatiety(amount):
 	Satiety += amount
@@ -154,7 +160,7 @@ func AddSatiety(amount):
 		Satiety = 0
 	elif Satiety > 100:
 		Satiety = 100
-	emit_signal("OnSatietyUpdate")
+	OnSatietyUpdate.emit()
 
 func HappinessUpdate():
 	pass
@@ -278,11 +284,10 @@ func AIFINDREC():
 	FindRec()
 	if CheckRec():
 		ChangeAIState(AI_STATES.GOREC, true)
-		emit_signal("OnRecUpdate", self)
 	else:
 		ChangeAIState(AI_STATES.WANDER)
-		emit_signal("OnRecUpdate", self)
-
+	OnRecUpdate.emit(self)
+	
 func AIGOFOOD():
 	if CheckFood():
 		if IsAtPosition(GetFoodPosition()):
@@ -581,7 +586,7 @@ func _on_timer_timeout():
 
 func _on_hunger_timer_timeout():
 	AddSatiety(-SatietyDecay)
-	emit_signal("OnSatietyUpdate")
+	OnSatietyUpdate.emit()
 
 func FindSomethingToDo():
 	var result = randi() % 2

@@ -26,10 +26,10 @@ func GetFormattedAmount(amount):
 func AddPopup(contentTitle, contentDescription, newContent):
 	Finder.GetContentPopup().ShowPopup(contentTitle, contentDescription, newContent)
 
-func AddPopupText(position, textContent):
+func AddPopupText(textPosition, textContent):
 	var instance = PopupTextClass.instantiate()
 	instance.SetText(textContent)
-	instance.global_position = position
+	instance.global_position = textPosition
 	get_tree().root.add_child(instance)
 
 func IsPopupVisible():

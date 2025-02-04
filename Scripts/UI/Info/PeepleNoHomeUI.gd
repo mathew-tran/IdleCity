@@ -8,5 +8,4 @@ func _ready():
 func Show():
 	text = str(PeepleManager.GetUnHousedPeepleAmount()) + " Peeple missing a home"
 	bHasProblem = PeepleManager.GetUnHousedPeepleAmount() > 0
-	emit_signal("OnInfoUpdate")
-
+	OnInfoUpdate.emit()

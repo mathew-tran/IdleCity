@@ -178,13 +178,13 @@ func Load(dictData):
 
 func Enter(peeple):
 	if PeepleInBuilding.has(peeple):
-		emit_signal("OnBuildingUpdate")
+		OnBuildingUpdate.emit()
 		return
 	PeepleInBuilding.append(peeple)
 	if PeepleInBuilding.size() >= 1:
 		OnActivated()
 		ShowUseGear(true)
-	emit_signal("OnBuildingUpdate")
+	OnBuildingUpdate.emit()
 
 func ShowUseGear(bShow):
 	if get_node_or_null("UseGear"):
@@ -197,7 +197,7 @@ func Exit(peeple):
 	if PeepleInBuilding.size() <= 0:
 		OnDeactivated()
 		ShowUseGear(false)
-	emit_signal("OnBuildingUpdate")
+	OnBuildingUpdate.emit()
 
 func IsAPeepleInBuilding(peeple):
 	return PeepleInBuilding.has(peeple)
@@ -231,7 +231,7 @@ func OnDeactivated():
 	pass
 
 func _exit_tree():
-	emit_signal("OnDestroyed")
+	OnDestroyed.emit()
 	SetTravelCost(false)
 	if bIsBlockingNavigation:
 		RemoveNavBlockers()

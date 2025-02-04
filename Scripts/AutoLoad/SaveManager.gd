@@ -28,7 +28,7 @@ func Save():
 		var nodeData = savedNode.call("Save")
 		saveGame.store_line(JSON.stringify(nodeData))
 	saveGame.close()
-	emit_signal("OnSave")
+	OnSave.emit()
 	var data = {
 		"message" : "Game Saved",
 		"timer" : 5
@@ -36,7 +36,7 @@ func Save():
 	Helper.Notify(data)
 
 func Load():
-	emit_signal("OnLoad")
+	OnLoad.emit()
 	if FileAccess.file_exists(SaveFilePath):
 		var saveGame = FileAccess.open(SaveFilePath, FileAccess.READ)
 		while not saveGame.eof_reached():
@@ -52,18 +52,18 @@ func Load():
 					newObject.Load(currentLine)
 				elif currentLine["type"] == "auto":
 					# Use expressions: https://docs.godotengine.org/en/stable/tutorials/scripting/evaluating_expressions.html
-					emit_signal("OnLoadAuto", currentLine["script"], currentLine)
+					OnLoadAuto.emit(currentLine["script"], currentLine)
 		saveGame.close()
-
-	emit_signal("OnLoadComplete")
+		
+	OnLoadComplete.emit()
 
 func Reset():
 	set_process(false)
 	var dir = DirAccess.open(SaveFilePath)
 	if  dir:
 		dir.remove(SaveFilePath)
-	emit_signal("OnDelete")
+		
+	OnDelete.emit()
 	var _sceneReload = get_tree().reload_current_scene()
-	emit_signal("OnReload")
+	OnReload.emit()
 	set_process(true)
-

@@ -103,7 +103,7 @@ func _process(delta):
 
 func ChangePlayerMode(newMode):
 	CurrentPlayerMode = newMode
-	emit_signal("OnPlayerModeChange", CurrentPlayerMode == GameResources.UI_MODE.BUILD)
+	OnPlayerModeChange.emit(CurrentPlayerMode == GameResources.UI_MODE.BUILD)
 
 
 func CanPurchase():

@@ -12,7 +12,7 @@ signal OnClicked(obj)
 
 func Click(object):
 	LastClickedObject = object
-	emit_signal("OnClicked", LastClickedObject)
+	OnClicked.emit(LastClickedObject)
 
 func GetLastClickedObject():
 	return LastClickedObject
@@ -34,14 +34,14 @@ func Internal_ContextClick(object):
 
 func BuildContextClick(object):
 	Internal_ContextClick(object)
-	emit_signal("OnBuildContextClicked", object)
+	OnBuildContextClicked.emit(object)
 
 func PlayContextClick(object):
 	Internal_ContextClick(object)
-	emit_signal("OnPlayContextClicked", object)
+	OnPlayContextClicked.emit(object)
 
 func PeepleClick(object):
-	emit_signal("OnPeepleClicked", object)
+	OnPeepleClicked.emit(object)
 
 func CanInteractWithBuilding():
 	return LastContextObject == null

@@ -47,13 +47,13 @@ func OnDayUpdate():
 	if CurrentAmount < MaxAmount:
 		Increment()
 		bHasPurchased = false
-		emit_signal("OnTavernAvailable")
+		OnTavernAvailable.emit()
 
 
 func SetFlag():
 	bHasPurchased = true
 	CurrentAmount += 1
-	emit_signal("OnTavernUnavailable")
+	OnTavernUnavailable.emit()
 
 func GetFlag():
 	return bHasPurchased

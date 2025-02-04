@@ -4,8 +4,9 @@ extends Button
 signal OnNotificationClicked(obj)
 
 var localData = {}
+
 func _on_button_up():
-	emit_signal("OnNotificationClicked", self)
+	OnNotificationClicked.emit(self)
 	if localData.has("position"):
 		Finder.GetPlayer().MoveToPosition(localData["position"])
 	if localData.has("peeple"):
