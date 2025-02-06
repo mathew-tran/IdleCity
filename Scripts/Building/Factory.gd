@@ -35,4 +35,3 @@ func ProduceWork():
 		InventoryManager.AddItem(reward)
 		var textToSay = "+" + str(reward.Amount) + " " + GameResources.GetResName(reward.ResourceType)
 		Helper.AddPopupText(position, textToSay)
-

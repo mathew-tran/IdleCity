@@ -151,5 +151,6 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-environment/defaults/default_clear_color=Color(0, 1.08294e-07, 0.221712, 1)
+textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0.196078, 0.2, 0.32549, 1)
 environment/defaults/default_environment="res://default_env.tres"

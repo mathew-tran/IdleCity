@@ -10,4 +10,3 @@ func _ready():
 		if is_instance_valid(unHousedPeeple[0]):
 			unHousedPeeple[0].FindHouse()
 		tries -= 1
-

@@ -6,17 +6,17 @@
 [ext_resource type="PackedScene" uid="uid://b6dmun6ale2vd" path="res://Prefab/Buildings/UseGear.tscn" id="4_nebdc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_agy7l"]
-size = Vector2(32, 32)
+size = Vector2(32, 62.5)
 
 [node name="Housing" type="Sprite2D" groups=["House"]]
 texture = ExtResource("2_qhxud")
 centered = false
 script = ExtResource("2_y04uj")
-BuildingLimit = 4
+BuildingLimit = 6
 BuildingName = "Duplex"
 RequirementType = Array[int]([0])
 RequirementAmount = Array[int]([100])
-Description = "Houses 4 Tenants"
+Description = "Houses 6 Tenants"
 HappinessAmount = 5.0
 BuildingPrefix = "TownDuplex"
 
@@ -24,11 +24,11 @@ BuildingPrefix = "TownDuplex"
 position = Vector2(-1, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(16.5, 17.5)
+position = Vector2(16.5, 32.75)
 shape = SubResource("RectangleShape2D_agy7l")
 
 [node name="ActiveParticle" parent="." instance=ExtResource("3_ubxff")]
-position = Vector2(17, 4)
+position = Vector2(16, 2)
 emission_sphere_radius = 1.0
 gravity = Vector2(0, 20)
 initial_velocity_min = 30.0
@@ -37,4 +37,4 @@ scale_amount_min = 0.2
 scale_amount_max = 0.2
 
 [node name="UseGear" parent="." instance=ExtResource("4_nebdc")]
-position = Vector2(16, 18)
+position = Vector2(16, 31)
