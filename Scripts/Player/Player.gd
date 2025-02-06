@@ -1,11 +1,12 @@
 extends Camera2D
 
+class_name Player
+
 var MoveSpeed = 200
 var ZoomSpeed = 7
 var MaxZoom = 1.6
 var MinZoom = .5
 @onready var Highlight = $Sprite2D
-@onready var GameMenu = $"../GameMenu"
 
 var BuildingClass = preload("res://Prefab/Buildings/Factories/Factory.tscn")
 var DefaultBuildingClass = preload("res://Prefab/Buildings/Factories/Factory.tscn")
@@ -22,8 +23,11 @@ var FollowTarget = null
 
 signal OnPlayerModeChange(bIsBuildMode)
 
+var bShowGhost = true
+
 func _ready():
-	GameMenu.hide()
+	Finder.GetGameMenu().PlayerRef = self
+	Finder.GetGameMenu().hide()
 	SetBuildingClass(BuildingClass, null)
 	Helper.ShowBuildTileOutline(false)
 	Finder.GetMenuUI().connect("tab_changed", Callable(self, "_on_TabContainer_tab_changed"))
@@ -38,6 +42,10 @@ func SetBuildingClass(newclass, purchaseButton):
 	$Sprite2D/GhostImage.texture = ClassInstance.texture
 	$Sprite2D/GhostImage.visible = newclass != DefaultBuildingClass
 
+func ShowGhost(bShow):
+	bShowGhost = bShow 
+	
+	
 func IsInBuildMode():
 	return CurrentPlayerMode == GameResources.UI_MODE.BUILD
 
@@ -48,15 +56,15 @@ func _process(delta):
 		ProcessMenuMode(delta)
 
 	if Input.is_action_just_pressed("escape"):
-		if GameMenu.visible:
+		if Finder.GetGameMenu().visible:
 			GameClock.Resume()
-			GameMenu.hide()
+			Finder.GetGameMenu().hide()
 		else:
 			GameClock.Pause()
-			GameMenu.show()
+			Finder.GetGameMenu().show()
 		return
 
-	if GameMenu.visible:
+	if Finder.GetGameMenu().visible:
 		return
 
 	if Helper.IsMouseOnControl() == false:
@@ -131,7 +139,10 @@ func GetFollowTarget():
 func ProcessBuildMode(delta):
 	Helper.ShowBuildTileOutline(true)
 	MoveGhost(delta)
-	$Sprite2D.visible = true
+	if bShowGhost:
+		$Sprite2D.visible = true
+	else:
+		$Sprite2D.visible = false
 	var TargetPosition =  Helper.GetCustomMousePosition()
 	var tile = Helper.GetTileInTilemap(TargetPosition)
 	var tileOffset = Vector2i(Finder.GetBuildTiles().map_to_local(tile))

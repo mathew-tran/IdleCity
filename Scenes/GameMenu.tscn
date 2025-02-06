@@ -5,7 +5,7 @@
 [sub_resource type="LabelSettings" id="LabelSettings_b11vu"]
 font_size = 45
 
-[node name="GameMenu" type="CanvasLayer"]
+[node name="GameMenu" type="CanvasLayer" groups=["GameMenu"]]
 process_mode = 3
 script = ExtResource("1_s07cs")
 
@@ -108,6 +108,7 @@ text = "Reset Data"
 layout_mode = 2
 text = "Back"
 
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/SaveGame" to="." method="_on_save_game_pressed"]
 [connection signal="pressed" from="MainMenu/VBoxContainer/LoadGame" to="." method="_on_load_game_pressed"]

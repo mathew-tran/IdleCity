@@ -1,5 +1,7 @@
 extends CanvasLayer
 
+class_name GameMenu
+
 @onready var MainMenu = $MainMenu
 @onready var SettingsMenu = $Settings
 @onready var NewGameButton = $MainMenu/VBoxContainer/NewGame
@@ -8,6 +10,8 @@ extends CanvasLayer
 @onready var ResetDataButton = $Settings/VBoxContainer/ResetData
 @onready var BackToMainMenuButton = $MainMenu/VBoxContainer/BackToMainMenu
 @onready var ExitButton = $MainMenu/VBoxContainer/Exit
+
+var PlayerRef : Player
 
 func _ready():
 	if FileAccess.file_exists(SaveManager.SaveFilePath):
@@ -18,6 +22,7 @@ func _ready():
 	else:
 		SaveGameButton.visible = false
 		BackToMainMenuButton.visible = false
+		
 
 func _on_new_game_pressed():
 	StartGame(true)
@@ -32,6 +37,7 @@ func _on_load_game_pressed():
 func _on_settings_pressed():
 	MainMenu.hide()
 	SettingsMenu.show()
+	
 
 func _on_exit_pressed():
 	get_tree().quit()
@@ -50,7 +56,12 @@ func StartGame(newGame: bool):
 	GameClock.paused = false
 	self.hide()
 
-
 func _on_back_to_main_menu_pressed():
 	var scene = load(GameResources.MenuScene)
 	get_tree().change_scene_to_packed(scene)
+
+
+func _on_visibility_changed():
+	if is_instance_valid(PlayerRef):
+		PlayerRef.ShowGhost(visible == false)
+		print("SET:" + str(visible == false))

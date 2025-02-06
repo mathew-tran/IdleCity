@@ -1,9 +1,12 @@
 extends Node
 
+func GetGameMenu() -> GameMenu:
+	return get_tree().get_nodes_in_group("GameMenu")[0]
+	
 func GetBuildMenuUI():
 	return get_tree().get_nodes_in_group("BuildMenuUI")[0]
 
-func GetPlayer():
+func GetPlayer() -> Player:
 	return get_tree().get_nodes_in_group("Player")[0]
 
 func GetBuildings():
