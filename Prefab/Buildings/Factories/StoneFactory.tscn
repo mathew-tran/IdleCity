@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://bhib4ars7emei"]
 
-[ext_resource type="Texture2D" uid="uid://c3ifyjuii5wx6" path="res://Art/Buildings/Factories/Factory_Small.png" id="1_c1lyd"]
+[ext_resource type="Texture2D" uid="uid://dhptpvb6k4ydo" path="res://Art/Buildings/Factories/Factory_Stone.png" id="1_6i0ab"]
 [ext_resource type="Script" path="res://Scripts/Building/Factory.gd" id="2_7w271"]
 [ext_resource type="PackedScene" uid="uid://fdiatj5sep31" path="res://Prefab/Particles/ActiveParticle.tscn" id="3_8sj83"]
 [ext_resource type="PackedScene" uid="uid://b6dmun6ale2vd" path="res://Prefab/Buildings/UseGear.tscn" id="4_7rerb"]
@@ -9,7 +9,7 @@
 size = Vector2(32, 32)
 
 [node name="Factory" type="Sprite2D" groups=["Factory"]]
-texture = ExtResource("1_c1lyd")
+texture = ExtResource("1_6i0ab")
 centered = false
 script = ExtResource("2_7w271")
 ResourceType = 1
