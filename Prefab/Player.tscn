@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://foxlaxf1cs8k"]
+[gd_scene load_steps=8 format=3 uid="uid://foxlaxf1cs8k"]
 
 [ext_resource type="Script" path="res://Scripts/Player/Player.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://do6jq2jgh0540" path="res://Art/UI/PointerIcon.png" id="2_2y7hf"]
 [ext_resource type="Texture2D" uid="uid://jurfxui50hik" path="res://Art/UI/GridHighlight.png" id="3"]
 [ext_resource type="Texture2D" uid="uid://c3ifyjuii5wx6" path="res://Art/Buildings/Factories/Factory_Small.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://dbn20tgm8tvul" path="res://Art/UI/SelectBoarder.png" id="5_1mu4k"]
+[ext_resource type="Script" path="res://Scripts/UI/SelectorBoarder.gd" id="5_wagbq"]
 
 [sub_resource type="RectangleShape2D" id="2"]
 
@@ -28,3 +30,21 @@ centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area3D"]
 shape = SubResource("2")
+
+[node name="SelectorBoarder" type="Node2D" parent="."]
+script = ExtResource("5_wagbq")
+
+[node name="TL" type="Sprite2D" parent="SelectorBoarder"]
+texture = ExtResource("5_1mu4k")
+
+[node name="TR" type="Sprite2D" parent="SelectorBoarder"]
+scale = Vector2(-1, 1)
+texture = ExtResource("5_1mu4k")
+
+[node name="BR" type="Sprite2D" parent="SelectorBoarder"]
+scale = Vector2(-1, -1)
+texture = ExtResource("5_1mu4k")
+
+[node name="BL" type="Sprite2D" parent="SelectorBoarder"]
+scale = Vector2(1, -1)
+texture = ExtResource("5_1mu4k")

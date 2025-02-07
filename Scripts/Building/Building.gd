@@ -79,7 +79,7 @@ func _input(event):
 	if bCanBeClicked and !bIsInMoveMode and InputManager.IsContextObject(self) == false:
 		if event.is_action_pressed("left_click") and Finder.GetPlayer().IsInBuildMode() == false:
 			OnLeftClick()
-		if event.is_action_pressed("right_click"):
+		if event.is_action_released("right_click"):
 			OnRightClick()
 
 func IsInMoveMode():
@@ -111,6 +111,7 @@ func _process(delta):
 			global_position = LastPosition
 			modulate = Color.WHITE
 			z_index = OldZIndex
+			
 
 func SetMoveMode(bIsMoving):
 	await get_tree().create_timer(.1).timeout
@@ -122,7 +123,7 @@ func GetMoveMode():
 	return bIsInMoveMode
 
 func OnHover():
-	modulate = "dedede"
+	modulate = Color.WHITE
 
 func OnMouseEntered():
 	bCanBeClicked = true
@@ -138,6 +139,7 @@ func OnRightClick():
 		InputManager.BuildContextClick(self)
 	else:
 		InputManager.PlayContextClick(self)
+	
 
 func OnExit():
 	modulate = "ffffff"

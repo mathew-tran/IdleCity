@@ -27,11 +27,11 @@ func OnPlayContextClicked(obj):
 		if ObjectToInteractWith.is_connected("OnBuildingUpdate", Callable(self, "UpdateBuilding")):
 			ObjectToInteractWith.disconnect("OnBuildingUpdate", Callable(self, "UpdateBuilding"))
 	ObjectToInteractWith = obj
-	ObjectToInteractWith.modulate = Color(400, 400, 400, ObjectToInteractWith.modulate.a)
+	ObjectToInteractWith.modulate = Color(2, 2, 2, ObjectToInteractWith.modulate.a)
 	ObjectToInteractWith.connect("OnBuildingUpdate", Callable(self, "UpdateBuilding"))
+	Finder.GetPlayer().GetSelectorBoarder().HoverSpriteObject(ObjectToInteractWith)
 	UpdateBuilding()
-
-
+		
 func UpdateBuilding():
 	if is_instance_valid(ObjectToInteractWith) == false:
 		return
@@ -68,6 +68,6 @@ func _on_visibility_changed():
 	if visible == false:
 		if ObjectToInteractWith:
 			ObjectToInteractWith.modulate = Color.WHITE
+			Finder.GetPlayer().GetSelectorBoarder().UnHover()
 		ObjectToInteractWith = null
 		InputManager.LastContextObject = null
-

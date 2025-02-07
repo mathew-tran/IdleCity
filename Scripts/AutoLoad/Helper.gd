@@ -143,3 +143,8 @@ func PlaySound(sound, channelIndex):
 func IsInGame():
 	print(get_tree().current_scene.name)
 	return get_tree().current_scene.name == "Main"
+
+func WorldToScreen(globalPosition) -> Vector2:
+	var camera = get_viewport().get_camera_2d()
+	var viewport_size = get_viewport_rect().size
+	return (globalPosition - camera.global_position) * camera.zoom + (viewport_size / 2.0)

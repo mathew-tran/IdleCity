@@ -195,3 +195,6 @@ func _on_TabContainer_tab_changed(tab):
 		ChangePlayerMode(GameResources.UI_MODE.BUILD)
 	else:
 		ChangePlayerMode(GameResources.UI_MODE.PLAY)
+
+func GetSelectorBoarder() -> SelectorBoarder:
+	return $SelectorBoarder
