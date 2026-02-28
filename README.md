@@ -39,14 +39,6 @@ IdleCity is an open source game that is planned to be a mix between Sim City and
 
 
 
-# Extra Remarks
-- Contributors are welcomed! The point of this project is to have it free and learn while making it!
-- [Join the development discord!](https://discord.gg/mXv3FTXktz)
-- When contributing, we want to have original content made (code, audio, art)
-- Make sure to mention what your PR does and try to follow a similar coding standard!
-- If you are looking for things to do, look at issues on github. Or look at the discussions page!
-- [Check out our contributors!](CONTRIBUTING.md)
-
 # Setting up
 - This is currently running on Godot 4.2
 - After you open up the Godot Editor. 
